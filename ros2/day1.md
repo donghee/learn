@@ -1,4 +1,4 @@
-# ROS 2 Programming
+ROS# ROS 2 Programming
 
  - 수업자료: https://learn.dronemap.io/ros-workshop/ros2/
  - 준비물: ubuntu 20.04 리눅스가 설치된 컴퓨터
@@ -6,20 +6,18 @@
 
 ----
 
-## 1. 수업 소개
+## 수업 소개
 
 -   목표: 자율 주행 로봇 개발 환경 구축하고 ROS 2를 이용하여 제어 프로그램을 개발 할 수 있다. 
 -   교재: [https://learn.dronemap.io/ros-workshop/ros2/#/day1](https://learn.dronemap.io/ros-workshop/ros2/#/day1)
 -   코치: 박동희 dongheepark@gmail.com
-
-## 2. UGV 제어 소프트웨어 소개 및 설치
 
 1. 워크숍 소개, 참가자 소개
 2. ROS 2 소개
 3. Linux 사용하기
 4. ROS 2 개발환경 구성
 
-## 3. Linux 사용하기
+## Linux 사용하기
 
 -   Ubuntu 20.04 설치
 -   주요 명령어 소개(파일 조작, 프로그램설치, 쉘스크립트, git)
@@ -203,7 +201,7 @@ ROS_DOMAIN_ID=1 ros2 topic list
  - ROS, URDF, Colcon Tasks
  - XML Tools, YAML, Markdown All in One
 
-## ROS 프로그래밍 
+## ROS 2 소개 
 
 ### ROS
 
@@ -257,16 +255,15 @@ digraph {
 	- PID Control
 	- Model Predictive Control
 
-### ROS Master Process
+### ROS Nodes
  
-노드 관리
 
 ```graphviz
 digraph {
 	graph [fontname="MS Gothic"];
 	node [shape=box, color="#40e0d0"];
 	edge [fontname="MS Gothic"];
-	label = "ROS Master Process";
+	label = "ROS Nodes";
 	
 	subgraph cluster_perception {
 		node [shape=rect, style="rounded"];
@@ -290,7 +287,20 @@ digraph {
 }
 ```
 
-### Topics  
+
+## ROS 인터페이스
+
+ROS에서 노드간 통신(토픽, 서비스, 액션)할때 이동하는 데이터 타입
+
+미리 정의된 메시지 타입 :
+- https://github.com/ros2/common_interfaces
+
+ - 토픽: msg 파일
+ - 서비스: srv 파일
+ - 액션: action 파일
+
+
+### Topics
 
 노드간 통신 인터페이스. 구독 발행의 이름
 
@@ -338,16 +348,6 @@ digraph {
 }
 ```
 
-## ROS Message Passing
-
-메시지: 노드간 통신할때 이동하는 실제 데이터
-- 메시지는 텍스트로 구성. 메시지를 이해하기 쉽다.
-
-미리 정의된 메시지 타입 :
-- <http://wiki.ros.org/common_msgs>
-- <https://github.com/ros/common_msgs>
-
-  
 ### ROS Services
 - Request-Response, 1:1 통신
 - PubSub이 필요 없는 경우 사용, 요청 할때만 데이터가 제공. 네트워크 부하가 적다.
@@ -393,14 +393,14 @@ digraph {
 }
 ```
 
-### ROS Turtlesim
+## ROS Turtlesim
 
 Turtle
 
 ![img](https://i.imgur.com/0r46gFH.png)
 
 
-#### Turtlesim 실행하기
+### Turtlesim 실행하기
 
 ![img](https://d17h27t6h515a5.cloudfront.net/topher/2017/March/58d9820b_running-turtlesim/running-turtlesim.png)
 
@@ -421,7 +421,7 @@ Turtle
    ros2 run turtlesim turtle_teleop_key
    ```
 
-#### Turtlesim 노드 정보
+### Turtlesim 노드 정보
 
 노드 목록 보기 
 ```
@@ -433,7 +433,7 @@ ros2 node list
 ros2 node info /turtlesim
 ```
 
-### Turtlesim 토픽 목록  
+### Turtlesim 토픽 목록
 ```
 ros2 topic list
 ```
@@ -464,7 +464,7 @@ geometry_msgs/Vector3 angular
   float64 z
 ```
 
-#### Turtlesim Echo a Topic
+### Turtlesim Echo a Topic
 
 디버깅시 편리
 
@@ -473,13 +473,13 @@ ros2 topic echo /turtle1/cmd_vel
 ```
 
 
-#### `rqt_graph`
+### `rqt_graph`
 
     rqt_graph
 
 ![img](https://i.imgur.com/rBjL8fv.png)
 
-#### `rqt_plot`
+### `rqt_plot`
 
 ![](https://i.imgur.com/hDRuBW8.png)
 
