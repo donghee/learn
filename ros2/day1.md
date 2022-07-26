@@ -348,7 +348,7 @@ digraph {
 }
 ```
 
-### ROS Services
+### Services
 - Request-Response, 1:1 통신
 - PubSub이 필요 없는 경우 사용, 요청 할때만 데이터가 제공. 네트워크 부하가 적다.
  
@@ -375,7 +375,7 @@ digraph {
 }
 ```
 
-### ROS Action
+### Action
  - Service + Message Passing
  - 비동기식 양방향 메시지 송수신 방식
  - Goal/Feedback/Result
