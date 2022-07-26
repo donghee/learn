@@ -1,52 +1,6 @@
 # ROS 2 Programming
 
-## 0. 수업준비
-
-- [ ] 1일차, 2일차, 3일차 목차 만들기
-- [ ] PC에 ROS2 설치하고 예시 실행해보기
-- [ ] 라이다 ROS2 에서 실행해보기
-- [ ] SLAM 사용해서 회피 예시 만들기
-- [ ] h-bridge 추가하기
-- [ ] RPI에 ros2 설치하여 slam 실행하기
-- [ ] RPI 이미지 만들기
-- [ ] 두개 모터로 조향 기능 추가하기
-- [ ] keyboard teleop, joystick teleop 추가하기
-- [ ] ROS2 책보고 쓸만한것 찾아보기
-- [ ] [Nanodegree Robotics Software Engineer](https://nanodegree.baribarilab.com/Robotics%20Software%20Engineer%20v6.0.0/) 보고 쓸만한것 찾아보기 
-- [ ] [Nanodegree Robotics Software Engineer 5번째 프로젝트 참고](https://github.com/obensustam2/RoboND_P5_Home_Service_Robot)
-
-Tier1 ARM64
-Tier3 Source Compile
-https://docs.ros.org/en/foxy/How-To-Guides/Installing-on-Raspberry-Pi.html
-https://cdimage.ubuntu.com/releases/20.04/release/
-https://cdimage.ubuntu.com/releases/20.04/release/ubuntu-20.04.4-preinstalled-server-arm64+raspi.img.xz
-https://medium.com/realroboox/how-to-setup-ros2-on-raspberry-pi-3-model-b-6b77cd350b7a
-https://singleboardblog.com/install-ubuntu-server-on-raspberry-pi/
-https://singleboardblog.com/install-ros2-on-raspberry-pi/
-https://singleboardblog.com/coding-on-raspberry-pi-remotely-with-vscode/
-
-version: 2
-ethernets:
-  eth0:
-    dhcp4: true
-    optional: true
-wifis:
-  wlan0:
-    dhcp4: true
-    optional: true
-    access-points:
-      "YOUR_WIFI_NAME":
-        password: "YOUR_WIFI_PASSWORD"
-
-https://roboticsbackend.com/install-ubuntu-on-raspberry-pi-without-monitor/
-
-l298n 드라이버, ros로 제어 
-
-https://circuitcellar.com/research-design-hub/design-solutions/intro-to-robot-operating-system-ros-part-3/
-
-
-
- - 수업자료: https://learn.dronemap.io/ros-workshop/rover/
+ - 수업자료: https://learn.dronemap.io/ros-workshop/ros2/
  - 준비물: ubuntu 20.04 리눅스가 설치된 컴퓨터
  - 참고책: ROS 2로 시작하는 로봇 프로그래밍
 
@@ -61,9 +15,9 @@ https://circuitcellar.com/research-design-hub/design-solutions/intro-to-robot-op
 ## 2. UGV 제어 소프트웨어 소개 및 설치
 
 1. 워크숍 소개, 참가자 소개
-2. ROS2 소개
+2. ROS 2 소개
 3. Linux 사용하기
-4. ROS2 개발환경 구성 
+4. ROS 2 개발환경 구성
 
 
 ## 3. Linux 사용하기
