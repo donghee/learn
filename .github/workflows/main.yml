@@ -53,7 +53,7 @@ jobs:
 #        run: ssh staging 'sudo systemctl stop my-application'
 
       - name: Check out the source
-        run: ssh staging 'cd /home/donghee/src/github.com/donghee/learn && git fetch && git reset --hard origin/master'
+        run: ssh staging 'cd /home/donghee/src/github.com/donghee/learn && git fetch && git reset --hard origin/main'
 
 #      - name: Start the server
 #        if: ${{ always() }}
