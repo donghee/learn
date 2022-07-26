@@ -326,8 +326,8 @@ digraph {
 	node [color="#40e0d0"]
 	edge [fontname="MS Gothic"];
 	label = "      PUBLISH           SUBSCRIBER";
-	node1 [label= "Publisher"]
-	node2 [label= "Subscriber"]
+	node1 [label= ""]
+	node2 [label= ""]
 	node3 [label= ""]
 	node1 -> node2
 	node2 -> node1
