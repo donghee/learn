@@ -1,4 +1,16 @@
 
+둘째날
+
+ROS 기본 프로그래밍
+ - ROS를 자율 주행 로봇을 제어하는 ROS 노드 만들기
+ - 시뮬레이터 사용하기
+ - 컴퓨터 비전 소개 및 카메라 사용 실습
+
+자율 주행 소프트웨어 실습
+ - SLAM 소개
+ - ROS와 시뮬레이터를 이용하여 SLAM 실습
+
+---
 
 https://classic.gazebosim.org/tutorials?tut=ros2_installing&cat=connect_ros
 
