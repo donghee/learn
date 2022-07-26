@@ -198,6 +198,11 @@ export ROS_DOMAIN_ID=6
 ROS_DOMAIN_ID=1 ros2 topic list
 ```
 
+### Visual Studio Code 확장 설치
+ - C/C++, CmMake, CMake Tools, Python
+ - ROS, URDF, Colcon Tasks
+ - XML Tools, YAML, Markdown All in One
+
 ## ROS 프로그래밍 
 
 ### ROS
@@ -211,9 +216,18 @@ ROS_DOMAIN_ID=1 ros2 topic list
 	- 2017: ROS 2 첫버전 릴리즈
 - 사용 분야: Drone, Kinematic ARMS(로봇암), Wheeled(바퀴), Bi-pedal(이족)
 
+### ROS 2 왜?
+ - 리얼타임 
+ - 임베디드 시스템 
+ - Linux, macOS, Windows 지원
+ - 통신 QOS 지원: 안정성 향상
+ - 다양한 프로그래밍 언어 호환: RCL 
+
+
+
 ### ROS 2 구조
 
-![](https://i.imgur.com/FRQYmK6.png)
+![](https://i.imgur.com/fHTamGJ.png)
 
 ### ROS Nodes and Topics
 
@@ -292,7 +306,7 @@ digraph {
 ```
  
 
-### Publish and Subscribe  
+### Publish and Subscribe
 
 발행과 구독. 신문/잡지 발행 구독에 비유
 
@@ -302,10 +316,12 @@ digraph {
 	node [color="#40e0d0"]
 	edge [fontname="MS Gothic"];
 	label = "      PUBLISH           SUBSCRIBER";
-	node1 [label= ""]
-	node2 [label= ""]
+	node1 [label= "Publisher"]
+	node2 [label= "Subscriber"]
+	node3 [label= ""]
 	node1 -> node2
 	node2 -> node1
+	node1 -> node3
 }
 ```
 
@@ -358,8 +374,26 @@ digraph {
 	"Camera" -> "Behavior Executor" [label="\nresponse: image"]
 }
 ```
+
+### ROS Action
+ - Service + Message Passing
+ - 비동기식 양방향 메시지 송수신 방식
+ - Goal/Feedback/Result
  
-### ROS Turtlesim  
+```graphviz
+digraph {
+	rankdir=LR
+	node [color="#40e0d0"]
+	edge [fontname="MS Gothic"];
+	label = "      Action Client           Action Server";
+	node1 [label= ""]
+	node2 [label= ""]
+	node1 -> node2 [label="Goal"]
+	node2 -> node1 [label="Feedback Result"]
+}
+```
+
+### ROS Turtlesim
 
 Turtle
 
@@ -383,12 +417,17 @@ Turtle
    ros2 run turtlesim turtle_teleop_key
    ```
 
-#### Turtlesim 노드 목록
+#### Turtlesim 노드 정보
+
+노드 목록 보기 
 ```
 ros2 node list
 ```
 
-/rosout : ROS 메시지 로깅.
+노드 정보 보기 
+```
+ros2 node info /turtlesim
+```
 
 ### Turtlesim 토픽 목록  
 ```
@@ -396,8 +435,16 @@ ros2 topic list
 ```
 
 ### Turtlesim 토픽 정보
+`cmd_vel` 토픽 정보 보기 
+
 ```
 ros2 topic info /turtle1/cmd_vel
+```
+
+토픽 publish
+
+```
+ros2 topic pub --once /turtle1/cmd_vel geometry_msgs/msg/Twist '{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.8}}
 ```
 
 ### Turtlesim 메시지 정보
@@ -421,11 +468,69 @@ geometry_msgs/Vector3 angular
 ros2 topic echo /turtle1/cmd_vel
 ```
 
+
 #### `rqt_graph`
 
     rqt_graph
 
-![img](https://wiki.ros.org/rqt_graph?action=AttachFile&do=get&target=snap_rqt_graph_moveit_demo.png)
+![img](https://i.imgur.com/rBjL8fv.png)
+
+#### `rqt_plot`
+
+![](https://i.imgur.com/hDRuBW8.png)
+
+
+
+### Turtlesim 서비스 정보
+서비스 목록 
+
+```
+ros2 service list -t
+```
+
+서비스 Call
+```
+ros2 service call /spawn turtlesim/srv/Spawn "{x: 2, y: 2, theta: 0.2, name: ''}"
+```
+
+### Turtlesim Action 정보
+
+액션 목록 
+```
+ros2 action list -t
+```
+
+액션 정보
+```
+ros2 action info /turtle1/rotate_absolute
+```
+
+액션 골 보내기
+```
+ros2 action send_goal /turtle1/rotate_absolute turtlesim/action/RotateAbsolute {'theta:
+-1.57'}
+```
+
+
+
+### rosbag2
+
+노드 간 통신 메시지를 bag에 녹화하고 재생
+
+bag 녹화
+```
+ros2 bag record /turtle1/cmd_vel
+```
+
+녹화된 bag 정보
+```
+ros2 bag info rosbag2_2022_07_24-20_10_23/
+```
+
+bag 재생
+```
+ros2 bag play rosbag2_2022_07_24-20_10_23/
+```
 
 
 ## 참고
