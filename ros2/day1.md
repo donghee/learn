@@ -408,6 +408,10 @@ Turtle
    ```
    source /opt/ros/foxy/setup.bash
    ```
+2. turtlesim 패키지 설치 확인
+   ```
+   ros2 pkg executables turtlesim
+   ```
 2. turtlesim 패키지의 `turtlesim_node` 실행
    ```
    ros2 run turtlesim turtlesim_node
@@ -505,13 +509,17 @@ ros2 action list -t
 ros2 action info /turtle1/rotate_absolute
 ```
 
-액션 골 보내기
+액션 골 보내기 -90도 회전 
 ```
 ros2 action send_goal /turtle1/rotate_absolute turtlesim/action/RotateAbsolute {'theta:
 -1.57'}
 ```
 
+### Turtlesim Parameter 정보
 
+```
+ros2 param list
+```
 
 ### rosbag2
 
