@@ -1,4 +1,4 @@
-ROS# ROS 2 Programming
+# ROS 2 Programming
 
  - 수업자료: https://learn.dronemap.io/ros-workshop/ros2/
  - 준비물: ubuntu 20.04 리눅스가 설치된 컴퓨터
