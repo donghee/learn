@@ -8,8 +8,8 @@
 
 ## 1. 수업 소개
 
--   목표: UGV 제어 소프트웨어에 대해 이해할 수 있고, 프로그래밍 환경을 구축할 수 있다.
--   교재: [https://learn.dronemap.io/ros-workshop/rover/1.html](https://learn.dronemap.io/ros-workshop/rover/1.html)
+-   목표: 자율 주행 로봇 개발 환경 구축하고 ROS 2를 이용하여 제어 프로그램을 개발 할 수 있다. 
+-   교재: [https://learn.dronemap.io/ros-workshop/ros2/#/day1](https://learn.dronemap.io/ros-workshop/ros2/#/day1)
 -   코치: 박동희 dongheepark@gmail.com
 
 ## 2. UGV 제어 소프트웨어 소개 및 설치
@@ -24,6 +24,8 @@
 -   Ubuntu 20.04 설치
 -   주요 명령어 소개(파일 조작, 프로그램설치, 쉘스크립트, git)
 -   디렉토리 소개
+
+### 주요 명령어
 
 ls: 파일 또는 디렉토리의 목록을 출력
 ```
@@ -120,80 +122,83 @@ sudo apt-get upgrade
 ```
 
 
+### 코드 편집기 Visual Studio Code 설치
+
+다음 주소에서 Debian. Ubuntu용 패키지 다운받아서 설치
+
+https://code.visualstudio.com/download
+
+```
+cd ~/Downloads
+sudo dpkg -i code_1.69.2-1658162013_amd64.deb
+```
+
 ## ROS 2 foxy 개발환경 구성
-  
-### PC에 설치된 우분트 18.04에 ROS melodic 설치하기
 
+### PC에 설치된 우분트 20.04에 ROS 2 foxy 설치하기
 
-<http://wiki.ros.org/melodic/Installation/Ubuntu>
+https://docs.ros.org/en/foxy/Installation/Ubuntu-Install-Debians.html
 
-  우분트 패키지 소스 리스트에 ROS melodic 추가
-
+UTF-8 로케일 설정
 ```
-sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-```
+sudo apt update && sudo apt install locales
+sudo locale-gen en_US en_US.UTF-8
+sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
-  
-```
-sudo apt install curl # if you haven't already installed curl
-```
-
-```
-curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+locale
 ```
 
 
-ROS 데스크탑 패키지 설치
+우분트 패키지 소스 리스트에 ROS 2 foxy 추가 
+
+```
+sudo apt update && sudo apt install curl gnupg2 lsb-release
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key  -o /usr/share/keyrings/ros-archive-keyring.gpg
+```
+
+```
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(source /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+```
+
+ROS foxy 데스크탑 패키지 설치
 
 ```
 sudo apt-get update
-sudo apt install ros-melodic-desktop-full
+sudo apt install ros-foxy-desktop
 ```
 
-ROS 환경 변수 설정
+ROS foxy 환경 변수 설정
 
 ```
-echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
+echo "source /opt/ros/foxy/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 ```
-  
-ROS 유저 패키지 빌드를 위한 도구 설치
+
+ROS 2 사용자 패키지 빌드를 위한 도구 colcon 설치
 
 ```
-sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential
+sudo apt install python3-colcon-common-extensions
 ```
 
+ROS 2 환경 구분을 위한 도메인 아이디 설정
 
-### Raspberry PI에 ROS Melodic 설치하기
-
-<http://wiki.ros.org/ROSberryPi/Installing%20ROS%20Melodic%20on%20the%20Raspberry%20Pi>
-
+자신의 도메인 아이디를 ~/.bashrc에 추가 한다. 
 ```
-sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
-sudo apt-get update
-sudo apt-get install -y python-rosdep python-rosinstall-generator python-wstool python-rosinstall build-essential 
-cmake
-sudo rosdep init
-rosdep update
-mkdir ~/ros_catkin_ws
-
-cd ~/ros_catkin_ws
+export ROS_DOMAIN_ID=1 # 강사
+export ROS_DOMAIN_ID=2 # ?
+export ROS_DOMAIN_ID=3 #
+export ROS_DOMAIN_ID=4
+export ROS_DOMAIN_ID=5
+export ROS_DOMAIN_ID=6
 ```
 
+사용법
 ```
-rosinstall_generator ros_comm --rosdistro melodic --deps --wet-only --tar > melodic-ros_comm-wet.rosinstall
-wstool init src melodic-ros_comm-wet.rosinstall
-
-cd ~/ros_catkin_ws
-rosdep install -y --from-paths src --ignore-src --rosdistro melodic -r --os=debian:buster
-sudo ./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release --install-space /opt/ros/melodic -j2
-source /opt/ros/melodic/setup.bash
-echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
+ROS_DOMAIN_ID=1 ros2 topic list
 ```
 
-
-## ROS 프로그래밍  
+## ROS 프로그래밍 
 
 ### ROS
 
@@ -205,6 +210,10 @@ echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 	- 2013: Open Source Robotics Foundation
 	- 2017: ROS 2 첫버전 릴리즈
 - 사용 분야: Drone, Kinematic ARMS(로봇암), Wheeled(바퀴), Bi-pedal(이족)
+
+### ROS 2 구조
+
+![](https://i.imgur.com/FRQYmK6.png)
 
 ### ROS Nodes and Topics
 
@@ -361,53 +370,39 @@ Turtle
 
 ![img](https://d17h27t6h515a5.cloudfront.net/topher/2017/March/58d9820b_running-turtlesim/running-turtlesim.png)
 
-1.  환경 변수 설정
-
-    source /opt/ros/melodic/setup.bash
-
-2.  roscore 실행
-    -   roscore: Master + rosout + parameter server
-        -   Master: 네임 서비스
-        -   rosout: stdout/stderr 로깅
-        -   parameter server: 파라미터 저장 서버
-
-```
-roscore
-```
-  
-3.  turtlesim 패키지의 `turtlesim_node` 실행
-
-```
-rosrun turtlesim turtlesim_node
-```
-
-4.  turtlesim 패키지의 `turtle_teleop_key` 실행
-
-```
-rosrun turtlesim turtle_teleop_key
-```
-
+1. 환경 변수 설정
+   ```
+   source /opt/ros/foxy/setup.bash
+   ```
+2. turtlesim 패키지의 `turtlesim_node` 실행
+   ```
+   ros2 run turtlesim turtlesim_node
+   ```
+3. turtlesim 패키지의 `turtle_teleop_key` 실행
+   ```
+   ros2 run turtlesim turtle_teleop_key
+   ```
 
 #### Turtlesim 노드 목록
 ```
-rosnode list
+ros2 node list
 ```
 
 /rosout : ROS 메시지 로깅.
 
 ### Turtlesim 토픽 목록  
 ```
-rostopic list
+ros2 topic list
 ```
 
 ### Turtlesim 토픽 정보
 ```
-rostopic info /turtle1/cmd_vel
+ros2 topic info /turtle1/cmd_vel
 ```
 
 ### Turtlesim 메시지 정보
 ```
-$ rosmsg info geometry_msgs/Twist
+$ ros2 interface show geometry_msgs/Twist
 geometry_msgs/Vector3 linear
   float64 x
   float64 y
@@ -417,17 +412,13 @@ geometry_msgs/Vector3 angular
   float64 y
   float64 z
 ```
-or
-```
-rosed geometry_msgs Twist.msg
-```  
 
 #### Turtlesim Echo a Topic
 
 디버깅시 편리
 
 ```
-rostopic echo /turtle1/cmd_vel
+ros2 topic echo /turtle1/cmd_vel
 ```
 
 #### `rqt_graph`
@@ -435,3 +426,9 @@ rostopic echo /turtle1/cmd_vel
     rqt_graph
 
 ![img](https://wiki.ros.org/rqt_graph?action=AttachFile&do=get&target=snap_rqt_graph_moveit_demo.png)
+
+
+## 참고
+ - ROS 2 Documentaion: Foxy https://docs.ros.org/en/foxy/Tutorials.html
+ 
+ 
