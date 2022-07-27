@@ -9,7 +9,7 @@
   * [6\. ROS Turtlesim](day1#ros-turtlesim)
   * [7\. 참고](day1#참고)
 
-<!-- * [둘째날](day2.md) -->
+* [둘째날](day2)
 <!-- * [셋째날](day3.md) -->
 
 <!--

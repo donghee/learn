@@ -480,7 +480,7 @@ ros2 topic echo /turtle1/cmd_vel
 
 ![img](https://i.imgur.com/rBjL8fv.png)
 
-### `rqt_plot`
+### `rqt`
 
 ![](https://i.imgur.com/hDRuBW8.png)
 
@@ -518,8 +518,15 @@ ros2 action send_goal /turtle1/rotate_absolute turtlesim/action/RotateAbsolute {
 
 ### Turtlesim Parameter 정보
 
+파라미터 목록 가져오기
+
 ```
 ros2 param list
+```
+
+```
+ros2 param get /my_node use_sim_time
+ros2 param set /my_node use_sim_time false
 ```
 
 ### rosbag2
