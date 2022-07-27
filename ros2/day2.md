@@ -61,6 +61,9 @@ source install/setup.bash
 ros2 run my_package my_node
 ```
 
+#### 해보기: my_package 분석
+ - ros2_ws/src/my_package 안의 디렉토리와 파일을 분석하고 설명해보자.
+
 #### 해보기: c++ 노드 패키지 작성
  - c++ 코드로 구현된 my_cpp_package와 my_node 만들고, 그 노드를 실행해보자.
  - 힌트: 패키지 만들기 할때 ament_cmake 사용
