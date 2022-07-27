@@ -297,6 +297,7 @@ ros2 run tf2_ros tf2_echo base_footprint map
 ```
 
 ros2 topic echo /odom
+
 ros2 run tf2_tools view_frames.py
 
 맵 저장
