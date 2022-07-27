@@ -494,6 +494,36 @@ echo "source /opt/ros/foxy/setup.bash" >>~/.bashrc
 ssh ubuntu@192.168.88.??
 ```
 
+### 하드웨어 설치
+
+#### IMU
+
+mpu9250 연결
+![](https://images.squarespace-cdn.com/content/v1/59b037304c0dbfb092fbe894/1573589401909-GKK8YB7UJ9FLCCYBDDRP/rpi_mpu9250_wiring_diagram.png?format=2500w)
+
+연결 확인
+```
+i2cdetect -y 1
+```
+
+0x68
+
+#### 모터 드라이버
+
+L298n
+![](https://i.imgur.com/omSvD8A.png)
+
+![](https://i.imgur.com/Cn6y8qp.png)
+
+연결
+![](https://imgur.com/0dio7EM.png)
+
+#### 카메라
+raspberry pi camera v1
+
+#### 라이다
+rplidar a1
+
 <!-- https://www.theconstructsim.com/tag/ros2 -->
 
 <!-- ## ROS2 패키지 만들기 -->
