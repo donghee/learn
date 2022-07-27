@@ -251,6 +251,11 @@ sudo apt install python3-vcstool
 mkdir -p ~/turtlebot3_ws/src
 cd ~/turtlebot3_ws
 wget https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/ros2/turtlebot3.repos
+```
+
+turtlebot3.repos파일의 version을 ros2-devel을 foxy-devel로 수정. 단 ld08_driver는 ros2-devel로 남겨 둔다.
+
+```
 vcs import src < turtlebot3.repos
 ```
 
