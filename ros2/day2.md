@@ -205,9 +205,12 @@ ros2 run py_pubsub listener
 
 ----
 
-Gazebo 실습
+## 시뮬레이션
+Gazebo를 사용해보자!
 
 https://classic.gazebosim.org/tutorials?tut=ros2_installing&cat=connect_ros
+https://ubuntu.com/blog/simulate-the-turtlebot3
+
 
 ### 시뮬레이터 Gazebo
 
@@ -231,6 +234,77 @@ ROS Gazebo 패키지 설치
 
 ```
 sudo apt install ros-foxy-gazebo-dev ros-foxy-gazebo-plugins ros-foxy-gazebo-msgs  ros-foxy-gazebo-ros-pkgs ros-foxy-gazebo-ros ros-foxy-ros-core ros-foxy-geometry2
+```
+
+SLAM navigation 패키지 설치
+```
+sudo apt install ros-foxy-cartographer
+sudo apt install ros-foxy-cartographer-ros
+sudo apt install ros-foxy-navigation2
+sudo apt install ros-foxy-nav2-bringup
+```
+
+터틀봇 패키지 설치
+```
+sudo apt install python3-vcstool
+mkdir -p ~/turtlebot3_ws/src
+cd ~/turtlebot3_ws
+wget https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/ros2/turtlebot3.repos
+vcs import src < turtlebot3.repos
+```
+
+```
+cd ~/turtlebot3_ws
+colcon build --symlink-install
+source install/setup.bash
+echo "source ~/turtlebot3_ws/install/setup.bash" >> ~/.bashrc
+echo "export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/turtlebot3_ws/src/turtlebot3/turtlebot3_simulations/turtlebot3_gazebo/models" >> ~/.bashrc
+echo "export TURTLEBOT3_MODEL=waffle_pi" >> ~/.bashrc
+source ~/.bashrc
+```
+
+시뮬레이터 실행
+```
+ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
+```
+
+![](https://www.theconstructsim.com/wp-content/uploads/2022/01/Click-Open-Gazebo-to-view-the-Gazebo-simulation.png)
+
+```
+ros2 launch turtlebot3_cartographer cartographer.launch.py
+```
+
+![](https://www.theconstructsim.com/wp-content/uploads/2022/01/ros2-launch-turtlebot3_cartographer-cartographer.launch.py_.png)
+
+키보드 입력
+```
+ros2 run turtlebot3_teleop teleop_keyboard
+```
+
+토픽, 서비스 확인
+```
+ros2 topic list
+ros2 service list
+ros2 topic pub /cmd_vel geometry_msgs/Twist '{linear: {x: 1.0}}' -1
+ros2 topic pub /cmd_vel geometry_msgs/Twist '{linear: {x: 0.0}}' -1
+ros2 run turtlebot3_teleop teleop_keyboard
+```
+
+맵과 로봇 프레임 좌표 연결
+```
+ros2 run tf2_ros tf2_echo base_footprint map
+```
+
+ros2 topic echo /odom
+
+맵 저장
+```
+ros2 run nav2_map_server map_saver_cli -f map
+```
+
+네비게이션 실행. 자율 주행!
+```
+ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=true map:=./map.yaml
 ```
 
 #### Gazebo 사용하기
