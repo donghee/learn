@@ -297,6 +297,7 @@ ros2 run tf2_ros tf2_echo base_footprint map
 ```
 
 ros2 topic echo /odom
+ros2 run tf2_tools view_frames.py
 
 맵 저장
 ```
@@ -309,6 +310,7 @@ ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=true map:
 ```
 
 ![](https://i.imgur.com/8TLNJRc.png)
+
 
 #### Gazebo 사용하기
 
@@ -335,102 +337,80 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 
 ![](https://github.com/osrf/gazebo_tutorials/raw/master/ros2_installing/figs/gazebo_ros_diff_drive_lin_vel.gif)
 
----
-## 가제보 시뮬레이션 로봇 만들기
-https://bitbucket.org/theconstructcore/box_bot/src/galactic/
-
-tank_gazebo
-
-ros2 pkg create tank_gazebo --build-type ament_cmake --dependencies ament_cmake rclcpp rclpy
-
-ros2 pkg create tank_description --build-type ament_cmake --dependencies ament_cmake urdf
+<!-- --- -->
+<!-- ## 가제보 시뮬레이션 로봇 만들기 -->
 
 
-colcon build --symlink-install --packages-ignore dolly_ignition
+<!-- tank_gazebo -->
 
-# Initial Setup ROS and colcon
-# https://docs.ros.org/en/foxy/Tutorials/Colcon-Tutorial.html#prerequisites
+<!-- ros2 pkg create tank_gazebo --build-type ament_cmake --dependencies ament_cmake rclcpp rclpy -->
 
-source /opt/ros/foxy/setup.bash
-# Only compile certian packages
-colcon build --symlink-install --packages-select tank_gazebo tank_description
-# Compile everything if you want
-colcon build --symlink-install
-source install/setup.bash
-
-# Install Dependencies
-# https://docs.ros.org/en/dashing/Installation/Linux-Development-Setup.html#install-dependencies-using-rosdep
-sudo rosdep init
-rosdep update
-# rosdep install --from-paths src --ignore-src --rosdistro foxy -y --skip-keys "console_bridge fastcdr fastrtps libopensplice67 libopensplice69 rti-connext-dds-5.3.1 urdfdom_headers"
-rosdep install --from-paths src --ignore-src --rosdistro foxy -y --skip-keys "console_bridge fastcdr fastrtps libopensplice67 libopensplice69 rti-connext-dds-5.3.1 urdfdom_headers"
+<!-- ros2 pkg create tank_description --build-type ament_cmake --dependencies ament_cmake urdf -->
 
 
-# Launch single liner
-ros2 launch tank_gazebo tank_launch.py
-ros2 launch tank_gazebo multi_tank_launch.py
+<!-- colcon build --symlink-install --packages-ignore dolly_ignition -->
 
-# If you want separted
-ros2 launch tank_gazebo start_world_launch.py
-ros2 launch tank_description start_world_launch.py
+<!-- # Initial Setup ROS and colcon -->
+<!-- # https://docs.ros.org/en/foxy/Tutorials/Colcon-Tutorial.html#prerequisites -->
 
-ros2 topic list
+<!-- source /opt/ros/foxy/setup.bash -->
+<!-- # Only compile certian packages -->
+<!-- colcon build --symlink-install --packages-select tank_gazebo tank_description -->
+<!-- # Compile everything if you want -->
+<!-- colcon build --symlink-install -->
+<!-- source install/setup.bash -->
 
-ros2 topic pub /tank/cmd_vel
-
-ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=/tank/cmd_vel
-
-ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=/tank2/cmd_vel
-ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=/tank2/cmd_vel
-
-ros2 run tf2_tools view_frames.py
-
-###########
+<!-- # Install Dependencies -->
+<!-- # https://docs.ros.org/en/dashing/Installation/Linux-Development-Setup.html#install-dependencies-using-rosdep -->
+<!-- sudo rosdep init -->
+<!-- rosdep update -->
+<!-- # rosdep install --from-paths src --ignore-src --rosdistro foxy -y --skip-keys "console_bridge fastcdr fastrtps libopensplice67 libopensplice69 rti-connext-dds-5.3.1 urdfdom_headers" -->
+<!-- rosdep install --from-paths src --ignore-src --rosdistro foxy -y --skip-keys "console_bridge fastcdr fastrtps libopensplice67 libopensplice69 rti-connext-dds-5.3.1 urdfdom_headers" -->
 
 
-This part is missing libraries that cannot be satisfied with any available stage-packages known to snapcraft:
-- libnddsc.so
-- libnddscore.so
-- libnddscpp.so
-- librosidl_typesupport_connext_c.so
-- librosidl_typesupport_connext_cpp.so
-- librticonnextmsgcpp.so
-- usr/lib/x86_64-linux-gnu/libpsm_infinipath.so.1
-These dependencies can be satisfied via additional parts or content sharing. Consider validating configured filesets if this dependency was built.
+<!-- # Launch single liner -->
+<!-- ros2 launch tank_gazebo tank_launch.py -->
+<!-- ros2 launch tank_gazebo multi_tank_launch.py -->
+
+<!-- # If you want separted -->
+<!-- ros2 launch tank_gazebo start_world_launch.py -->
+<!-- ros2 launch tank_description start_world_launch.py -->
+
+<!-- ros2 topic list -->
+
+<!-- ros2 topic pub /tank/cmd_vel -->
+
+<!-- ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=/tank/cmd_vel -->
+
+<!-- ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=/tank2/cmd_vel -->
+<!-- ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=/tank2/cmd_vel -->
+
+<!-- ros2 run tf2_tools view_frames.py -->
+
+<!-- ########### -->
+
+
+<!-- This part is missing libraries that cannot be satisfied with any available stage-packages known to snapcraft: -->
+<!-- - libnddsc.so -->
+<!-- - libnddscore.so -->
+<!-- - libnddscpp.so -->
+<!-- - librosidl_typesupport_connext_c.so -->
+<!-- - librosidl_typesupport_connext_cpp.so -->
+<!-- - librticonnextmsgcpp.so -->
+<!-- - usr/lib/x86_64-linux-gnu/libpsm_infinipath.so.1 -->
+<!-- These dependencies can be satisfied via additional parts or content sharing. Consider validating configured filesets if this dependency was built. -->
 
 
 
----
-turtle3 slam
+<!-- --- -->
+<!-- turtle3 slam -->
 
-https://www.theconstructsim.com/ros2-how-to-2-create-a-ros2-action-server/
+<!-- https://www.theconstructsim.com/ros2-how-to-2-create-a-ros2-action-server/ -->
 
----
+<!-- --- -->
 
-ROS 2 빌드툴 Colcon
-
-ROS 2 워크스페이스 만들기
-
-파이썬 패키지 만들기
-
-C++ 패키지 만들기
-
-Publisher and Subscriber
-
-Client and Server
-
-Launch File
-
-
-![](https://roboticsbackend.com/wp-content/uploads/2020/10/ros2_multiple_machines-1024x554.png)
-
-ROS_DOMAIN_ID=5
-
-printenv
-
-
-참고
- - https://www.udemy.com/course/ros2-for-beginners/?referralCode=18C75F99C1A868F0A7AB
+<!-- 참고 -->
+<!--  - https://www.udemy.com/course/ros2-for-beginners/?referralCode=18C75F99C1A868F0A7AB -->
 
 
 ## Raspberry Pi 3에 ROS2 설치
@@ -441,9 +421,9 @@ printenv
  - SD카드 32GB
 
 
-WIFI 네트워크 설정
+### WIFI 네트워크 설정
 
- /etc/netplan/50-cloud-init.yaml
+/etc/netplan/50-cloud-init.yaml
 ```
  version: 2
 ethernets:
@@ -489,7 +469,6 @@ Mem:           906M        144M        553M        6.6M        208M        740M
 Swap:          1.0G          0B        1.0G
 ```
 
-
 ```
 sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key  -o /usr/share/keyrings/ros-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(source /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
@@ -500,127 +479,119 @@ sudo apt update
 sudo apt install ros-foxy-ros-base -y
 ```
 
-base 패키지는 GUI 툴이 설치 안된다.
+base 패키지는 GUI툴이 포함되어 있지 않다.
 
 ```
 echo "source /opt/ros/foxy/setup.bash" >>~/.bashrc
 ```
 
-테스트 패키지 설치
+### 원격 접속하기
+
+ - 아이디 ubuntu
+ - 암호: ubuntu
 
 ```
-sudo apt install ros-foxy-demo-nodes-cpp
-sudo apt install ros-foxy-demo-nodes-py
+ssh ubuntu@192.168.88.??
 ```
 
-```
-ros2 run demo_nodes_py listener
-```
+<!-- https://www.theconstructsim.com/tag/ros2 -->
 
-```
-ros2 run demo_nodes_cpp talker
-```
+<!-- ## ROS2 패키지 만들기 -->
+<!-- C++ -->
 
-----
-
-https://www.theconstructsim.com/tag/ros2
-
-## ROS2 패키지 만들기
-C++
-
-source /opt/ros/foxy/setup.bash
+<!-- source /opt/ros/foxy/setup.bash -->
 
 
-ros2 pkg create <package_name> --build-type <build_type> --dependencies <dependencies_separated_by_single_space>
+<!-- ros2 pkg create <package_name> --build-type <build_type> --dependencies <dependencies_separated_by_single_space> -->
 
 
-ros2_ws/src
-ros2 pkg create ros2_hello_cpp_pkg --build-type ament_cmake --dependencies rclcpp
+<!-- ros2_ws/src -->
+<!-- ros2 pkg create ros2_hello_cpp_pkg --build-type ament_cmake --dependencies rclcpp -->
 
-cd ros2_hello_cpp_pkg/src
+<!-- cd ros2_hello_cpp_pkg/src -->
 
-touch ros2_hello.cpp
+<!-- touch ros2_hello.cpp -->
 
-#include "rclcpp/rclcpp.hpp"
+<!-- #include "rclcpp/rclcpp.hpp" -->
 
-int main(int argc, char *argv[]) {
-  rclcpp::init(argc, argv);
-  auto node = rclcpp::Node::make_shared("Hello");
+<!-- int main(int argc, char *argv[]) { -->
+<!--   rclcpp::init(argc, argv); -->
+<!--   auto node = rclcpp::Node::make_shared("Hello"); -->
 
-  RCLCPP_INFO(node->get_logger(),
-              "Hello ROS 2 World");
+<!--   RCLCPP_INFO(node->get_logger(), -->
+<!--               "Hello ROS 2 World"); -->
 
-  rclcpp::shutdown();
-  return 0;
-}
+<!--   rclcpp::shutdown(); -->
+<!--   return 0; -->
+<!-- } -->
 
 
 
-CMakeLists.txt
-```
-add_executable(hello src/ros2_hello.cpp)
-ament_target_dependencies(hello rclcpp)
+<!-- CMakeLists.txt -->
+<!-- ``` -->
+<!-- add_executable(hello src/ros2_hello.cpp) -->
+<!-- ament_target_dependencies(hello rclcpp) -->
 
-install(TARGETS
-    hello
-    DESTINATION lib/${PROJECT_NAME}
-)
-```
+<!-- install(TARGETS -->
+<!--     hello -->
+<!--     DESTINATION lib/${PROJECT_NAME} -->
+<!-- ) -->
+<!-- ``` -->
 
-컴파일
+<!-- 컴파일 -->
 
-cd /home/user/ros2_ws
+<!-- cd /home/user/ros2_ws -->
 
-colcon build --symlink-install
+<!-- colcon build --symlink-install -->
 
-source install/setup.sh
+<!-- source install/setup.sh -->
 
-ros2 run ros2_hello_cpp_pkg hello
-
-
-python 버전
-
-```
-
-import rclpy
-from rclpy.node import Node
-from box_bot_perception.dummy_class import Dummy
-from std_msgs.msg import String
+<!-- ros2 run ros2_hello_cpp_pkg hello -->
 
 
-class MinimalPublisher(Node):
+<!-- python 버전 -->
 
-    def __init__(self):
-        super().__init__('minimal_publisher')
-        self.dummy_obj = Dummy()
-        self.publisher_ = self.create_publisher(String, '/box_bot_talker', 10)
-        timer_period = 0.5  # seconds
-        self.timer = self.create_timer(timer_period, self.timer_callback)
+<!-- ``` -->
 
-
-    def timer_callback(self):
-        msg = String()
-        talk_text = self.dummy_obj.talk()
-        msg.data = "Dummy Said:"+str(talk_text)
-        self.publisher_.publish(msg)
-        self.get_logger().info('Publishing: "%s"' % msg.data)
+<!-- import rclpy -->
+<!-- from rclpy.node import Node -->
+<!-- from box_bot_perception.dummy_class import Dummy -->
+<!-- from std_msgs.msg import String -->
 
 
+<!-- class MinimalPublisher(Node): -->
 
-def main(args=None):
-    rclpy.init(args=args)
-
-    minimal_publisher = MinimalPublisher()
-
-    rclpy.spin(minimal_publisher)
-
-    # Destroy the node explicitly
-    # (optional - otherwise it will be done automatically
-    # when the garbage collector destroys the node object)
-    minimal_publisher.destroy_node()
-    rclpy.shutdown()
+<!--     def __init__(self): -->
+<!--         super().__init__('minimal_publisher') -->
+<!--         self.dummy_obj = Dummy() -->
+<!--         self.publisher_ = self.create_publisher(String, '/box_bot_talker', 10) -->
+<!--         timer_period = 0.5  # seconds -->
+<!--         self.timer = self.create_timer(timer_period, self.timer_callback) -->
 
 
-if __name__ == '__main__':
-    main()
-```
+<!--     def timer_callback(self): -->
+<!--         msg = String() -->
+<!--         talk_text = self.dummy_obj.talk() -->
+<!--         msg.data = "Dummy Said:"+str(talk_text) -->
+<!--         self.publisher_.publish(msg) -->
+<!--         self.get_logger().info('Publishing: "%s"' % msg.data) -->
+
+
+
+<!-- def main(args=None): -->
+<!--     rclpy.init(args=args) -->
+
+<!--     minimal_publisher = MinimalPublisher() -->
+
+<!--     rclpy.spin(minimal_publisher) -->
+
+<!--     # Destroy the node explicitly -->
+<!--     # (optional - otherwise it will be done automatically -->
+<!--     # when the garbage collector destroys the node object) -->
+<!--     minimal_publisher.destroy_node() -->
+<!--     rclpy.shutdown() -->
+
+
+<!-- if __name__ == '__main__': -->
+<!--     main() -->
+<!-- ``` -->
