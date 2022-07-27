@@ -61,9 +61,10 @@ source install/setup.bash
 ros2 run my_package my_node
 ```
 
-#### 해보기: cmake를 이용하여 my_cpp_package를 패키지 만들어보자.
+#### 해보기: c++ 노드 패키지 작성
+ - c++ 코드로 구현된 my_cpp_package와 my_node 만들고, 그 노드를 실행해보자.
  - 힌트: 패키지 만들기 할때 ament_cmake 사용
-
+ - 참고: https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html
 
 ----
 
