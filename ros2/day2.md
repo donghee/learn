@@ -22,45 +22,17 @@
 
 ## ROS 노드 만들기
 
-워크스페이스 만들기
-```
-mkdir -p ~/ros2_ws/src
-cd ~/ros2_ws
-```
+### 새로운 노드 만들기
 
 빌드 도구 colcon 설치하기
 ```
 sudo apt install python3-colcon-common-extensions
 ```
 
-**패키지 빌드하기**
-
-1. examples 패키지 워크스페이스의 src 디렉토리 아래에 다운로드
+#### 패키지 만들기
 ```
-git clone https://github.com/ros2/examples src/examples -b foxy
-```
-2. examples 패키지 빌드
-```
-colcon build --symlink-install
-```
-
-빌드한 패키지 실행
- 1. 환경 설정
-```
-. install/setup.bash
-```
- 2. 노드 실행
-구독 노드 실행
-```
-ros2 run examples_rclcpp_minimal_subscriber subscriber_member_function
-```
-출판 노드 실행
-```
-ros2 run examples_rclcpp_minimal_publisher publisher_member_function
-```
-### 나만의 패키지 만들기
-```
-cd ~/dev_ws/src
+mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws/src
 ```
 
 my_package 이름의 패키지 안에 my_node 이름 노드를 만들어 보자.
@@ -68,28 +40,165 @@ my_package 이름의 패키지 안에 my_node 이름 노드를 만들어 보자.
 #ros2 pkg create --build-type ament_cmake my_package # my_package만 만들경우
 ros2 pkg create --build-type ament_python --node-name my_node my_package
 ```
-my_package 빌드하기
-```
-colcon build --packages-select my_package
 
+#### 패키지 빌드
 ```
+cd ~/ros2_ws
+colcon build --packages-select my_package
+```
+
+#### 패키지 노드 실행
+
 환경 변수 설정
 ```
 cd ~/ros2_ws
 source install/setup.bash
 ```
-my_node 실행하기
+
+노드 실행
 ```
 ros2 run my_package my_node
 ```
 
+#### 해보기: 1초마다 출력
+ - ????
 
-### Pub Sub 노드 만들기
 
+----
+
+### 새로운 노드 만들기: Pub Sub 노드 만들기
+
+#### 패키지 만들기
 ```
+cd ~/ros2_ws/src
 ros2 pkg create --build-type ament_python py_pubsub
 ```
----
+
+#### 노드 코드 작성
+
+~/ros2_ws/src/py_pubsub/py_pubsub/minimal_publisher.py
+
+```
+import rclpy
+from rclpy.node import Node
+
+from std_msgs.msg import String
+
+class MinimalPublisher(Node):
+
+    def __init__(self):
+        super().__init__('minimal_publisher')
+        self.publisher_ = self.create_publisher(String, 'topic', 10)
+        timer_period = 0.5  # seconds
+        self.timer = self.create_timer(timer_period, self.timer_callback)
+        self.i = 0
+
+    def timer_callback(self):
+        msg = String()
+        msg.data = 'Hello World: %d' % self.i
+        self.publisher_.publish(msg)
+        self.get_logger().info('Publishing: "%s"' % msg.data)
+        self.i += 1
+
+
+def main(args=None):
+    rclpy.init(args=args)
+
+    minimal_publisher = MinimalPublisher()
+
+    rclpy.spin(minimal_publisher)
+
+    minimal_publisher.destroy_node()
+    rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
+```
+
+~/ros2_ws/src/py_pubsub/py_pubsub/minimal_subscriber.py
+
+```
+import rclpy
+from rclpy.node import Node
+
+from std_msgs.msg import String
+
+
+class MinimalSubscriber(Node):
+
+    def __init__(self):
+        super().__init__('minimal_subscriber')
+        self.subscription = self.create_subscription(
+            String,
+            'topic',
+            self.listener_callback,
+            10)
+        self.subscription  # prevent unused variable warning
+
+    def listener_callback(self, msg):
+        self.get_logger().info('I heard: "%s"' % msg.data)
+
+
+def main(args=None):
+    rclpy.init(args=args)
+
+    minimal_subscriber = MinimalSubscriber()
+
+    rclpy.spin(minimal_subscriber)
+
+    minimal_subscriber.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+```
+
+#### 패키지 노드 실행 위치지정
+
+~/ros2_ws/src/py_pubsub/setup.py 의 entry_points에 다음줄 추가
+
+```
+entry_points={
+        'console_scripts': [
+                'talker = py_pubsub.minimal_publisher:main',
+                'listener = py_pubsub.minimal_subscriber:main',
+        ],
+},
+```
+#### 패키지 빌드
+```
+cd ~/ros2_ws
+rosdep install -i --from-path src --rosdistro foxy -y
+```
+
+```
+colcon build --packages-select py_pubsub
+```
+
+```
+source install/setup.bash
+```
+
+#### 패키지 노드 실행
+
+```
+ros2 run py_pubsub talker
+```
+
+```
+ros2 run py_pubsub listener
+```
+
+#### 해보기: 1초마다 출력
+ - ????
+
+
+
+
+----
+
+Gazebo 실습
 
 https://classic.gazebosim.org/tutorials?tut=ros2_installing&cat=connect_ros
 
