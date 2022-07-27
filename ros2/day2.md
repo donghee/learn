@@ -332,9 +332,7 @@ gazebo --verbose /opt/ros/foxy/share/gazebo_plugins/worlds/gazebo_ros_diff_drive
 
 1. 월드 파일 읽어 보기
 
-```
-gedit /opt/ros/foxy/share/gazebo_plugins/worlds/gazebo_ros_diff_drive_demo.world
-```
+/opt/ros/foxy/share/gazebo_plugins/worlds/gazebo_ros_diff_drive_demo.world
 
 월드 파일에서 `gazebo_ros_pkgs` 확인
 
@@ -345,16 +343,15 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 
 ![](https://github.com/osrf/gazebo_tutorials/raw/master/ros2_installing/figs/gazebo_ros_diff_drive_lin_vel.gif)
 
+
 <!-- --- -->
 <!-- ## 가제보 시뮬레이션 로봇 만들기 -->
-
 
 <!-- tank_gazebo -->
 
 <!-- ros2 pkg create tank_gazebo --build-type ament_cmake --dependencies ament_cmake rclcpp rclpy -->
 
 <!-- ros2 pkg create tank_description --build-type ament_cmake --dependencies ament_cmake urdf -->
-
 
 <!-- colcon build --symlink-install --packages-ignore dolly_ignition -->
 
@@ -397,7 +394,6 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 
 <!-- ########### -->
 
-
 <!-- This part is missing libraries that cannot be satisfied with any available stage-packages known to snapcraft: -->
 <!-- - libnddsc.so -->
 <!-- - libnddscore.so -->
@@ -408,18 +404,10 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 <!-- - usr/lib/x86_64-linux-gnu/libpsm_infinipath.so.1 -->
 <!-- These dependencies can be satisfied via additional parts or content sharing. Consider validating configured filesets if this dependency was built. -->
 
-
-
-<!-- --- -->
-<!-- turtle3 slam -->
-
 <!-- https://www.theconstructsim.com/ros2-how-to-2-create-a-ros2-action-server/ -->
-
-<!-- --- -->
 
 <!-- 참고 -->
 <!--  - https://www.udemy.com/course/ros2-for-beginners/?referralCode=18C75F99C1A868F0A7AB -->
-
 
 ## Raspberry Pi 3에 ROS2 설치
 
@@ -427,7 +415,6 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
  - [Ubuntu 20.04: Raspberry Pi Generic (64-bit ARM) preinstalled server image](https://cdimage.ubuntu.com/releases/20.04/release/)
  - balenaEther
  - SD카드 32GB
-
 
 ### WIFI 네트워크 설정
 
