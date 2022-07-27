@@ -1,10 +1,8 @@
-# ROS 2 Programming
+# ROS 2 Programming Day 2
 
  - 수업자료: https://learn.dronemap.io/ros-workshop/ros2/
  - 준비물: ubuntu 20.04 리눅스가 설치된 컴퓨터
  - 참고책: ROS 2로 시작하는 로봇 프로그래밍
-
-----
 
 ## 수업 소개
 

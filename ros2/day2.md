@@ -1,14 +1,63 @@
+# ROS 2 Programming Day 2
 
-둘째날
+ - 수업자료: https://learn.dronemap.io/ros-workshop/ros2/
+ - 준비물: ubuntu 20.04 리눅스가 설치된 컴퓨터
+ - 참고책: ROS 2로 시작하는 로봇 프로그래밍
 
-ROS 기본 프로그래밍
+## 수업 소개
+
+-   목표: 나만의 ROS 노드 만들고, 시뮬레이터를 이용하여 노드를 프로그래밍 할 수 있다.
+-   교재: [https://learn.dronemap.io/ros-workshop/ros2/#/day1](https://learn.dronemap.io/ros-workshop/ros2/#/day2)
+-   코치: 박동희 dongheepark@gmail.com
+
+1. ROS 기본 프로그래밍
  - ROS를 자율 주행 로봇을 제어하는 ROS 노드 만들기
  - 시뮬레이터 사용하기
  - 컴퓨터 비전 소개 및 카메라 사용 실습
-
-자율 주행 소프트웨어 실습
+2. 자율 주행 소프트웨어 실습
  - SLAM 소개
  - ROS와 시뮬레이터를 이용하여 SLAM 실습
+
+---
+
+## ROS 노드 만들기
+
+워크스페이스 만들기
+```
+mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws
+```
+
+No 빌드 도구 colcon 설치하기
+```
+sudo apt install python3-colcon-common-extensions
+```
+
+**패키지 빌드하기**
+
+1. examples 패키지 워크스페이스의 src 디렉토리 아래에 다운로드
+```
+git clone https://github.com/ros2/examples src/examples -b foxy
+```
+2. examples 패키지 빌드
+```
+colcon build --symlink-install
+```
+
+빌드한 패키지 실행
+ 1. 환경 설정
+```
+. install/setup.bash
+```
+ 2. 노드 실행
+구독 노드 실행
+```
+ros2 run examples_rclcpp_minimal_subscriber subscriber_member_function
+```
+출판 노드 실행
+```
+ros2 run examples_rclcpp_minimal_publisher publisher_member_function
+```
 
 ---
 
