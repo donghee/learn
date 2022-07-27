@@ -7,7 +7,7 @@
 ## 수업 소개
 
 -   목표: 나만의 ROS 노드 만들고, 시뮬레이터를 이용하여 노드를 프로그래밍 할 수 있다.
--   교재: [https://learn.dronemap.io/ros-workshop/ros2/#/day1](https://learn.dronemap.io/ros-workshop/ros2/#/day2)
+-   교재: [https://learn.dronemap.io/ros-workshop/ros2/#/day2](https://learn.dronemap.io/ros-workshop/ros2/#/day2)
 -   코치: 박동희 dongheepark@gmail.com
 
 1. ROS 기본 프로그래밍
@@ -37,9 +37,10 @@ cd ~/ros2_ws/src
 
 my_package 이름의 패키지 안에 my_node 이름 노드를 만들어 보자.
 ```
-#ros2 pkg create --build-type ament_cmake my_package # my_package만 만들경우
+#ros2 pkg create --build-type ament_python my_package # my_package만 만들경우
 ros2 pkg create --build-type ament_python --node-name my_node my_package
 ```
+ - python package(ament_python) ? cmake 패키지(ament_cmake)
 
 #### 패키지 빌드
 ```
@@ -60,8 +61,8 @@ source install/setup.bash
 ros2 run my_package my_node
 ```
 
-#### 해보기: 1초마다 출력
- - ????
+#### 해보기: cmake를 이용하여 my_cpp_package를 패키지 만들어보자.
+ - 힌트: 패키지 만들기 할때 ament_cmake 사용
 
 
 ----
@@ -190,7 +191,7 @@ ros2 run py_pubsub talker
 ros2 run py_pubsub listener
 ```
 
-#### 해보기: 1초마다 출력
+#### 해보기:
  - ????
 
 
