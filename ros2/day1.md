@@ -183,10 +183,10 @@ ROS 2 환경 구분을 위한 도메인 아이디 설정
 
 자신의 도메인 아이디를 ~/.bashrc에 추가 한다. 
 ```
-export ROS_DOMAIN_ID=1
-export ROS_DOMAIN_ID=10 # 강사
-export ROS_DOMAIN_ID=20 # ?
-export ROS_DOMAIN_ID=30 #
+export ROS_DOMAIN_ID=1 # 강사
+export ROS_DOMAIN_ID=10
+export ROS_DOMAIN_ID=20
+export ROS_DOMAIN_ID=30
 export ROS_DOMAIN_ID=40
 export ROS_DOMAIN_ID=50
 export ROS_DOMAIN_ID=60
