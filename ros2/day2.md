@@ -58,6 +58,30 @@ ros2 run examples_rclcpp_minimal_subscriber subscriber_member_function
 ```
 ros2 run examples_rclcpp_minimal_publisher publisher_member_function
 ```
+### 나만의 패키지 만들기
+```
+cd ~/dev_ws/src
+```
+
+my_package 이름의 패키지 안에 my_node 이름 노드를 만들어 보자.
+```
+#ros2 pkg create --build-type ament_cmake my_package # my_package만 만들경우
+ros2 pkg create --build-type ament_python --node-name my_node my_package
+```
+my_package 빌드하기
+```
+colcon build --packages-select my_package
+
+```
+환경 변수 설정
+```
+cd ~/ros2_ws
+source install/setup.bash
+```
+my_node 실행하기
+```
+ros2 run my_package my_node
+```
 
 ---
 
