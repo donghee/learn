@@ -40,7 +40,8 @@ my_package 이름의 패키지 안에 my_node 이름 노드를 만들어 보자.
 #ros2 pkg create --build-type ament_python my_package # my_package만 만들경우
 ros2 pkg create --build-type ament_python --node-name my_node my_package
 ```
- - python package(ament_python) ? cmake 패키지(ament_cmake)
+ - python package(ament_python) ? cmake 패키지(ament_cmake) --dependencies 의존패키지
+ - 의존 패키지 추가하기: ros2 pkg create --build-type ament_cmake --node-name my_node my_cpp_package --dependencies rclcpp
 
 #### 패키지 빌드
 ```
@@ -307,6 +308,8 @@ ros2 run nav2_map_server map_saver_cli -f map
 ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=true map:=./map.yaml
 ```
 
+![](https://i.imgur.com/8TLNJRc.png)
+
 #### Gazebo 사용하기
 
 1. 차동 주행 월드 로드
@@ -498,7 +501,6 @@ sudo apt install ros-foxy-ros-base -y
 ```
 
 base 패키지는 GUI 툴이 설치 안된다.
-
 
 ```
 echo "source /opt/ros/foxy/setup.bash" >>~/.bashrc
