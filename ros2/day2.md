@@ -197,8 +197,11 @@ ros2 run py_pubsub listener
 
 #### 해보기: c++ 노드 작성
  - c++로 작성된 cpp_pubsub listener를 만들어서 py_pubsub talker가 보내는 토픽을 받아 보자.
+ - ros2 run cpp_pubsub listener
  - 참고: https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html#write-the-subscriber-node
  - rqt를 이용하여 토픽을 모니터링 해보자.
+
+![](https://i.imgur.com/ARCF7vx.png)
 
 ----
 
