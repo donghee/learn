@@ -209,9 +209,8 @@ ros2 run py_pubsub listener
 ## 시뮬레이션
 Gazebo를 사용해보자!
 
-https://classic.gazebosim.org/tutorials?tut=ros2_installing&cat=connect_ros
-https://ubuntu.com/blog/simulate-the-turtlebot3
-
+<!-- https://classic.gazebosim.org/tutorials?tut=ros2_installing&cat=connect_ros -->
+<!-- https://ubuntu.com/blog/simulate-the-turtlebot3 -->
 
 ### 시뮬레이터 Gazebo
 
