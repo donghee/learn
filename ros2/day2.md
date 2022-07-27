@@ -328,7 +328,7 @@ ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=true map:
 gazebo --verbose /opt/ros/foxy/share/gazebo_plugins/worlds/gazebo_ros_diff_drive_demo.world
 ```
 
-![]https://github.com/osrf/gazebo_tutorials/raw/master/ros2_installing/figs/gazebo_ros_diff_drive.png)
+![](https://github.com/osrf/gazebo_tutorials/raw/master/ros2_installing/figs/gazebo_ros_diff_drive.png)
 
 1. 월드 파일 읽어 보기
 
@@ -342,7 +342,6 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 ```
 
 ![](https://github.com/osrf/gazebo_tutorials/raw/master/ros2_installing/figs/gazebo_ros_diff_drive_lin_vel.gif)
-
 
 <!-- --- -->
 <!-- ## 가제보 시뮬레이션 로봇 만들기 -->
@@ -409,7 +408,7 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 <!-- 참고 -->
 <!--  - https://www.udemy.com/course/ros2-for-beginners/?referralCode=18C75F99C1A868F0A7AB -->
 
-## Raspberry Pi 3에 ROS2 설치
+## Raspberry Pi 3에 ROS 2 설치
 
 준비물
  - [Ubuntu 20.04: Raspberry Pi Generic (64-bit ARM) preinstalled server image](https://cdimage.ubuntu.com/releases/20.04/release/)
