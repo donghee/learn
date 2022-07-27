@@ -296,9 +296,11 @@ ros2 run turtlebot3_teleop teleop_keyboard
 ros2 run tf2_ros tf2_echo base_footprint map
 ```
 
+프레임 좌표 연결 확인
+```
 ros2 topic echo /odom
-
 ros2 run tf2_tools view_frames.py
+```
 
 맵 저장
 ```
