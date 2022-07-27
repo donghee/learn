@@ -454,7 +454,7 @@ ros2 topic pub --once /turtle1/cmd_vel geometry_msgs/msg/Twist '{linear: {x: 2.0
 
 ### Turtlesim 메시지 정보
 ```
-$ ros2 interface show geometry_msgs/Twist
+$ ros2 interface show geometry_msgs/msg/Twist
 geometry_msgs/Vector3 linear
   float64 x
   float64 y
