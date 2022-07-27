@@ -28,7 +28,7 @@ mkdir -p ~/ros2_ws/src
 cd ~/ros2_ws
 ```
 
-No 빌드 도구 colcon 설치하기
+빌드 도구 colcon 설치하기
 ```
 sudo apt install python3-colcon-common-extensions
 ```
@@ -84,6 +84,11 @@ ros2 run my_package my_node
 ```
 
 
+### Pub Sub 노드 만들기
+
+```
+ros2 pkg create --build-type ament_python py_pubsub
+```
 ---
 
 https://classic.gazebosim.org/tutorials?tut=ros2_installing&cat=connect_ros
