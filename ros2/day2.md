@@ -207,7 +207,7 @@ ros2 run py_pubsub listener
 ----
 
 ## 시뮬레이션
-Gazebo를 사용해보자!
+Gazebo 시뮬레이터를 이용하여, SLAM과 자율 주행을 테스트 해보자.
 
 <!-- https://classic.gazebosim.org/tutorials?tut=ros2_installing&cat=connect_ros -->
 <!-- https://ubuntu.com/blog/simulate-the-turtlebot3 -->
