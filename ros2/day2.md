@@ -321,7 +321,7 @@ ros2 topic pub /cmd_vel geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 ros2 topic pub /cmd_vel geometry_msgs/Twist '{linear: {x: 0.0}}' -1
 ```
 
-맵과 로봇 프레임 좌표 연결
+맵과 로봇 프레임 좌표 연결 확인
 ```
 ros2 run tf2_ros tf2_echo base_footprint map
 ```
