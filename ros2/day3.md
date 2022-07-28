@@ -1,18 +1,275 @@
-셋째날
+# ROS 2 Programming Day 2
 
-자율 주행 하드웨어 구성
+ - 수업자료: https://learn.dronemap.io/ros-workshop/ros2/
+ - 준비물: ubuntu 20.04 리눅스가 설치된 컴퓨터
+ - 참고책: ROS 2로 시작하는 로봇 프로그래밍
+
+## 수업 소개
+
+-   목표: 자율 주행에 필요한 주변장치를 제어하고, 자율 주행 프로젝트를 할 수 있다.
+-   교재: [https://learn.dronemap.io/ros-workshop/ros2/#/day3](https://learn.dronemap.io/ros-workshop/ros2/#/day3)
+-   코치: 박동희 dongheepark@gmail.com
+
+1. 자율 주행 하드웨어 구성
  - 자율 주행 하드웨어(탱크) 소개
  - 탱크 프레임 조립, 센서 및 모터 드라이버 하드웨어 구성
  - ROS 를 이용하여 센서(Lidar, 거리센서), 모터 드라이버(L293D)  제어
 
-자율 주행 실습
+2. 자율 주행 실습
  - 조립한 자율 주행 탱크에 자율 주행 소프트웨어(ROS 노드) 적용
  - 주행 테스트
+ - 자율 프로젝트
+
+## 자율 주행 하드웨어 소개
+
+![](https://i.imgur.com/QMcDV3r.jpg)
+
+![](https://i.imgur.com/lihXEDr.jpg)
+
+![](https://i.imgur.com/qcDHWaj.jpg)
+
+ - L298n H-Bridge
+ - MPU9250 IMU
+ - Raspberry Pi Camera V1
+ - RPLIDAR A1
+ - 몸체 프레임
+ - DC 모터
+ - 3S LiPo 배터리
+ - DCDC 컨버터
+ - Raspberry Pi 3
+ - Raspberry Pi용 5V 어댑터
+
+## 탱크 주변 장치 제어하기
+
+### L298N
+
+l298n 연결 확인
+
+<!--
 ```
+sudo apt install python3-lgpio
+```
+-->
+
+python3 rpi_l298n_test.py
+
+```
+import RPi.GPIO as GPIO
+import time
+
+GPIO.setmode(GPIO.BCM)
+
+GPIO.setup(12, GPIO.OUT)
+GPIO.setup(21, GPIO.OUT)
+GPIO.setup(20, GPIO.OUT)
+GPIO.setup(23, GPIO.OUT)
+GPIO.setup(24, GPIO.OUT)
+GPIO.setup(13, GPIO.OUT)
+
+# forward
+GPIO.output(12, GPIO.HIGH)
+GPIO.output(13, GPIO.HIGH)
+
+GPIO.output(21, GPIO.HIGH)
+GPIO.output(20, GPIO.LOW)
+GPIO.output(23, GPIO.HIGH)
+GPIO.output(24, GPIO.LOW)
+
+time.sleep(10)
+
+GPIO.output(12, GPIO.LOW)
+GPIO.output(13, GPIO.LOW)
+
+# backward
+GPIO.output(12, GPIO.HIGH)
+GPIO.output(13, GPIO.HIGH)
+
+GPIO.output(21, GPIO.LOW)
+GPIO.output(20, GPIO.HIGH)
+GPIO.output(23, GPIO.LOW)
+GPIO.output(24, GPIO.HIGH)
+
+time.sleep(10)
+
+GPIO.output(12, GPIO.LOW)
+GPIO.output(13, GPIO.LOW)
+```
+
+#### 해보기: 회전
+ - 1초 동안 좌우 회전을 시켜보자.
+ 
+### IMU
+
+Inertial Measurement Unit 관성 측정 장치
+ - 가속도 센서(Acceleration) 
+ - 각속도 센서(Gyroscope)
+ - 지자기 센서(Magnetometer)
+
+Axis Orientation
+
+x forward, y left, z up 
+
+![](https://velog.velcdn.com/images%2Fleesy970906%2Fpost%2F13213a98-13c4-4d00-9968-f461bffd90b0%2FScreen%20Shot%202021-04-08%20at%204.40.12%20PM.png)
+
+right hand rule
+![](https://velog.velcdn.com/images%2Fleesy970906%2Fpost%2Fe6042f9c-7c3b-4878-a288-8dca47ab6a33%2FScreen%20Shot%202021-04-08%20at%204.42.02%20PM.png)
+
+참고: https://www.ros.org/reps/rep-0103.html
+
+https://github.com/Schnilz/mpu9250
+
+#### 해보기
+ - mpu9250_calibration.py를 실행하여, imu의 roll, pitch, yaw 방향을 ROS의 axis orientaton과 right hand rule에 맞게 mpu9250 모듈을 로봇에 부착하자.
+ - mpu9250_calibration.py를 이용하여, 센서값을 캘리브레이션 하여, gyro, accel, mag 센서의 bias값을 구하자.
+
+
+### Raspberry Pi Camera 사용하기
+
+<!--
+libraspberrypi-bin libraspberrypi-dev 설치
+```
+sudo apt autoremove --purge libgles2-mesa-dev mesa-common-dev
+sudo add-apt-repository ppa:ubuntu-pi-flavour-makers/ppa
+sudo apt install libraspberrypi-bin libraspberrypi-dev
+```
+
+raspicam2_node
+
+https://github.com/christianrauch/raspicam2_node
+
+```
+cd ~/ros2_ws/src
+git clone https://github.com/christianrauch/raspicam2_node
+cd ~/ros2_ws
+colcon build
+```
+
+video 그룹에 유저 추가후 리부팅
+```
+sudo usermod -a -G video $USER
+```
+
+노드 실행
+```
+ros2 run raspicam2 raspicam2_node --ros-args --params-file `ros2 pkg prefix raspicam2`/share/raspicam2/cfg/params.yaml
+```
+-->
+
+
+```
+wget https://archive.raspberrypi.org/debian/pool/main/r/raspi-config/raspi-config_20200601_all.deb -P /tmp
+```
+
+```
+sudo dpkg -i /tmp/raspi-config_20200601_all.deb
+```
+
+```
+sudo apt --fix-broken install
+```
+
+카메라 활성화
+
+```
+sudo mount /dev/mmcblk0p1 /boot
+```
+
+```
+sudo raspi-config
+
+# 5. Interface Options -> P1 Camera -> Enable camera
+```
+
+카메라 설치 확인
+```
+sudo apt-get install v4l-utils
+v4l2-ctl --list-devices
+```
+
+
+ros2 camera node 설치
+
+sudo apt install ros-foxy-cv-bridge ros-foxy-camera-info-manager ros-foxy-camera-calibration-parsers ros-foxy-image-common ros-foxy-image-transport ros-foxy-v4l2-camera
+
+<!--
+v4l2-camera 패키지 source 설치
+```
+cd ros2_ws/src/
+#git clone --branch ros2 https://github.com/ros-perception/image_common.git
+#git clone --branch ros2 https://github.com/ros-perception/vision_opencv.git
+git clone --branch foxy https://gitlab.com/boldhearts/ros2_v4l2_camera.git v4l2_camera
+```
+
+의존성 패키지 설치
+```
+cd ros2_ws
+sudo apt-get install python3-rosdep
+sudo rosdep init
+rosdep update
+rosdep install --from-paths src -r -y
+```
+
+camera node 패키지 빌드
+```
+cd ros2_ws
+colcon build --symlink-install
+source ~/install/setup.bash
+```
+
+에러. camera_info_manager.cpp 파일에 다음줄 추가 
+```
+#include "rcpputils/get_env.hpp"
+```
+
+-->
+
+camera node 실행
+```
+ros2 run v4l2_camera v4l2_camera_node
+```
+
+pc에서 camera 이미지 보기
+```
+ros2 run rqt_image_view rqt_image_view
+```
+
+해상도 수정
+```
+ros2 param set /v4l2_camera image_size '[320, 240]'
+ros2 param get /v4l2_camera image_size
+```
+
+#### 해보기: 컴퓨터 비전 노드 만들기
+ - 참고: https://automaticaddison.com/getting-started-with-opencv-in-ros-2-foxy-fitzroy-python/
+
+### RPLIDAR A1
+
+https://www.slamtec.com/en/Lidar/A1
+
+![](https://mblogthumb-phinf.pstatic.net/MjAyMDA1MThfNTgg/MDAxNTg5NzczODkwMTAz.OF3ryBtnNzMRC8Zgtgz0l0M0mNOboq_Q3L95MFhYg6Ug.w7erXC3UCYdhj3tk1F8h0-3jCi7IsNhEqSKmswLQdyYg.PNG.rich0812/SE-18a6b694-89cf-4e5b-ae73-99e1b92f736f.png?type=w800)
+
+ROS2 노드
+
+https://github.com/Slamtec/sllidar_ros2.git
+
+```
+cd ros2_ws/src
+git clone https://github.com/Slamtec/sllidar_ros2.git
+cd ros2_ws
+colcon build
+```
+
+#### 해보기: A1 라이더 값 받기
+ - rplidar 센서값을 ros2 topic echo를 이용해서 받아 보자.
+ - ros2 노드를 구성해서 라이더 값을 받아서 라이더 값의 최소값을 구해보자.
+ - 참고: https://github.com/ROBOTIS-GIT/turtlebot3/blob/master/turtlebot3_example/nodes/turtlebot3_obstacle
+
+
+
 
 ---
 
-# TF
+## TF
 
 ![](https://blog.hadabot.com/images/tf_hadabot.jpg)
 
@@ -28,7 +285,7 @@ ros2 run tf2_tools view_frames.py
 
 ![](https://i.imgur.com/cq1MgBY.png)
 
-# Odometry
+## Odometry
 
 Differential Drive Robot Odometry 수식
  - 바퀴 크기
@@ -55,7 +312,7 @@ Control 구현
 https://github.com/hadabot/hadabot_main/blob/master/content/p12/hadabot_ws/src/hadabot_nav2/src/hadabot_controller.cpp
 
 
-# Navigation
+## Navigation
 ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
 
 ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=True autostart:=True map:=`ros2 pkg prefix turtlebot3_navigation2`/share/turtlebot3_navigation2/map/map.yaml
@@ -63,7 +320,7 @@ ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=True auto
 ros2 run rviz2 rviz2 -d $(ros2 pkg prefix nav2_bringup)/share/nav2_bringup/launch/nav2_default_view.rviz
 
 
-# tank
+## tank
 
 ```
 # tf2
