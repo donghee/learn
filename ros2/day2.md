@@ -233,6 +233,7 @@ Simultaneous Localization and Mapping 동시적 위치추정 및 지도작성
 
 
 ## 시뮬레이션
+
 Gazebo 시뮬레이터를 이용하여, SLAM과 자율 주행을 테스트 해보자.
 
 <!-- https://classic.gazebosim.org/tutorials?tut=ros2_installing&cat=connect_ros -->
@@ -262,7 +263,7 @@ ROS Gazebo 패키지 설치
 sudo apt install ros-foxy-gazebo-dev ros-foxy-gazebo-plugins ros-foxy-gazebo-msgs  ros-foxy-gazebo-ros-pkgs ros-foxy-gazebo-ros ros-foxy-ros-core ros-foxy-geometry2
 ```
 
-SLAM navigation 패키지 설치
+SLAM, Navigation 패키지 설치
 ```
 sudo apt install ros-foxy-cartographer
 sudo apt install ros-foxy-cartographer-ros
@@ -438,7 +439,14 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
  - balenaEther
  - SD카드 32GB
 
+### 설치
+ - 키보드, 모니터 연결하여 네트워크 설정
+ - ROS_DOMAIN_ID 설정: 노트북, Raspberry Pi 같은 도메인 ID로 지정.
+
 ### WIFI 네트워크 설정
+
+ - WIFI AP: "baribarilab"
+ - WIFI PASSWORD: "1111100000"
 
 /etc/netplan/50-cloud-init.yaml
 ```
@@ -469,22 +477,35 @@ sudo chmod 600 /swapfile
 sudo mkswap /swapfile
 ```
 
+Swap 생성 확인
 ```
 Setting up swapspace version 1, size = 1024 MiB (1073737728 bytes)
 no label, UUID=09c9cd5c-f066-48f0-b988-7b000b69ed3d
 ```
 
+Swap 추가
 ```
 sudo swapon /swapfile
-sudo vi /etc/fstab
-sudo free -h
+
+swapfile 파티션 테이블에 추가
+```
+sudo nano /etc/fstab
+```
+```
+/swapfile swap swap defaults 0 0
 ```
 
+swap 확인
 ```
-  total        used        free      shared  buff/cache   available
+sudo free -h
+
+total        used        free      shared  buff/cache   available
 Mem:           906M        144M        553M        6.6M        208M        740M
 Swap:          1.0G          0B        1.0G
 ```
+
+
+### ROS 2 Foxy 패키지 설치
 
 ```
 sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key  -o /usr/share/keyrings/ros-archive-keyring.gpg
