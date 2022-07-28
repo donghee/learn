@@ -24,7 +24,7 @@
 
 ![](https://i.imgur.com/QMcDV3r.jpg)
 
-![](https://i.imgur.com/lihXEDr.jpg)
+![](https://i.imgur.com/IjhXEDr.jpg)
 
 ![](https://i.imgur.com/qcDHWaj.jpg)
 
@@ -189,7 +189,9 @@ v4l2-ctl --list-devices
 
 ros2 camera node 설치
 
+```
 sudo apt install ros-foxy-cv-bridge ros-foxy-camera-info-manager ros-foxy-camera-calibration-parsers ros-foxy-image-common ros-foxy-image-transport ros-foxy-v4l2-camera
+```
 
 <!--
 v4l2-camera 패키지 source 설치
