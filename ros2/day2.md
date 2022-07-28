@@ -22,6 +22,7 @@
 3. Raspberry Pi에 ROS 2 개발 환경 구성
  - 네트워크 설정
  - Raspberry Pi에 ROS 2 설치
+ - 모터, IMU ROS 노드 만들기
 
 ---
 
