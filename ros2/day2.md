@@ -480,9 +480,10 @@ ip address
 
 #### Timezone 설정
 
-timezone asia/seoul 설정
+timezone Asia/Seoul 설정
+
 ```
-timedatectl set-timezone asia/seoul
+timedatectl set-timezone Asia/Seoul
 ```
 
 #### Swap 추가
@@ -504,11 +505,14 @@ no label, UUID=09c9cd5c-f066-48f0-b988-7b000b69ed3d
 Swap 추가
 ```
 sudo swapon /swapfile
+```
 
 swapfile 파티션 테이블에 추가
+
 ```
 sudo nano /etc/fstab
 ```
+
 ```
 /swapfile swap swap defaults 0 0
 ```
