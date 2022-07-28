@@ -319,7 +319,6 @@ ros2 topic list
 ros2 service list
 ros2 topic pub /cmd_vel geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 ros2 topic pub /cmd_vel geometry_msgs/Twist '{linear: {x: 0.0}}' -1
-ros2 run turtlebot3_teleop teleop_keyboard
 ```
 
 맵과 로봇 프레임 좌표 연결
