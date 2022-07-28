@@ -572,8 +572,12 @@ L298n
 #### 카메라
 raspberry pi camera v1
 
+https://github.com/christianrauch/raspicam2_node
+
 #### 라이다
 rplidar a1
+
+https://github.com/Slamtec/sllidar_ros2
 
 <!-- https://www.theconstructsim.com/tag/ros2 -->
 
