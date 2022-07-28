@@ -579,6 +579,8 @@ L298n
 연결
 ![](https://imgur.com/0dio7EM.png)
 
+![](https://pi4j.com/1.2/images/j8header-3b-large.png)
+
 #### 카메라
 raspberry pi camera v1
 
