@@ -43,7 +43,7 @@ cd ~/ros2_ws/src
 
 my_package 이름의 패키지 안에 my_node 이름 노드를 만들어 보자.
 ```
-#ros2 pkg create --build-type ament_python my_package # my_package만 만들경우
+#ros2 pkg create --build-type ament_python my_package # my_package 만 만들경우
 ros2 pkg create --build-type ament_python --node-name my_node my_package
 ```
  - python package(ament_python) ? cmake 패키지(ament_cmake) --dependencies 의존패키지
@@ -73,7 +73,7 @@ ros2 run my_package my_node
 
 #### 해보기: c++ 노드 패키지 작성
  - c++ 코드로 구현된 my_cpp_package와 my_node 만들고, 그 노드를 실행해보자.
- - 힌트: 패키지 만들기 할때 ament_cmake 사용
+ - 힌트: 패키지 만들때 ament_cmake 옵션 사용
  - 참고: https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html
 
 ----
@@ -210,7 +210,27 @@ ros2 run py_pubsub listener
 
 ![](https://i.imgur.com/ARCF7vx.png)
 
-----
+## SLAM
+
+Simultaneous Localization and Mapping 동시적 위치추정 및 지도작성
+
+자율주행 차량에 사용되어 주변 환경 지도를 작성하는 동시에 차량의 위치를 작성된 지도 안에서 추정하는 방법
+
+미지의 장소의 지도 작성!
+
+![](https://kr.mathworks.com/discovery/slam/_jcr_content/mainParsys3/discoverysubsection_158176500/mainParsys3/image.adapt.full.medium.png/1654866250910.png)
+
+종류
+ - vSLAM: 카메라 이용.
+   - PTAM, ORB-SLAM 알고리즘 사용
+ - 라이다 SLAM: 라이다 센서 이용. 포인트 클라우드 생성.
+   - 포인트 클라우드 합치기 알고리즘: ICP, NDT
+
+특징
+ - 실시간 지도 생성
+ - 누적 오차 발생
+ - 높은 계산 비용.
+
 
 ## 시뮬레이션
 Gazebo 시뮬레이터를 이용하여, SLAM과 자율 주행을 테스트 해보자.
@@ -325,7 +345,7 @@ ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=true map:
 ![](https://i.imgur.com/8TLNJRc.png)
 
 
-#### Gazebo 사용하기
+#### Gazebo 시뮬레이션 모델 만들기
 
 1. 차동 주행 월드 로드
 
@@ -376,7 +396,6 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 <!-- # rosdep install --from-paths src --ignore-src --rosdistro foxy -y --skip-keys "console_bridge fastcdr fastrtps libopensplice67 libopensplice69 rti-connext-dds-5.3.1 urdfdom_headers" -->
 <!-- rosdep install --from-paths src --ignore-src --rosdistro foxy -y --skip-keys "console_bridge fastcdr fastrtps libopensplice67 libopensplice69 rti-connext-dds-5.3.1 urdfdom_headers" -->
 
-
 <!-- # Launch single liner -->
 <!-- ros2 launch tank_gazebo tank_launch.py -->
 <!-- ros2 launch tank_gazebo multi_tank_launch.py -->
@@ -390,8 +409,6 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 <!-- ros2 topic pub /tank/cmd_vel -->
 
 <!-- ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=/tank/cmd_vel -->
-
-<!-- ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=/tank2/cmd_vel -->
 <!-- ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=/tank2/cmd_vel -->
 
 <!-- ros2 run tf2_tools view_frames.py -->
@@ -412,20 +429,6 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 
 <!-- 참고 -->
 <!--  - https://www.udemy.com/course/ros2-for-beginners/?referralCode=18C75F99C1A868F0A7AB -->
-
-
-
-## SLAM 동시적 위치추정 및 지도작성
-
-자율주행 차량에 사용되어 주변 환경 지도를 작성하는 동시에 차량의 위치를 작성된 지도 안에서 추정하는 방법
-
-미지의 지도 작성!
-
-![](https://kr.mathworks.com/discovery/slam/_jcr_content/mainParsys3/discoverysubsection_158176500/mainParsys3/image.adapt.full.medium.png/1654866250910.png)
-
-종류
- - vSLAM
- - 라이다 SLAM
 
 
 ## Raspberry Pi 3에 ROS 2 설치
