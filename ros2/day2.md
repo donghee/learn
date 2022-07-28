@@ -257,13 +257,13 @@ gazebo
 export SVGA_VGPU10=0
 ```
 
-ROS Gazebo 패키지 설치
+#### ROS Gazebo 패키지 설치
 
 ```
 sudo apt install ros-foxy-gazebo-dev ros-foxy-gazebo-plugins ros-foxy-gazebo-msgs  ros-foxy-gazebo-ros-pkgs ros-foxy-gazebo-ros ros-foxy-ros-core ros-foxy-geometry2
 ```
 
-SLAM, Navigation 패키지 설치
+#### SLAM, Navigation 패키지 설치
 ```
 sudo apt install ros-foxy-cartographer
 sudo apt install ros-foxy-cartographer-ros
@@ -271,7 +271,7 @@ sudo apt install ros-foxy-navigation2
 sudo apt install ros-foxy-nav2-bringup
 ```
 
-터틀봇 패키지 설치
+#### 터틀봇 패키지 설치
 ```
 sudo apt install python3-vcstool
 mkdir -p ~/turtlebot3_ws/src
@@ -295,7 +295,7 @@ echo "export TURTLEBOT3_MODEL=waffle_pi" >> ~/.bashrc
 source ~/.bashrc
 ```
 
-시뮬레이터 실행
+#### 시뮬레이터 실행
 ```
 ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
 ```
@@ -346,6 +346,10 @@ ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=true map:
 ![](https://i.imgur.com/8TLNJRc.png)
 
 
+#### 해보기: turtlebot3_dqn_stage3.launch.py
+ - ros2 launch turtlebot3_gazebo turtlebot3_dqn_stage3.launch.py 실행하여 자율 주행 해보자.
+
+
 #### Gazebo 시뮬레이션 모델 만들기
 
 1. 차동 주행 월드 로드
@@ -366,6 +370,7 @@ gazebo --verbose /opt/ros/foxy/share/gazebo_plugins/worlds/gazebo_ros_diff_drive
 ```
 ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 ```
+
 
 ![](https://github.com/osrf/gazebo_tutorials/raw/master/ros2_installing/figs/gazebo_ros_diff_drive_lin_vel.gif)
 
