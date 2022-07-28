@@ -303,7 +303,7 @@ ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
 ![](https://www.theconstructsim.com/wp-content/uploads/2022/01/Click-Open-Gazebo-to-view-the-Gazebo-simulation.png)
 
 ```
-ros2 launch turtlebot3_cartographer cartographer.launch.py
+ros2 launch turtlebot3_cartographer cartographer.launch.py use_sim_time:=true
 ```
 
 ![](https://www.theconstructsim.com/wp-content/uploads/2022/01/ros2-launch-turtlebot3_cartographer-cartographer.launch.py_.png)
