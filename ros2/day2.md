@@ -363,7 +363,7 @@ gazebo --verbose /opt/ros/foxy/share/gazebo_plugins/worlds/gazebo_ros_diff_drive
 
 /opt/ros/foxy/share/gazebo_plugins/worlds/gazebo_ros_diff_drive_demo.world
 
-월드 파일에서 `gazebo_ros_pkgs` 확인
+월드 파일에서 플러그인과 출력 확인
 
 1. 로봇 조정
 ```
