@@ -456,7 +456,7 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 
 sudo nano /etc/netplan/50-cloud-init.yaml
 ```
- version: 2
+version: 2
 ethernets:
   eth0:
     dhcp4: true
