@@ -466,7 +466,13 @@ wifis:
         password: "YOUR_WIFI_PASSWORD"
 ```
 
+```
 sudo netplan --debug apply
+```
+
+```
+ip address
+```
 
 #### Timezone 설정
 
