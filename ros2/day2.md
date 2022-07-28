@@ -557,7 +557,7 @@ ssh ubuntu@192.168.88.??
 
 #### IMU
 
-mpu9250 연결
+*mpu9250과 Raspberry Pi 연결하기*
 ![](https://images.squarespace-cdn.com/content/v1/59b037304c0dbfb092fbe894/1573589401909-GKK8YB7UJ9FLCCYBDDRP/rpi_mpu9250_wiring_diagram.png?format=2500w)
 
 https://abyz.me.uk/rpi/pigpio/download.html
@@ -576,7 +576,8 @@ L298n
 
 ![](https://i.imgur.com/Cn6y8qp.png)
 
-연결
+*L298n과 Raspberry Pi 연결하기*
+
 ![](https://imgur.com/0dio7EM.png)
 
 ![](https://pi4j.com/1.2/images/j8header-3b-large.png)
