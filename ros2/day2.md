@@ -439,11 +439,13 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
  - balenaEther
  - SD카드 32GB
 
-### 설치
+### ROS 2 설치 준비
  - 키보드, 모니터 연결하여 네트워크 설정
+ - timezone 설정
+ - swap 추가
  - ROS_DOMAIN_ID 설정: 노트북, Raspberry Pi 같은 도메인 ID로 지정.
 
-### WIFI 네트워크 설정
+#### WIFI 네트워크 설정
 
  - WIFI AP: "baribarilab"
  - WIFI PASSWORD: "1111100000"
@@ -464,10 +466,16 @@ wifis:
         password: "YOUR_WIFI_PASSWORD"
 ```
 
-timezone 설정
+sudo netplan --debug apply
+
+#### Timezone 설정
+
+timezone asia/seoul 설정
 ```
 timedatectl set-timezone asia/seoul
 ```
+
+#### Swap 추가
 
 Swap 추가
 
@@ -503,7 +511,6 @@ total        used        free      shared  buff/cache   available
 Mem:           906M        144M        553M        6.6M        208M        740M
 Swap:          1.0G          0B        1.0G
 ```
-
 
 ### ROS 2 Foxy 패키지 설치
 
@@ -568,7 +575,6 @@ rplidar a1
 <!-- C++ -->
 
 <!-- source /opt/ros/foxy/setup.bash -->
-
 
 <!-- ros2 pkg create <package_name> --build-type <build_type> --dependencies <dependencies_separated_by_single_space> -->
 
