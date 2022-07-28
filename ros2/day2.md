@@ -245,7 +245,7 @@ Gazebo 시뮬레이터를 이용하여, SLAM과 자율 주행을 테스트 해�
 
 ```
 sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
-wget https://packages.osrfoundation.org/gazebo.key -O - | sudo apt key add -
+wget https://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
 sudo apt update
 sudo apt install gazebo11 libgazebo11-dev
 
@@ -677,5 +677,5 @@ rplidar a1
 <!-- ``` -->
 
 
-
+<!-- rpi2 cam on ros2 -->
 <!-- https://www.youtube.com/watch?v=MlYWtDNsvgw -->
