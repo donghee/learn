@@ -319,19 +319,6 @@ ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=true map:
 ![](https://i.imgur.com/8TLNJRc.png)
 
 
-### SLAM 동시적 위치추정 및 지도작성
-자율주행 차량에 사용되어 주변 환경 지도를 작성하는 동시에 차량의 위치를 작성된 지도 안에서 추정하는 방법
-
-미지의 지도 작성!
-
-![](https://kr.mathworks.com/discovery/slam/_jcr_content/mainParsys3/discoverysubsection_158176500/mainParsys3/image.adapt.full.medium.png/1654866250910.png)
-
-종류
- - vSLAM
- - 라이다 SLAM
-
-----
-
 #### Gazebo 사용하기
 
 1. 차동 주행 월드 로드
@@ -419,6 +406,21 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 
 <!-- 참고 -->
 <!--  - https://www.udemy.com/course/ros2-for-beginners/?referralCode=18C75F99C1A868F0A7AB -->
+
+
+
+## SLAM 동시적 위치추정 및 지도작성
+
+자율주행 차량에 사용되어 주변 환경 지도를 작성하는 동시에 차량의 위치를 작성된 지도 안에서 추정하는 방법
+
+미지의 지도 작성!
+
+![](https://kr.mathworks.com/discovery/slam/_jcr_content/mainParsys3/discoverysubsection_158176500/mainParsys3/image.adapt.full.medium.png/1654866250910.png)
+
+종류
+ - vSLAM
+ - 라이다 SLAM
+
 
 ## Raspberry Pi 3에 ROS 2 설치
 
