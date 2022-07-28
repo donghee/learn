@@ -454,7 +454,7 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
  - WIFI AP: "baribarilab"
  - WIFI PASSWORD: "1111100000"
 
-/etc/netplan/50-cloud-init.yaml
+sudo nano /etc/netplan/50-cloud-init.yaml
 ```
  version: 2
 ethernets:
