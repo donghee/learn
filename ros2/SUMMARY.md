@@ -15,6 +15,8 @@
   * [시뮬레이션](day2#시뮬레이션)
   * [Raspberry Pi 3에 ROS2 설치](day2#raspberry-pi-3에-ros2-설치)
 
+* [셋째날](day3#ros-2-programming-day-3)
+ 
 <!-- * [셋째날](day3.md) -->
 
 <!--
