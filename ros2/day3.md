@@ -296,6 +296,7 @@ cd ~/ros2_ws
 colcon build --symlink-install
 source ./install/setup.sh
 
+sudo chmod 666 /dev/ttyUSB0
 ros2 launch sllidar_ros2 sllidar_launch.py 
 ```
 
