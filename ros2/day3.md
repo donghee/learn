@@ -290,10 +290,11 @@ ROS2 노드
 https://github.com/Slamtec/sllidar_ros2.git
 
 ```
-cd ros2_ws/src
+cd ~/ros2_ws/src
 git clone https://github.com/Slamtec/sllidar_ros2.git
-cd ros2_ws
+cd ~/ros2_ws
 colcon build --symlink-install
+source ./install/setup.sh
 
 ros2 launch sllidar_ros2 sllidar_launch.py 
 ```
