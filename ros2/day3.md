@@ -319,7 +319,7 @@ source ./install/setup.sh
 ros2 run tank_control robot_control
 ```
 
-#### teleop
+#### keyboard teleop
 ```
 ros2 run teleop_twist_keyboard teleop_twist_keyboard
 ```
