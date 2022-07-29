@@ -126,7 +126,8 @@ right hand rule
 
 참고: https://www.ros.org/reps/rep-0103.html
 
-https://github.com/Schnilz/mpu9250
+mpu9250 라이브러리 설치
+ - https://github.com/Schnilz/mpu9250
 
 #### 해보기
  - mpu9250_calibration.py: https://github.com/donghee/tank-foxy/blob/main/hwtest/mpu9250_calibration.py
