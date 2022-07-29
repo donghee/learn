@@ -131,7 +131,7 @@ https://github.com/Schnilz/mpu9250
 #### 해보기
  - mpu9250_calibration.py를 실행하여, imu의 roll, pitch, yaw 방향을 ROS의 axis orientaton과 right hand rule에 맞게 mpu9250 모듈을 로봇에 부착하자.
  - mpu9250_calibration.py를 이용하여, 센서값을 캘리브레이션 하여, gyro, accel, mag 센서의 bias값을 구하자.
-
+ - 참고: https://github.com/donghee/tank-foxy/blob/main/hwtest/mpu9250_calibration.py
 
 ### Raspberry Pi Camera 사용하기
 
