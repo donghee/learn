@@ -609,7 +609,7 @@ L298n
 
 ![](https://imgur.com/0dio7EM.png)
 
-![](https://pi4j.com/1.2/images/j8header-3b-large.png)
+![](https://www.raspberrypi-spy.co.uk/wp-content/uploads/2012/06/raspberry_pi_3_model_b_plus_gpio.jpg)
 
 #### 카메라
 raspberry pi camera v1
