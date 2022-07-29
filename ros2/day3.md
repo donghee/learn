@@ -53,7 +53,7 @@ sudo apt install python3-lgpio
 
 RPi.GPIO 라이브러리 설치
 ```
-sudo apt-get install python3-rpi.gpio
+sudo apt-get install python3-rpi.gpio rpi.gpio-common
 ```
 
 python3 rpi_l298n_test.py
@@ -205,6 +205,8 @@ sudo raspi-config
 
 카메라 설치 확인
 ```
+sudo usermod -G video "$USER"
+
 sudo apt-get install v4l-utils
 v4l2-ctl --list-devices
 ```
