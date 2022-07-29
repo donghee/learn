@@ -454,6 +454,7 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
  - WIFI AP: "baribarilab"
  - WIFI PASSWORD: "1111100000"
 
+
 sudo nano /etc/netplan/50-cloud-init.yaml
 ```
 network:
@@ -485,6 +486,14 @@ timezone Asia/Seoul 설정
 
 ```
 timedatectl set-timezone Asia/Seoul
+```
+
+#### hostname 변경
+
+sudo nano /etc/hostname
+
+```
+ubuntu
 ```
 
 #### Swap 추가
