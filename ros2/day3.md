@@ -131,8 +131,9 @@ right hand rule
 
 ```
 sudo apt-get install i2c-tools
-sudo apt-get install python3-pip
+sudo apt-get install python3-pip python3-numpy
 sudo pip install smbus
+sudo pip install easydict
 cd ~/
 git clone https://github.com/niru-5/imusensor
 cd imusensor
