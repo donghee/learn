@@ -314,6 +314,13 @@ colcon build --symlink-install
 source ./install/setup.sh
 ```
 
+tmux 사용하기
+
+```
+sudo apt-get install tmux
+```
+
+
 #### 모터 노드
 ```
 ros2 run tank_control robot_control
