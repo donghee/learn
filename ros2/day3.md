@@ -208,6 +208,7 @@ sudo raspi-config
 
 # 5. Interface Options -> P1 Camera -> Enable camera
 ```
+재부팅
 
 카메라 설치 확인
 ```
@@ -299,6 +300,29 @@ colcon build
  - rplidar 센서값을 ros2 topic echo를 이용해서 받아 보자.
  - ros2 노드를 구성해서 라이더 값을 받아서 라이더 값의 최소값을 구해보자.
  - 참고: https://github.com/ROBOTIS-GIT/turtlebot3/blob/master/turtlebot3_example/nodes/turtlebot3_obstacle
+
+
+## 주행 테스트
+
+다음 프로젝트를 받아서 키보드를 이용해서 주행을 해보자!
+
+```
+cd ~/ros2_ws/src
+git clone https://github.com/donghee/tank-foxy
+cd ~/ros2_ws
+colcon build --symlink-install
+source ./install/setup.sh
+```
+
+#### 모터 노드
+```
+ros2 run tank_control robot_control
+```
+
+#### teleop
+```
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
+```
 
 
 
