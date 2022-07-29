@@ -621,26 +621,26 @@ rplidar a1
 
 https://github.com/Slamtec/sllidar_ros2
 
-----
+<!-- ---- -->
 
-### 소프트웨어 드라이버
+<!-- ### 소프트웨어 드라이버 -->
 
-Raspberry Pi GPIO 드라이버
+<!-- Raspberry Pi GPIO 드라이버 -->
 
-pigpio
+<!-- pigpio -->
 
-http://abyz.me.uk/rpi/pigpio/download.html
+<!-- http://abyz.me.uk/rpi/pigpio/download.html -->
 
-설치
+<!-- 설치 -->
 
-```
-sudo apt install python-setuptools python3-setuptools
-wget https://github.com/joan2937/pigpio/archive/master.zip
-unzip master.zip
-cd pigpio-master
-make
-sudo make install
-```
+<!-- ``` -->
+<!-- sudo apt install python-setuptools python3-setuptools -->
+<!-- wget https://github.com/joan2937/pigpio/archive/master.zip -->
+<!-- unzip master.zip -->
+<!-- cd pigpio-master -->
+<!-- make -->
+<!-- sudo make install -->
+<!-- ``` -->
 
 
 <!-- https://www.theconstructsim.com/tag/ros2 -->
