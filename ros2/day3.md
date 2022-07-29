@@ -100,6 +100,11 @@ GPIO.output(12, GPIO.LOW)
 GPIO.output(13, GPIO.LOW)
 ```
 
+permission 에러가 나는 경우 python3를 root로 실행
+```
+sudo python3
+```
+
 #### 해보기: 회전
  - 1초 동안 좌우 회전을 시켜보자.
  
