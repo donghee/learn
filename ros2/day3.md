@@ -191,6 +191,12 @@ sudo dpkg -i /tmp/raspi-config_20200601_all.deb
 sudo apt --fix-broken install
 ```
 
+```
+sudo apt autoremove --purge libgles2-mesa-dev mesa-common-dev
+sudo add-apt-repository ppa:ubuntu-pi-flavour-makers/ppa
+sudo apt install libraspberrypi-bin libraspberrypi-dev
+```
+
 카메라 활성화
 
 ```
