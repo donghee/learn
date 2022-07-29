@@ -51,6 +51,11 @@ sudo apt install python3-lgpio
 ```
 -->
 
+RPi.GPIO 라이브러리 설치
+```
+sudo apt-get install python3-rpi.gpio
+```
+
 python3 rpi_l298n_test.py
 
 ```
