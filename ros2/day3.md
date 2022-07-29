@@ -209,8 +209,11 @@ sudo apt-get install v4l-utils
 v4l2-ctl --list-devices
 ```
 
+```
+raspistill -o cam.jpg
+```
 
-ros2 camera node 설치
+ROS 2 camera node 설치
 
 ```
 sudo apt install ros-foxy-cv-bridge ros-foxy-camera-info-manager ros-foxy-camera-calibration-parsers ros-foxy-image-common ros-foxy-image-transport ros-foxy-v4l2-camera
