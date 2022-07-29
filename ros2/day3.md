@@ -294,6 +294,8 @@ cd ros2_ws/src
 git clone https://github.com/Slamtec/sllidar_ros2.git
 cd ros2_ws
 colcon build
+
+ros2 launch sllidar_ros2 view_sllidar_launch.py
 ```
 
 #### 해보기: A1 라이더 값 받기
