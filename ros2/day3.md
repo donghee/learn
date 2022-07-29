@@ -308,10 +308,11 @@ ros2 launch sllidar_ros2 sllidar_launch.py
 
 ## 주행 테스트
 
-tank-foxy 프로젝트를 설치하여, 키보드를 이용해서 주행을 해보자!
+mpu9250 패키지와 tank-foxy 패키지를 설치하여, 키보드를 이용해서 주행을 해보자!
 
 ```
 cd ~/ros2_ws/src
+git clone https://github.com/Schnilz/mpu9250
 git clone https://github.com/donghee/tank-foxy
 cd ~/ros2_ws
 colcon build --symlink-install
