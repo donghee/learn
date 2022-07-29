@@ -126,8 +126,17 @@ right hand rule
 
 참고: https://www.ros.org/reps/rep-0103.html
 
-mpu9250 라이브러리 설치
- - https://github.com/Schnilz/mpu9250
+#### mpu9250 라이브러리 설치
+ - https://github.com/niru-5/imusensor
+
+```
+sudo apt-get install i2c-tools
+sudo pip install smbus
+cd ~/
+git clone https://github.com/niru-5/imusensor
+cd imusensor
+sudo python3 setup.py install
+```
 
 #### 해보기
  - mpu9250_calibration.py: https://github.com/donghee/tank-foxy/blob/main/hwtest/mpu9250_calibration.py
