@@ -131,6 +131,7 @@ right hand rule
 
 ```
 sudo apt-get install i2c-tools
+sudo apt-get install python3-pip
 sudo pip install smbus
 cd ~/
 git clone https://github.com/niru-5/imusensor
