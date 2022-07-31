@@ -45,15 +45,11 @@
 
 l298n 연결 확인
 
-<!--
-```
-sudo apt install python3-lgpio
-```
--->
-
 RPi.GPIO 라이브러리 설치
 ```
 sudo apt-get install python3-rpi.gpio rpi.gpio-common
+sudo usermod -aG dialout $USER
+sudo reboot
 ```
 
 python3 rpi_l298n_test.py
@@ -62,6 +58,7 @@ python3 rpi_l298n_test.py
 import RPi.GPIO as GPIO
 import time
 
+# setup
 GPIO.setmode(GPIO.BCM)
 
 GPIO.setup(12, GPIO.OUT)
@@ -80,7 +77,7 @@ GPIO.output(20, GPIO.LOW)
 GPIO.output(23, GPIO.HIGH)
 GPIO.output(24, GPIO.LOW)
 
-time.sleep(10)
+time.sleep(2)
 
 GPIO.output(12, GPIO.LOW)
 GPIO.output(13, GPIO.LOW)
@@ -94,7 +91,7 @@ GPIO.output(20, GPIO.HIGH)
 GPIO.output(23, GPIO.LOW)
 GPIO.output(24, GPIO.HIGH)
 
-time.sleep(10)
+time.sleep(2)
 
 GPIO.output(12, GPIO.LOW)
 GPIO.output(13, GPIO.LOW)
@@ -285,6 +282,8 @@ https://www.slamtec.com/en/Lidar/A1
 
 ![](https://mblogthumb-phinf.pstatic.net/MjAyMDA1MThfNTgg/MDAxNTg5NzczODkwMTAz.OF3ryBtnNzMRC8Zgtgz0l0M0mNOboq_Q3L95MFhYg6Ug.w7erXC3UCYdhj3tk1F8h0-3jCi7IsNhEqSKmswLQdyYg.PNG.rich0812/SE-18a6b694-89cf-4e5b-ae73-99e1b92f736f.png?type=w800)
 
+![](https://i.imgur.com/sJiKhWe.png]
+
 ROS2 노드
 
 https://github.com/Slamtec/sllidar_ros2.git
@@ -295,8 +294,8 @@ git clone https://github.com/Slamtec/sllidar_ros2.git
 cd ~/ros2_ws
 colcon build --symlink-install
 source ./install/setup.sh
+./src/sllidar_ros2/scripts/create_udev_rules.sh
 
-sudo chmod 666 /dev/ttyUSB0
 ros2 launch sllidar_ros2 sllidar_launch.py 
 ```
 
