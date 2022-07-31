@@ -282,7 +282,7 @@ https://www.slamtec.com/en/Lidar/A1
 
 ![](https://mblogthumb-phinf.pstatic.net/MjAyMDA1MThfNTgg/MDAxNTg5NzczODkwMTAz.OF3ryBtnNzMRC8Zgtgz0l0M0mNOboq_Q3L95MFhYg6Ug.w7erXC3UCYdhj3tk1F8h0-3jCi7IsNhEqSKmswLQdyYg.PNG.rich0812/SE-18a6b694-89cf-4e5b-ae73-99e1b92f736f.png?type=w800)
 
-![](https://i.imgur.com/sJiKhWe.png]
+![](https://i.imgur.com/sJiKhWe.png)
 
 ROS2 노드
 
