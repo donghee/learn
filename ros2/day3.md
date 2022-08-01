@@ -273,8 +273,15 @@ ros2 param set /v4l2_camera image_size '[320, 240]'
 ros2 param get /v4l2_camera image_size
 ```
 
-#### 해보기: 컴퓨터 비전 노드 만들기
- - 참고: https://automaticaddison.com/getting-started-with-opencv-in-ros-2-foxy-fitzroy-python/
+#### 해보기
+ - 컴퓨터 비전 노드 만들기
+  - 참고: https://automaticaddison.com/getting-started-with-opencv-in-ros-2-foxy-fitzroy-python/
+ - Aruco 태그 이용하여, 카메라 위치 구하기: 
+  - 참고: https://github.com/lapo5/ROS2-Aruco-TargetTracking
+
+<!--
+https://github.com/ptrmu/fiducial_vlam_sam
+-->
 
 ### RPLIDAR A1
 
