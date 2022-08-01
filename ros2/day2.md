@@ -210,7 +210,7 @@ ros2 run py_pubsub listener
 
 ![](https://i.imgur.com/ARCF7vx.png)
 
-## SLAM
+## SLAM 소개
 
 Simultaneous Localization and Mapping 동시적 위치추정 및 지도작성
 

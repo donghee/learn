@@ -12,6 +12,7 @@
 * [둘째날](day2#ros-2-programming-day-2)
   * [수업 소개](day2#수업-소개)
   * [ROS 노드 만들기](day2#ros-노드-만들기)
+  * [SLAM 소개](day2#SLAM)
   * [시뮬레이션](day2#시뮬레이션)
   * [Raspberry Pi 3에 ROS2 설치](day2#raspberry-pi-3에-ros2-설치)
 
