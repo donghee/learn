@@ -181,7 +181,7 @@ ROS 2 환경 구분을 위한 도메인 아이디 설정
 
 자신의 도메인 아이디를 ~/.bashrc에 추가 한다. 
 ```
-export ROS_DOMAIN_ID=1 # 강사
+export ROS_DOMAIN_ID=0 # 강사
 export ROS_DOMAIN_ID=10
 export ROS_DOMAIN_ID=20
 export ROS_DOMAIN_ID=30
@@ -192,7 +192,7 @@ export ROS_DOMAIN_ID=60
 
 사용법
 ```
-ROS_DOMAIN_ID=1 ros2 topic list
+ROS_DOMAIN_ID=10 ros2 topic list
 ```
 
 ### Visual Studio Code 확장 설치
