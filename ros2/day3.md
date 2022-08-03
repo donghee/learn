@@ -22,11 +22,7 @@
 
 ## 자율 주행 하드웨어 소개
 
-![](https://i.imgur.com/QMcDV3r.jpg)
-
-![](https://i.imgur.com/IjhXEDr.jpg)
-
-![](https://i.imgur.com/qcDHWaj.jpg)
+![](https://i.imgur.com/QMcDV3r.jpg ':size=141') ![](https://i.imgur.com/IjhXEDr.jpg ':size=250') ![](https://i.imgur.com/qcDHWaj.jpg ':size=250')
 
  - L298n H-Bridge
  - MPU9250 IMU
@@ -116,10 +112,10 @@ Axis Orientation
 
 x forward, y left, z up 
 
-![](https://velog.velcdn.com/images%2Fleesy970906%2Fpost%2F13213a98-13c4-4d00-9968-f461bffd90b0%2FScreen%20Shot%202021-04-08%20at%204.40.12%20PM.png)
+![](https://velog.velcdn.com/images%2Fleesy970906%2Fpost%2F13213a98-13c4-4d00-9968-f461bffd90b0%2FScreen%20Shot%202021-04-08%20at%204.40.12%20PM.png ':size=600')
 
 right hand rule
-![](https://velog.velcdn.com/images%2Fleesy970906%2Fpost%2Fe6042f9c-7c3b-4878-a288-8dca47ab6a33%2FScreen%20Shot%202021-04-08%20at%204.42.02%20PM.png)
+![](https://velog.velcdn.com/images%2Fleesy970906%2Fpost%2Fe6042f9c-7c3b-4878-a288-8dca47ab6a33%2FScreen%20Shot%202021-04-08%20at%204.42.02%20PM.png ':size=400')
 
 참고: https://www.ros.org/reps/rep-0103.html
 
@@ -289,7 +285,7 @@ https://www.slamtec.com/en/Lidar/A1
 
 ![](https://mblogthumb-phinf.pstatic.net/MjAyMDA1MThfNTgg/MDAxNTg5NzczODkwMTAz.OF3ryBtnNzMRC8Zgtgz0l0M0mNOboq_Q3L95MFhYg6Ug.w7erXC3UCYdhj3tk1F8h0-3jCi7IsNhEqSKmswLQdyYg.PNG.rich0812/SE-18a6b694-89cf-4e5b-ae73-99e1b92f736f.png?type=w800)
 
-![](https://i.imgur.com/sJiKhWe.png)
+![](https://i.imgur.com/sJiKhWe.png ':size=600')
 
 ROS2 노드
 
