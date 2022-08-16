@@ -6,20 +6,21 @@
 
 ## 수업 소개
 
--   목표: 자율 주행 로봇 개발 환경 구축하고 ROS 2를 이용하여 제어 프로그램을 개발 할 수 있다. 
--   교재: [https://learn.dronemap.io/ros-workshop/ros2/#/day1](https://learn.dronemap.io/ros-workshop/ros2/#/day1)
--   코치: 박동희 dongheepark@gmail.com
+ - 목표: ROS2 로봇 개발 환경 구축하고 ROS 2를 이용하여 제어 프로그램을 개발 할 수 있다.
+ - 교재: [https://learn.dronemap.io/ros-workshop/ros2/#/day1](https://learn.dronemap.io/ros-workshop/ros2/#/day1)
+ - 코치: 박동희 dongheepark@gmail.com
 
 1. 워크숍 소개, 참가자 소개
 2. ROS 2 소개
 3. Linux 사용하기
 4. ROS 2 개발환경 구성
+5. ROS 2 기본 프로그래밍
 
 ## Linux 사용하기
 
--   Ubuntu 20.04 설치
--   주요 명령어 소개(파일 조작, 프로그램설치, 쉘스크립트, git)
--   디렉토리 소개
+ - Ubuntu 20.04 설치
+ - 주요 명령어 소개(파일 조작, 프로그램설치, 쉘스크립트, git)
+ - 디렉토리 소개
 
 ### 주요 명령어
 
@@ -83,23 +84,17 @@ wget: url에서 파일 다운로드
 wget https://google.com
 ```
 
+curl: url의 파일 다운로드
+```
+wget https://google.com
+```
+
 source: 현재 쉘에서 파일을 읽고 실행
 
 ```
 source ~/.bashrc
 ```
 
-git: 버전 관리, 코드 다운로드
-
-```
-git init
-git clone
-git checkout
-git add
-git commit
-git reset
-git push
-```
 
 IP 확인 방법
 
@@ -111,12 +106,31 @@ ip addr
 우분트 패키지 설치
 
 ```
-sudo apt-get update
-sudo apt-get install //설치할 패키지
-sudo apt-get remove //삭제할 패키지
-sudo apt-get upgrade
+sudo apt update
+sudo apt install //설치할 패키지
+sudo apt remove //삭제할 패키지
+sudo apt upgrade
 ```
 
+git: 버전 관리, 코드 다운로드
+
+![](https://i.imgur.com/6oVlYTU.png)
+
+```
+git init
+git add
+git commit
+git push
+
+git clone
+git checkout
+git branch
+```
+
+해보기:
+ - github에 새로운 코드 저장소를 만들어서 README.md 파일을 수정 해보자.
+ - 힌트: github 가입, 새로운 저장소 추가, ssh 키추가. README.md 수정, 커밋, push
+ - https://www.youtube.com/watch?v=RGOj5yH7evk
 
 ### 코드 편집기 Visual Studio Code 설치
 
@@ -219,8 +233,6 @@ ROS_DOMAIN_ID=10 ros2 topic list
  - Linux, macOS, Windows 지원
  - 통신 QOS 지원: 안정성 향상
  - 다양한 프로그래밍 언어 호환: RCL 
-
-
 
 ### ROS 2 구조
 
@@ -546,8 +558,189 @@ bag 재생
 ros2 bag play rosbag2_2022_07_24-20_10_23/
 ```
 
+## ROS 노드 만들기
+
+### 새로운 노드 만들기
+
+빌드 도구 colcon 설치하기
+```
+sudo apt install python3-colcon-common-extensions python3-rosdep2
+```
+
+#### 패키지 만들기
+```
+mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws/src
+```
+
+my_package 이름의 패키지 안에 my_node 이름 노드를 만들어 보자.
+```
+#ros2 pkg create --build-type ament_python my_package # my_package 만 만들경우
+ros2 pkg create --build-type ament_python --node-name my_node my_package
+```
+ - python package(ament_python) ? cmake 패키지(ament_cmake) --dependencies 의존패키지
+ - 의존 패키지 추가하기: ros2 pkg create --build-type ament_cmake --node-name my_node my_cpp_package --dependencies rclcpp
+
+#### 패키지 빌드
+```
+cd ~/ros2_ws
+colcon build --packages-select my_package
+```
+
+#### 패키지 노드 실행
+
+환경 변수 설정
+```
+cd ~/ros2_ws
+source install/setup.bash
+```
+
+노드 실행
+```
+ros2 run my_package my_node
+```
+
+#### 해보기: my_package 분석
+ - ros2_ws/src/my_package 안의 디렉토리와 파일을 분석하고 설명해보자.
+
+#### 해보기: c++ 노드 패키지 작성
+ - c++ 코드로 구현된 my_cpp_package와 my_node 만들고, 그 노드를 실행해보자.
+ - 힌트: 패키지 만들때 ament_cmake 옵션 사용
+ - 참고: https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html
+
+----
+
+### 새로운 노드 만들기: Pub Sub 노드 만들기
+
+#### 패키지 만들기
+```
+cd ~/ros2_ws/src
+ros2 pkg create --build-type ament_python py_pubsub
+```
+
+#### 노드 코드 작성
+
+~/ros2_ws/src/py_pubsub/py_pubsub/minimal_publisher.py
+
+```
+import rclpy
+from rclpy.node import Node
+
+from std_msgs.msg import String
+
+class MinimalPublisher(Node):
+
+    def __init__(self):
+        super().__init__('minimal_publisher')
+        self.publisher_ = self.create_publisher(String, 'topic', 10)
+        timer_period = 0.5  # seconds
+        self.timer = self.create_timer(timer_period, self.timer_callback)
+        self.i = 0
+
+    def timer_callback(self):
+        msg = String()
+        msg.data = 'Hello World: %d' % self.i
+        self.publisher_.publish(msg)
+        self.get_logger().info('Publishing: "%s"' % msg.data)
+        self.i += 1
+
+
+def main(args=None):
+    rclpy.init(args=args)
+
+    minimal_publisher = MinimalPublisher()
+
+    rclpy.spin(minimal_publisher)
+
+    minimal_publisher.destroy_node()
+    rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
+```
+
+~/ros2_ws/src/py_pubsub/py_pubsub/minimal_subscriber.py
+
+```
+import rclpy
+from rclpy.node import Node
+
+from std_msgs.msg import String
+
+
+class MinimalSubscriber(Node):
+
+    def __init__(self):
+        super().__init__('minimal_subscriber')
+        self.subscription = self.create_subscription(
+            String,
+            'topic',
+            self.listener_callback,
+            10)
+        self.subscription  # prevent unused variable warning
+
+    def listener_callback(self, msg):
+        self.get_logger().info('I heard: "%s"' % msg.data)
+
+
+def main(args=None):
+    rclpy.init(args=args)
+
+    minimal_subscriber = MinimalSubscriber()
+
+    rclpy.spin(minimal_subscriber)
+
+    minimal_subscriber.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+```
+
+#### 패키지 노드 실행 위치지정
+
+~/ros2_ws/src/py_pubsub/setup.py 의 entry_points에 다음줄 추가
+
+```
+entry_points={
+        'console_scripts': [
+                'talker = py_pubsub.minimal_publisher:main',
+                'listener = py_pubsub.minimal_subscriber:main',
+        ],
+},
+```
+#### 패키지 빌드
+```
+cd ~/ros2_ws
+rosdep install -i --from-path src --rosdistro foxy -y
+```
+
+```
+colcon build --packages-select py_pubsub
+```
+
+```
+source install/setup.bash
+```
+
+#### 패키지 노드 실행
+
+```
+ros2 run py_pubsub talker
+```
+
+```
+ros2 run py_pubsub listener
+```
+
+#### 해보기: c++ 노드 작성
+ - c++로 작성된 cpp_pubsub listener를 만들어서 py_pubsub talker가 보내는 토픽을 받아 보자.
+ - ros2 run cpp_pubsub listener
+ - 참고: https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html#write-the-subscriber-node
+ - rqt를 이용하여 토픽을 모니터링 해보자.
+
+![](https://i.imgur.com/ARCF7vx.png)
 
 ## 참고
  - ROS 2 Documentaion: Foxy https://docs.ros.org/en/foxy/Tutorials.html
- 
- 
