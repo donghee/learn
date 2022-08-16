@@ -95,6 +95,17 @@ source: 현재 쉘에서 파일을 읽고 실행
 source ~/.bashrc
 ```
 
+ps: 실행중인 프로세스 목록 나열
+
+```
+ps aux
+```
+
+kill: 프로세스 종료. 죽이기 
+
+```
+kill 프로세스번호
+```
 
 IP 확인 방법
 
@@ -118,6 +129,7 @@ git: 버전 관리, 코드 다운로드
 
 ```
 git init
+
 git add
 git commit
 git push
