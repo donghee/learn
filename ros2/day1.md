@@ -22,6 +22,8 @@
  - 주요 명령어 소개(파일 조작, 프로그램설치, 쉘스크립트, git)
  - 디렉토리 소개
 
+virtualbox ubuntu 20.04 ova 이미지 https://cloud.baribarilab.com/s/csjC5dXrqgRrGsT
+
 ### 주요 명령어
 
 ls: 파일 또는 디렉토리의 목록을 출력
