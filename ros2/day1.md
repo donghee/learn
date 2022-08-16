@@ -141,10 +141,17 @@ git checkout
 git branch
 ```
 
-해보기:
+**해보기:**
  - github에 새로운 코드 저장소를 만들어서 README.md 파일을 수정 해보자.
  - 힌트: github 가입, 새로운 저장소 추가, ssh 키추가. README.md 수정, 커밋, push
  - https://www.youtube.com/watch?v=RGOj5yH7evk
+
+리눅스에서 ssh 생성
+```
+ssh-keygen
+
+cat ~/.ssh/id_rsa.pub
+```
 
 ### 코드 편집기 Visual Studio Code 설치
 

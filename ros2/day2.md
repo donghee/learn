@@ -180,11 +180,11 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 
 ## 자율 주행 하드웨어 소개
 
- - https://github.com/omorobot/omo_r1mini-foxy
+ - https://omorobot.com/docs/omo-r1mini
 
 ## 자율 주행 하드웨어 코드 분석
 
- - https://omorobot.com/docs/omo-r1mini
+ - https://github.com/omorobot/omo_r1mini-foxy
 
 ## SLAM 주행 테스트
 
