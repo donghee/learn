@@ -196,24 +196,30 @@ simple_joint 패키지 설치
 cd ~/ros2_ws/src
 git clone https://github.com/donghee/simple_joint
 cd ~/ros2_ws
-colcon build simple_joint
+colcon build --packages-select simple_joint
 ```
 
 simple joint gazebo 실행
 ```
+cd ~/ros2_ws
+source ./install/setup.bash
 ros2 launch simple_joint_gazebo simple_joint_launch.py
 ```
 
 
 ros2 control joint state와  trajectory controller 로드 (새로운 터미널에서)
 ```
+cd ~/ros2_ws
+source ./install/setup.bash
 ros2 control load_controller --set-state start joint_state_broadcaster
 ros2 control load_controller --set-state start joint_trajectory_controller
 ```
 
 조인트 제어
 ```
-python3 /home/donghee/ros2_ws/install/simple_joint_description/lib/simple_joint_description/wheel_steer.py -0.5
+cd ~/ros2_ws
+source ./install/setup.bash
+python3 ~/ros2_ws/install/simple_joint_description/lib/simple_joint_description/wheel_steer.py -0.5
 ```
 
 <!-- ``` -->
