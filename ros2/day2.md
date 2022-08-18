@@ -190,6 +190,7 @@ ros2-control gazebo-ros2-control 설치
 ```
 sudo apt install ros-foxy-ros2-control ros-foxy-ros2-controller ros-foxy-gazebo-ros2-control ros-foxy-xacro
 ```
+
 simple_joint 패키지 설치
 ```
 cd ~/ros2_ws/src
