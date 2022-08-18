@@ -235,4 +235,21 @@ python3 ~/ros2_ws/install/simple_joint_description/lib/simple_joint_description/
 
 ## SLAM 주행 테스트
 
+## ROBOT 
+wifi: baribarilab-mobild.local
+```
+ssh ubuntu@doodoong.local  password: ubuntu
+```
+```
+ros2 launch omo_r1mini_bringup omo_r1mini_bringup.launch.py
+ros2 launch omo_r1mini_cartographer cartographer.launch.py
+ros2 run omo_r1mini_teleop teleop_keyboard 
+ros2 launch omo_r1mini_navigation2 navigation2.launch.py
+```
+
+## PC
+```
+ros2 launch omo_r1mini_cartographer cartographer_rviz.launch.py
+ros2 launch omo_r1mini_navigation2 navigation2_rviz.launch.py
+```
  https://cloud.baribarilab.com/apps/sharingpath/donghee/Public/2022/ros2/omo_r1mini_ros2-foxy-slam-demo.mp4
