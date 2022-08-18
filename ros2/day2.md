@@ -182,7 +182,8 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 ---
 
 ![](http://wiki.ros.org/urdf/XML/link?action=AttachFile&do=get&target=inertial.png)
-
+ - JOINT
+ - LINK
  - URDF: Unified Robot Description Format. 로봇의 geometry와 구성을 명세.
  - 관성모멘트: 주어진 축을 중심으로 일어나는 회전 운동을 변화시키기 어려운 정도
 
