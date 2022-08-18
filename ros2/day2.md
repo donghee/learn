@@ -178,6 +178,47 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 
 ![](https://github.com/osrf/gazebo_tutorials/raw/master/ros2_installing/figs/gazebo_ros_diff_drive_lin_vel.gif)
 
+
+---
+
+![](http://wiki.ros.org/urdf/XML/link?action=AttachFile&do=get&target=inertial.png)
+
+ - URDF: Unified Robot Description Format. 로봇의 geometry와 구성을 명세.
+ - 관성모멘트: 주어진 축을 중심으로 일어나는 회전 운동을 변화시키기 어려운 정도
+
+ros2-control gazebo-ros2-control 설치
+```
+sudo apt install ros-foxy-ros2-control ros-foxy-ros2-controller ros-foxy-gazebo-ros2-control ros-foxy-xacro
+```
+simple_joint 패키지 설치
+```
+cd ~/ros2_ws/src
+git clone https://github.com/donghee/simple_joint
+cd ~/ros2_ws
+colcon build simple_joint
+```
+
+simple joint gazebo 실행
+```
+ros2 launch simple_joint_gazebo simple_joint_launch.py
+```
+
+
+ros2 control joint state와  trajectory controller 로드 (새로운 터미널에서)
+```
+ros2 control load_controller --set-state start joint_state_broadcaster
+ros2 control load_controller --set-state start joint_trajectory_controller
+```
+
+조인트 제어
+```
+python3 /home/donghee/ros2_ws/install/simple_joint_description/lib/simple_joint_description/wheel_steer.py -0.5
+```
+
+<!-- ``` -->
+<!-- ros2 action send_goal /joint_trajectory_controller/follow_joint_trajectory control_msgs/action/FollowJointTrajectory "{ trajectory: { joint_names: [body_steering__wheel_stir_right], points: [ { positions: [0, 0, 0.5, 0.5] }]}, goal_time_tolerance: { sec: 1, nanosec: 0 } }" -->
+<!-- ``` -->
+
 ## 자율 주행 하드웨어 소개
 
  - https://omorobot.com/docs/omo-r1mini
