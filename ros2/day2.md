@@ -188,7 +188,7 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 
 ros2-control gazebo-ros2-control 설치
 ```
-sudo apt install ros-foxy-ros2-control ros-foxy-ros2-controller ros-foxy-gazebo-ros2-control ros-foxy-xacro
+sudo apt install ros-foxy-ros2-control ros-foxy-ros2-controllers ros-foxy-gazebo-ros2-control ros-foxy-xacro
 ```
 
 simple_joint 패키지 설치
