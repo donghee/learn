@@ -217,8 +217,6 @@ ros2 control load_controller --set-state start joint_trajectory_controller
 
 조인트 제어
 ```
-cd ~/ros2_ws
-source ./install/setup.bash
 python3 ~/ros2_ws/install/simple_joint_description/lib/simple_joint_description/wheel_steer.py -0.5
 ```
 
