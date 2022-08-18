@@ -236,7 +236,7 @@ python3 ~/ros2_ws/install/simple_joint_description/lib/simple_joint_description/
 ## SLAM 주행 테스트
 
 ## ROBOT 
-wifi: baribarilab-mobild.local
+wifi: baribarilab-mobile
 ```
 ssh ubuntu@doodoong.local  password: ubuntu
 ```
