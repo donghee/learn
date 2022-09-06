@@ -181,11 +181,60 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 
 ---
 
-![](http://wiki.ros.org/urdf/XML/link?action=AttachFile&do=get&target=inertial.png)
- - JOINT
+모델 구성 요소
  - LINK
+ - JOINT
  - URDF: Unified Robot Description Format. 로봇의 geometry와 구성을 명세.
  - 관성모멘트: 주어진 축을 중심으로 일어나는 회전 운동을 변화시키기 어려운 정도
+
+
+Link 
+
+![](http://wiki.ros.org/urdf/XML/link?action=AttachFile&do=get&target=inertial.png)
+
+```
+ <link name="my_link">
+   <inertial>
+     <origin xyz="0 0 0.5" rpy="0 0 0"/>
+     <mass value="1"/>
+     <inertia ixx="100"  ixy="0"  ixz="0" iyy="100" iyz="0" izz="100" />
+   </inertial>
+
+   <visual>
+     <origin xyz="0 0 0" rpy="0 0 0" />
+     <geometry>
+       <box size="1 1 1" />
+     </geometry>
+     <material name="Cyan">
+       <color rgba="0 1.0 1.0 1.0"/>
+     </material>
+   </visual>
+
+   <collision>
+     <origin xyz="0 0 0" rpy="0 0 0"/>
+     <geometry>
+       <cylinder radius="1" length="0.5"/>
+     </geometry>
+   </collision>
+ </link>
+```
+
+Joint
+
+![](http://wiki.ros.org/urdf/XML/joint?action=AttachFile&do=get&target=joint.png)
+
+```
+ <joint name="my_joint" type="floating">
+    <origin xyz="0 0 1" rpy="0 0 3.1416"/>
+    <parent link="link1"/>
+    <child link="link2"/>
+
+    <calibration rising="0.0"/>
+    <dynamics damping="0.0" friction="0.0"/>
+    <limit effort="30" velocity="1.0" lower="-2.2" upper="0.7" />
+    <safety_controller k_velocity="10" k_position="15" soft_lower_limit="-2.0" soft_upper_limit="0.5" />
+ </joint>
+```
 
 ros2-control gazebo-ros2-control 설치
 ```
