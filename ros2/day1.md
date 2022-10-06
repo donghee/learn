@@ -383,6 +383,8 @@ digraph {
 ### Services
 - Request-Response, 1:1 통신
 - PubSub이 필요 없는 경우 사용, 요청 할때만 데이터가 제공. 네트워크 부하가 적다.
+
+![](https://i.imgur.com/8DXMX1t.png)
  
 ### 예시: 카메라 이미지 얻기
  
@@ -424,6 +426,8 @@ digraph {
 	node2 -> node1 [label="Feedback Result"]
 }
 ```
+
+![](https://i.imgur.com/NcCUWFc.png)
 
 ## ROS Turtlesim
 
