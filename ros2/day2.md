@@ -231,8 +231,7 @@ Simultaneous Localization and Mapping 동시적 위치추정 및 지도작성
  - 누적 오차 발생
  - 높은 계산 비용.
 
-
-## 시뮬레이션
+## Gazebo 시뮬레이터를 이용하여 SLAM 실습
 
 Gazebo 시뮬레이터를 이용하여, SLAM과 자율 주행을 테스트 해보자.
 
@@ -296,6 +295,7 @@ source ~/.bashrc
 ```
 
 #### 시뮬레이터 실행
+
 ```
 ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
 ```
@@ -349,7 +349,7 @@ ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=true map:
  - ros2 launch turtlebot3_gazebo turtlebot3_dqn_stage3.launch.py 실행하여 자율 주행 해보자.
 
 
-#### Gazebo 시뮬레이션 모델 만들기
+#### Gazebo를 이용하여 로봇 모델 만들기
 
 1. 차동 주행 월드 로드
 
@@ -369,7 +369,6 @@ gazebo --verbose /opt/ros/foxy/share/gazebo_plugins/worlds/gazebo_ros_diff_drive
 ```
 ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 ```
-
 
 ![](https://github.com/osrf/gazebo_tutorials/raw/master/ros2_installing/figs/gazebo_ros_diff_drive_lin_vel.gif)
 

@@ -17,35 +17,42 @@
 
 ## Linux 사용하기
 
--   Ubuntu 20.04 설치
--   주요 명령어 소개(파일 조작, 프로그램설치, 쉘스크립트, git)
--   디렉토리 소개
+- Ubuntu 20.04 설치
+- 주요 명령어 소개(파일 조작, 프로그램설치, 쉘스크립트, git)
+- 디렉토리 소개
+
+virtualbox ubuntu 20.04 ova 이미지 https://cloud.baribarilab.com/s/csjC5dXrqgRrGsT
 
 ### 주요 명령어
 
 ls: 파일 또는 디렉토리의 목록을 출력
+
 ```
 ls
 ls -al
 ```
 
 cd: 디렉토리 이동
+
 ```
 cd ~
 cd ~/Downloads
 ```
 
 pwd: 현재 디렉토리 출력
+
 ```
 pwd
 ```
 
 mkdir: 디렉토리 생성
+
 ```
 mkdir tmp
 ```
 
 rm: 파일 또는 디렉토리 지우기
+
 ```
 rm -rf tmp
 ```
@@ -57,7 +64,6 @@ cat ~/.bashrc
 cat > ~/hello.c
 ```
 
-
 cp: 파일 또는 디렉토리 복사
 
 ```
@@ -65,7 +71,6 @@ cp hello.c world.c
 ```
 
 gcc: c코드 컴파일
-
 
 ```
 gcc hello.c -o hello
@@ -83,22 +88,28 @@ wget: url에서 파일 다운로드
 wget https://google.com
 ```
 
+curl: url의 파일 다운로드
+
+```
+curl https://google.com
+```
+
 source: 현재 쉘에서 파일을 읽고 실행
 
 ```
 source ~/.bashrc
 ```
 
-git: 버전 관리, 코드 다운로드
+ps: 실행중인 프로세스 목록 나열
 
 ```
-git init
-git clone
-git checkout
-git add
-git commit
-git reset
-git push
+ps aux
+```
+
+kill: 프로세스 종료. 죽이기
+
+```
+kill 프로세스번호
 ```
 
 IP 확인 방법
@@ -111,12 +122,41 @@ ip addr
 우분트 패키지 설치
 
 ```
-sudo apt-get update
-sudo apt-get install //설치할 패키지
-sudo apt-get remove //삭제할 패키지
-sudo apt-get upgrade
+sudo apt update
+sudo apt install //설치할 패키지
+sudo apt remove //삭제할 패키지
+sudo apt upgrade
 ```
 
+git: 버전 관리, 코드 다운로드
+
+![](https://i.imgur.com/6oVlYTU.png)
+
+```
+git init
+
+git add
+git commit
+git push
+
+git clone
+git checkout
+git branch
+```
+
+**해보기:**
+
+- github에 새로운 코드 저장소를 만들어서 README.md 파일을 수정 해보자.
+- 힌트: github 가입, 새로운 저장소 추가, ssh 키추가. README.md 수정, 커밋, push
+- https://www.youtube.com/watch?v=RGOj5yH7evk
+
+리눅스에서 ssh 생성
+
+```
+ssh-keygen
+
+cat ~/.ssh/id_rsa.pub
+```
 
 ### 코드 편집기 Visual Studio Code 설치
 
@@ -136,6 +176,7 @@ sudo dpkg -i code_1.69.2-1658162013_amd64.deb
 https://docs.ros.org/en/foxy/Installation/Ubuntu-Install-Debians.html
 
 UTF-8 로케일 설정
+
 ```
 sudo apt update && sudo apt install locales
 sudo locale-gen en_US en_US.UTF-8
@@ -145,8 +186,7 @@ export LANG=en_US.UTF-8
 locale
 ```
 
-
-우분트 패키지 소스 리스트에 ROS 2 foxy 추가 
+우분트 패키지 소스 리스트에 ROS 2 foxy 추가
 
 ```
 sudo apt update && sudo apt install curl gnupg2 lsb-release
@@ -179,7 +219,8 @@ sudo apt install python3-colcon-common-extensions
 
 ROS 2 환경 구분을 위한 도메인 아이디 설정
 
-자신의 도메인 아이디를 ~/.bashrc에 추가 한다. 
+자신의 도메인 아이디를 ~/.bashrc에 추가 한다.
+
 ```
 export ROS_DOMAIN_ID=0 # 강사
 export ROS_DOMAIN_ID=10
@@ -191,36 +232,37 @@ export ROS_DOMAIN_ID=60
 ```
 
 사용법
+
 ```
 ROS_DOMAIN_ID=10 ros2 topic list
 ```
 
 ### Visual Studio Code 확장 설치
- - C/C++, CmMake, CMake Tools, Python
- - ROS, URDF, Colcon Tasks
- - XML Tools, YAML, Markdown All in One
 
-## ROS 2 소개 
+- C/C++, CmMake, CMake Tools, Python
+- ROS, URDF, Colcon Tasks
+- XML Tools, YAML, Markdown All in One
+
+## ROS 2 소개
 
 ### ROS
 
 - Robot Operating System: 로봇 빌드에 사용되는 라이브러리 어플리케이션 모음 <http://www.ros.org/>
 - 목표: 로봇을 만들때 기존의 재활용 하고 공유하자.
 - History:
-	- 2000s: Standford Artificial intelligence
-	- 2007: Willow Garage
-	- 2013: Open Source Robotics Foundation
-	- 2017: ROS 2 첫버전 릴리즈
+  - 2000s: Standford Artificial intelligence
+  - 2007: Willow Garage
+  - 2013: Open Source Robotics Foundation
+  - 2017: ROS 2 첫버전 릴리즈
 - 사용 분야: Drone, Kinematic ARMS(로봇암), Wheeled(바퀴), Bi-pedal(이족)
 
 ### ROS 2 왜?
- - 리얼타임 
- - 임베디드 시스템 
- - Linux, macOS, Windows 지원
- - 통신 QOS 지원: 안정성 향상
- - 다양한 프로그래밍 언어 호환: RCL 
 
-
+- 리얼타임
+- 임베디드 시스템
+- Linux, macOS, Windows 지원
+- 통신 QOS 지원: 안정성 향상
+- 다양한 프로그래밍 언어 호환: RCL
 
 ### ROS 2 구조
 
@@ -241,21 +283,23 @@ digraph {
 ```
 
 - Perception: Sense
-	- Sensor Fusion
-	- Filtering
-	- Localization 
-  
+
+  - Sensor Fusion
+  - Filtering
+  - Localization
+
 - Dicesion Making: Decide
-	- Path Planning
-	- Prediction
-	- Behavior Planning
+
+  - Path Planning
+  - Prediction
+  - Behavior Planning
 
 - Actuation: Act
-	- PID Control
-	- Model Predictive Control
+
+  - PID Control
+  - Model Predictive Control
 
 ### ROS Nodes
- 
 
 ```graphviz
 digraph {
@@ -263,7 +307,7 @@ digraph {
 	node [shape=box, color="#40e0d0"];
 	edge [fontname="MS Gothic"];
 	label = "ROS Nodes";
-	
+
 	subgraph cluster_perception {
 		node [shape=rect, style="rounded"];
 		label = "Perception";
@@ -271,13 +315,13 @@ digraph {
 		"Wheel Encoder";
 		"Positon Estimator";
 	}
-	
+
 	subgraph cluster_dicesion_making {
 		node [shape=rect, style="rounded"];
 		label = "Dicesion Making";
 		"Behavior Execution";
 	}
-	
+
 	subgraph cluster_actuation {
 		node [shape=rect, style="rounded"];
 		label = "Actuation";
@@ -286,18 +330,17 @@ digraph {
 }
 ```
 
-
 ## ROS 인터페이스
 
 ROS에서 노드간 통신(토픽, 서비스, 액션)할때 이동하는 데이터 타입
 
 미리 정의된 메시지 타입 :
+
 - https://github.com/ros2/common_interfaces
 
- - 토픽: msg 파일
- - 서비스: srv 파일
- - 액션: action 파일
-
+- 토픽: msg 파일
+- 서비스: srv 파일
+- 액션: action 파일
 
 ### Topics
 
@@ -313,7 +356,6 @@ digraph {
 	node1 -> node2 [label="/topic_name"];
 }
 ```
- 
 
 ### Publish and Subscribe
 
@@ -335,7 +377,7 @@ digraph {
 ```
 
 실제 예제
- 
+
 ```graphviz
 digraph {
 	node [color="#40e0d0"]
@@ -348,11 +390,14 @@ digraph {
 ```
 
 ### Services
+
 - Request-Response, 1:1 통신
 - PubSub이 필요 없는 경우 사용, 요청 할때만 데이터가 제공. 네트워크 부하가 적다.
- 
+
+![](https://i.imgur.com/8DXMX1t.png)
+
 ### 예시: 카메라 이미지 얻기
- 
+
 ```graphviz
 digraph {
 	rankdir=LR;
@@ -362,7 +407,7 @@ digraph {
 	"Camera" -> "Behavior Executor" [label="/camera_images\limage"]
 }
 ```
- 
+
 ```graphviz
 digraph {
 	rankdir=LR;
@@ -375,10 +420,11 @@ digraph {
 ```
 
 ### Action
- - Service + Message Passing
- - 비동기식 양방향 메시지 송수신 방식
- - Goal/Feedback/Result
- 
+
+- Service + Message Passing
+- 비동기식 양방향 메시지 송수신 방식
+- Goal/Feedback/Result
+
 ```graphviz
 digraph {
 	rankdir=LR
@@ -391,6 +437,8 @@ digraph {
 	node2 -> node1 [label="Feedback Result"]
 }
 ```
+
+![](https://i.imgur.com/NcCUWFc.png)
 
 ## ROS Turtlesim
 
@@ -411,34 +459,47 @@ Turtle
    ```
    ros2 pkg executables turtlesim
    ```
-2. turtlesim 패키지의 `turtlesim_node` 실행
+3. turtlesim 패키지의 `turtlesim_node` 실행
    ```
    ros2 run turtlesim turtlesim_node
    ```
-3. turtlesim 패키지의 `turtle_teleop_key` 실행
+4. turtlesim 패키지의 `turtle_teleop_key` 실행
    ```
    ros2 run turtlesim turtle_teleop_key
    ```
 
 ### Turtlesim 노드 정보
 
-노드 목록 보기 
+노드 목록 보기
+
 ```
 ros2 node list
 ```
 
-노드 정보 보기 
+노드 정보 보기
+
 ```
 ros2 node info /turtlesim
 ```
 
+노드 라이프사이클 (turtlesim에는 없음)
+
+```bash
+ros2 lifecycle nodes
+ros2 lifecycle list 노드이름
+ros2 lifecycle get 노드이름
+ros2 lifecycle set 노드이름 configure/activate/deactivate/cleanup/shutdown
+```
+
 ### Turtlesim 토픽 목록
+
 ```
 ros2 topic list
 ```
 
 ### Turtlesim 토픽 정보
-`cmd_vel` 토픽 정보 보기 
+
+`cmd_vel` 토픽 정보 보기
 
 ```
 ros2 topic info /turtle1/cmd_vel
@@ -451,6 +512,11 @@ ros2 topic pub --once /turtle1/cmd_vel geometry_msgs/msg/Twist '{linear: {x: 2.0
 ```
 
 ### Turtlesim 메시지 정보
+
+```
+ros2 interface list
+```
+
 ```
 $ ros2 interface show geometry_msgs/msg/Twist
 geometry_msgs/Vector3 linear
@@ -471,10 +537,9 @@ geometry_msgs/Vector3 angular
 ros2 topic echo /turtle1/cmd_vel
 ```
 
-
 ### `rqt_graph`
 
-    rqt_graph
+rqt_graph
 
 ![img](https://i.imgur.com/rBjL8fv.png)
 
@@ -482,33 +547,36 @@ ros2 topic echo /turtle1/cmd_vel
 
 ![](https://i.imgur.com/hDRuBW8.png)
 
-
-
 ### Turtlesim 서비스 정보
-서비스 목록 
+
+서비스 목록
 
 ```
 ros2 service list -t
 ```
 
 서비스 Call
+
 ```
 ros2 service call /spawn turtlesim/srv/Spawn "{x: 2, y: 2, theta: 0.2, name: ''}"
 ```
 
 ### Turtlesim Action 정보
 
-액션 목록 
+액션 목록
+
 ```
 ros2 action list -t
 ```
 
 액션 정보
+
 ```
 ros2 action info /turtle1/rotate_absolute
 ```
 
-액션 골 보내기 -90도 회전 
+액션 골 보내기 -90도 회전
+
 ```
 ros2 action send_goal /turtle1/rotate_absolute turtlesim/action/RotateAbsolute {'theta:
 -1.57'}
@@ -532,22 +600,24 @@ ros2 param set /my_node use_sim_time false
 노드 간 통신 메시지를 bag에 녹화하고 재생
 
 bag 녹화
+
 ```
 ros2 bag record /turtle1/cmd_vel
 ```
 
 녹화된 bag 정보
+
 ```
 ros2 bag info rosbag2_2022_07_24-20_10_23/
 ```
 
 bag 재생
+
 ```
 ros2 bag play rosbag2_2022_07_24-20_10_23/
 ```
 
 
 ## 참고
- - ROS 2 Documentaion: Foxy https://docs.ros.org/en/foxy/Tutorials.html
- 
- 
+
+- ROS 2 Documentaion: Foxy https://docs.ros.org/en/foxy/Tutorials.html
