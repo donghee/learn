@@ -1,28 +1,31 @@
 # ROS 2 Programming Day 2
 
- - 수업자료: https://learn.dronemap.io/ros-workshop/ros2/
- - 준비물: ubuntu 20.04 리눅스가 설치된 컴퓨터
- - 참고책: ROS 2로 시작하는 로봇 프로그래밍
+- 수업자료: https://learn.dronemap.io/ros-workshop/ros2/
+- 준비물: ubuntu 20.04 리눅스가 설치된 컴퓨터
+- 참고책: ROS 2로 시작하는 로봇 프로그래밍
 
 ## 수업 소개
 
--   목표: 나만의 ROS 노드 만들고, 시뮬레이터를 이용하여 노드를 프로그래밍 할 수 있다.
--   교재: [https://learn.dronemap.io/ros-workshop/ros2/#/day2](https://learn.dronemap.io/ros-workshop/ros2/#/day2)
--   코치: 박동희 dongheepark@gmail.com
+- 목표: 나만의 ROS 노드 만들고, 시뮬레이터를 이용하여 노드를 프로그래밍 할 수 있다.
+- 교재: [https://learn.dronemap.io/ros-workshop/ros2/#/day2](https://learn.dronemap.io/ros-workshop/ros2/#/day2)
+- 코치: 박동희 dongheepark@gmail.com
 
 1. ROS 기본 프로그래밍
- - 워크스페이스 만들기
- - ROS 노드 만들기
+
+- 워크스페이스 만들기
+- ROS 노드 만들기
 
 2. 자율 주행 소프트웨어 실습
- - 시뮬레이터 사용하기
- - SLAM 소개
- - ROS와 시뮬레이터를 이용하여 SLAM 실습
+
+- 시뮬레이터 사용하기
+- SLAM 소개
+- ROS와 시뮬레이터를 이용하여 SLAM 실습
 
 3. Raspberry Pi에 ROS 2 개발 환경 구성
- - 네트워크 설정
- - Raspberry Pi에 ROS 2 설치
- - 모터, IMU ROS 노드 만들기
+
+- 네트워크 설정
+- Raspberry Pi에 ROS 2 설치
+- 모터, IMU ROS 노드 만들기
 
 ---
 
@@ -31,25 +34,30 @@
 ### 새로운 노드 만들기
 
 빌드 도구 colcon 설치하기
+
 ```
 sudo apt install python3-colcon-common-extensions python3-rosdep2
 ```
 
 #### 패키지 만들기
+
 ```
 mkdir -p ~/ros2_ws/src
 cd ~/ros2_ws/src
 ```
 
 my_package 이름의 패키지 안에 my_node 이름 노드를 만들어 보자.
+
 ```
 #ros2 pkg create --build-type ament_python my_package # my_package 만 만들경우
 ros2 pkg create --build-type ament_python --node-name my_node my_package
 ```
- - python package(ament_python) ? cmake 패키지(ament_cmake) --dependencies 의존패키지
- - 의존 패키지 추가하기: ros2 pkg create --build-type ament_cmake --node-name my_node my_cpp_package --dependencies rclcpp
+
+- python package(ament_python) ? cmake 패키지(ament_cmake) --dependencies 의존패키지
+- 의존 패키지 추가하기: ros2 pkg create --build-type ament_cmake --node-name my_node my_cpp_package --dependencies rclcpp
 
 #### 패키지 빌드
+
 ```
 cd ~/ros2_ws
 colcon build --packages-select my_package
@@ -58,29 +66,34 @@ colcon build --packages-select my_package
 #### 패키지 노드 실행
 
 환경 변수 설정
+
 ```
 cd ~/ros2_ws
 source install/setup.bash
 ```
 
 노드 실행
+
 ```
 ros2 run my_package my_node
 ```
 
 #### 해보기: my_package 분석
- - ros2_ws/src/my_package 안의 디렉토리와 파일을 분석하고 설명해보자.
+
+- ros2_ws/src/my_package 안의 디렉토리와 파일을 분석하고 설명해보자.
 
 #### 해보기: c++ 노드 패키지 작성
- - c++ 코드로 구현된 my_cpp_package와 my_node 만들고, 그 노드를 실행해보자.
- - 힌트: 패키지 만들때 ament_cmake 옵션 사용
- - 참고: https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html
 
-----
+- c++ 코드로 구현된 my_cpp_package와 my_node 만들고, 그 노드를 실행해보자.
+- 힌트: 패키지 만들때 ament_cmake 옵션 사용
+- 참고: https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html
+
+---
 
 ### 새로운 노드 만들기: Pub Sub 노드 만들기
 
 #### 패키지 만들기
+
 ```
 cd ~/ros2_ws/src
 ros2 pkg create --build-type ament_python py_pubsub
@@ -178,7 +191,9 @@ entry_points={
         ],
 },
 ```
+
 #### 패키지 빌드
+
 ```
 cd ~/ros2_ws
 rosdep install -i --from-path src --rosdistro foxy -y
@@ -203,10 +218,11 @@ ros2 run py_pubsub listener
 ```
 
 #### 해보기: c++ 노드 작성
- - c++로 작성된 cpp_pubsub listener를 만들어서 py_pubsub talker가 보내는 토픽을 받아 보자.
- - ros2 run cpp_pubsub listener
- - 참고: https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html#write-the-subscriber-node
- - rqt를 이용하여 토픽을 모니터링 해보자.
+
+- c++로 작성된 cpp_pubsub listener를 만들어서 py_pubsub talker가 보내는 토픽을 받아 보자.
+- ros2 run cpp_pubsub listener
+- 참고: https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html#write-the-subscriber-node
+- rqt를 이용하여 토픽을 모니터링 해보자.
 
 ![](https://i.imgur.com/ARCF7vx.png)
 
@@ -221,15 +237,17 @@ Simultaneous Localization and Mapping 동시적 위치추정 및 지도작성
 ![](https://kr.mathworks.com/discovery/slam/_jcr_content/mainParsys3/discoverysubsection_158176500/mainParsys3/image.adapt.full.medium.png/1654866250910.png)
 
 종류
- - vSLAM: 카메라 이용.
-   - PTAM, ORB-SLAM 알고리즘 사용
- - 라이다 SLAM: 라이다 센서 이용. 포인트 클라우드 생성.
-   - 포인트 클라우드 합치기 알고리즘: ICP, NDT
+
+- vSLAM: 카메라 이용.
+  - PTAM, ORB-SLAM 알고리즘 사용
+- 라이다 SLAM: 라이다 센서 이용. 포인트 클라우드 생성.
+  - 포인트 클라우드 합치기 알고리즘: ICP, NDT
 
 특징
- - 실시간 지도 생성
- - 누적 오차 발생
- - 높은 계산 비용.
+
+- 실시간 지도 생성
+- 누적 오차 발생
+- 높은 계산 비용.
 
 ## Gazebo 시뮬레이터를 이용하여 SLAM 실습
 
@@ -252,6 +270,7 @@ gazebo
 ```
 
 가상 머신에서 에러가 나는 경우 다음 실행후 다시 gazebo 실행
+
 ```
 export SVGA_VGPU10=0
 ```
@@ -263,6 +282,7 @@ sudo apt install ros-foxy-gazebo-dev ros-foxy-gazebo-plugins ros-foxy-gazebo-msg
 ```
 
 #### SLAM, Navigation 패키지 설치
+
 ```
 sudo apt install ros-foxy-cartographer
 sudo apt install ros-foxy-cartographer-ros
@@ -271,6 +291,7 @@ sudo apt install ros-foxy-nav2-bringup
 ```
 
 #### 터틀봇 패키지 설치
+
 ```
 sudo apt install python3-vcstool
 mkdir -p ~/turtlebot3_ws/src
@@ -309,11 +330,13 @@ ros2 launch turtlebot3_cartographer cartographer.launch.py use_sim_time:=true
 ![](https://i.imgur.com/MDWDPgQ.png)
 
 키보드 입력
+
 ```
 ros2 run turtlebot3_teleop teleop_keyboard
 ```
 
 토픽, 서비스 확인
+
 ```
 ros2 topic list
 ros2 service list
@@ -322,32 +345,35 @@ ros2 topic pub /cmd_vel geometry_msgs/Twist '{linear: {x: 0.0}}' -1
 ```
 
 맵과 로봇 프레임 좌표 연결 확인
+
 ```
 ros2 run tf2_ros tf2_echo base_footprint map
 ```
 
 프레임 좌표 연결 확인
+
 ```
 ros2 topic echo /odom
 ros2 run tf2_tools view_frames.py
 ```
 
 맵 저장
+
 ```
 ros2 run nav2_map_server map_saver_cli -f map
 ```
 
 네비게이션 실행. 자율 주행!
+
 ```
 ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=true map:=./map.yaml
 ```
 
 ![](https://i.imgur.com/8TLNJRc.png)
 
-
 #### 해보기: turtlebot3_dqn_stage3.launch.py
- - ros2 launch turtlebot3_gazebo turtlebot3_dqn_stage3.launch.py 실행하여 자율 주행 해보자.
 
+- ros2 launch turtlebot3_gazebo turtlebot3_dqn_stage3.launch.py 실행하여 자율 주행 해보자.
 
 #### Gazebo를 이용하여 로봇 모델 만들기
 
@@ -366,6 +392,7 @@ gazebo --verbose /opt/ros/foxy/share/gazebo_plugins/worlds/gazebo_ros_diff_drive
 월드 파일에서 플러그인과 출력 확인
 
 1. 로봇 조정
+
 ```
 ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 ```
@@ -434,27 +461,28 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 <!-- 참고 -->
 <!--  - https://www.udemy.com/course/ros2-for-beginners/?referralCode=18C75F99C1A868F0A7AB -->
 
-
 ## Raspberry Pi 3에 ROS 2 설치
 
 준비물
- - [Ubuntu 20.04: Raspberry Pi Generic (64-bit ARM) preinstalled server image](https://cdimage.ubuntu.com/releases/20.04/release/)
- - balenaEther
- - SD카드 32GB
+
+- [Ubuntu 20.04: Raspberry Pi Generic (64-bit ARM) preinstalled server image](https://cdimage.ubuntu.com/releases/20.04/release/)
+- balenaEther
+- SD카드 32GB
 
 ### ROS 2 설치 준비
- - 키보드, 모니터 연결하여 네트워크 설정
- - timezone 설정
- - swap 추가
- - ROS_DOMAIN_ID 설정: 노트북, Raspberry Pi 같은 도메인 ID로 지정.
+
+- 키보드, 모니터 연결하여 네트워크 설정
+- timezone 설정
+- swap 추가
+- ROS_DOMAIN_ID 설정: 노트북, Raspberry Pi 같은 도메인 ID로 지정.
 
 #### WIFI 네트워크 설정
 
- - WIFI AP: "baribarilab"
- - WIFI PASSWORD: "1111100000"
-
+- WIFI AP: "baribarilab"
+- WIFI PASSWORD: "1111100000"
 
 sudo nano /etc/netplan/50-cloud-init.yaml
+
 ```
 network:
   version: 2
@@ -506,12 +534,14 @@ sudo mkswap /swapfile
 ```
 
 Swap 생성 확인
+
 ```
 Setting up swapspace version 1, size = 1024 MiB (1073737728 bytes)
 no label, UUID=09c9cd5c-f066-48f0-b988-7b000b69ed3d
 ```
 
 Swap 추가
+
 ```
 sudo swapon /swapfile
 ```
@@ -527,6 +557,7 @@ sudo nano /etc/fstab
 ```
 
 swap 확인
+
 ```
 sudo free -h
 
@@ -547,6 +578,12 @@ sudo apt update
 sudo apt install ros-foxy-ros-base -y
 ```
 
+빌드 도구 설치하기
+
+```
+sudo apt install python3-colcon-common-extensions python3-rosdep2 build-essential libboost-dev
+```
+
 base 패키지는 GUI툴이 포함되어 있지 않다.
 
 ```
@@ -555,8 +592,8 @@ echo "source /opt/ros/foxy/setup.bash" >>~/.bashrc
 
 ### 원격 접속하기
 
- - 아이디 ubuntu
- - 암호: ubuntu
+- 아이디 ubuntu
+- 암호: ubuntu
 
 ```
 ssh ubuntu@192.168.88.??
@@ -566,12 +603,13 @@ ssh ubuntu@192.168.88.??
 
 #### IMU
 
-*mpu9250과 Raspberry Pi 연결하기*
+_mpu9250과 Raspberry Pi 연결하기_
 ![](https://images.squarespace-cdn.com/content/v1/59b037304c0dbfb092fbe894/1573589401909-GKK8YB7UJ9FLCCYBDDRP/rpi_mpu9250_wiring_diagram.png?format=2500w)
 
 https://abyz.me.uk/rpi/pigpio/download.html
 
 연결 확인
+
 ```
 i2cdetect -y 1
 ```
@@ -592,6 +630,7 @@ ubuntu@doodoong:~$ i2cdetect -y 1
 ```
 
 permission 문제가 있을경우, 다음 명령으로 i2c 그룹에 ubuntu 유저를 추가한다. 추가 후 다시 로그인 해야 그룹이 적용.
+
 ```
 sudo usermod -G i2c "$USER"
 ```
@@ -604,18 +643,20 @@ L298n
 
 ![](https://i.imgur.com/Cn6y8qp.png)
 
-*L298n과 Raspberry Pi 연결하기*
+_L298n과 Raspberry Pi 연결하기_
 
 ![](https://imgur.com/0dio7EM.png)
 
 ![](https://www.raspberrypi-spy.co.uk/wp-content/uploads/2012/06/raspberry_pi_3_model_b_plus_gpio.jpg)
 
 #### 카메라
+
 raspberry pi camera v1
 
 https://github.com/christianrauch/raspicam2_node
 
 #### 라이다
+
 rplidar a1
 
 https://github.com/Slamtec/sllidar_ros2
@@ -641,7 +682,6 @@ https://github.com/Slamtec/sllidar_ros2
 <!-- sudo make install -->
 <!-- ``` -->
 
-
 <!-- https://www.theconstructsim.com/tag/ros2 -->
 
 <!-- ## ROS2 패키지 만들기 -->
@@ -650,7 +690,6 @@ https://github.com/Slamtec/sllidar_ros2
 <!-- source /opt/ros/foxy/setup.bash -->
 
 <!-- ros2 pkg create <package_name> --build-type <build_type> --dependencies <dependencies_separated_by_single_space> -->
-
 
 <!-- ros2_ws/src -->
 <!-- ros2 pkg create ros2_hello_cpp_pkg --build-type ament_cmake --dependencies rclcpp -->
@@ -671,8 +710,6 @@ https://github.com/Slamtec/sllidar_ros2
 <!--   rclcpp::shutdown(); -->
 <!--   return 0; -->
 <!-- } -->
-
-
 
 <!-- CMakeLists.txt -->
 <!-- ``` -->
@@ -695,7 +732,6 @@ https://github.com/Slamtec/sllidar_ros2
 
 <!-- ros2 run ros2_hello_cpp_pkg hello -->
 
-
 <!-- python 버전 -->
 
 <!-- ``` -->
@@ -704,7 +740,6 @@ https://github.com/Slamtec/sllidar_ros2
 <!-- from rclpy.node import Node -->
 <!-- from box_bot_perception.dummy_class import Dummy -->
 <!-- from std_msgs.msg import String -->
-
 
 <!-- class MinimalPublisher(Node): -->
 
@@ -715,15 +750,12 @@ https://github.com/Slamtec/sllidar_ros2
 <!--         timer_period = 0.5  # seconds -->
 <!--         self.timer = self.create_timer(timer_period, self.timer_callback) -->
 
-
 <!--     def timer_callback(self): -->
 <!--         msg = String() -->
 <!--         talk_text = self.dummy_obj.talk() -->
 <!--         msg.data = "Dummy Said:"+str(talk_text) -->
 <!--         self.publisher_.publish(msg) -->
 <!--         self.get_logger().info('Publishing: "%s"' % msg.data) -->
-
-
 
 <!-- def main(args=None): -->
 <!--     rclpy.init(args=args) -->
@@ -738,11 +770,23 @@ https://github.com/Slamtec/sllidar_ros2
 <!--     minimal_publisher.destroy_node() -->
 <!--     rclpy.shutdown() -->
 
-
 <!-- if __name__ == '__main__': -->
 <!--     main() -->
 <!-- ``` -->
 
-
 <!-- rpi2 cam on ros2 -->
 <!-- https://www.youtube.com/watch?v=MlYWtDNsvgw -->
+
+---
+
+diffdrive-arduino
+
+필요한 패키지
+ros-foxy-ros2-control ros-foxy-ros2-controllers ros-foxy-hardware-interface ros-foxy-xacro
+
+---
+
+icra2023 ros2 gz tutorial
+
+- https://drive.google.com/drive/folders/1HeveECTM4RTbKhFgO0gieUqawBCQKZf0
+- https://github.com/osrf/icra2023_ros2_gz_tutorial#quick-start

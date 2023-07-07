@@ -1,14 +1,14 @@
 # ROS 2 Programming Day 1
 
- - 수업자료: https://learn.dronemap.io/ros-workshop/ros2/
- - 준비물: ubuntu 20.04 리눅스가 설치된 컴퓨터
- - 참고책: ROS 2로 시작하는 로봇 프로그래밍
+- 수업자료: https://learn.dronemap.io/ros-workshop/ros2/
+- 준비물: ubuntu 20.04 리눅스가 설치된 컴퓨터
+- 참고책: ROS 2로 시작하는 로봇 프로그래밍
 
 ## 수업 소개
 
--   목표: 자율 주행 로봇 개발 환경 구축하고 ROS 2를 이용하여 제어 프로그램을 개발 할 수 있다. 
--   교재: [https://learn.dronemap.io/ros-workshop/ros2/#/day1](https://learn.dronemap.io/ros-workshop/ros2/#/day1)
--   코치: 박동희 dongheepark@gmail.com
+- 목표: 자율 주행 로봇 개발 환경 구축하고 ROS 2를 이용하여 제어 프로그램을 개발 할 수 있다.
+- 교재: [https://learn.dronemap.io/ros-workshop/ros2/#/day1](https://learn.dronemap.io/ros-workshop/ros2/#/day1)
+- 코치: 박동희 dongheepark@gmail.com
 
 1. 워크숍 소개, 참가자 소개
 2. ROS 2 소개
@@ -446,7 +446,6 @@ Turtle
 
 ![img](https://i.imgur.com/0r46gFH.png)
 
-
 ### Turtlesim 실행하기
 
 ![img](https://d17h27t6h515a5.cloudfront.net/topher/2017/March/58d9820b_running-turtlesim/running-turtlesim.png)
@@ -616,7 +615,6 @@ bag 재생
 ```
 ros2 bag play rosbag2_2022_07_24-20_10_23/
 ```
-
 
 ## 참고
 
