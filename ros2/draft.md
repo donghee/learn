@@ -41,9 +41,10 @@ ros2 run tf2_ros static_transform_publisher 2 1 0 0.785 0 0 world robot_1
 ros2 run tf2_ros static_transform_publisher 1 0 0 0 0 0 robot_1 robot_2
 ```
 
+#### 해보기: `robot_1`는 `world` 좌표계를 기준으로 어디에 있나?
 
-
-`world`, `robot_1`, `robot_2`의 관계 보기
+- robot_1의 위치와 방향을 계산해보자. 
+- rviz를 이용해서 `world`, `robot_1`, `robot_2`의 관계 보기
 
 ```
 ros2 run rviz2 rviz2
