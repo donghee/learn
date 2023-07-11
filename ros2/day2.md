@@ -100,14 +100,21 @@ git clone git@github.com:donghee/firstbot_zara.git -b foxy
 git clone https://github.com/donghee/firstbot_zara.git -b foxy --recursive
 ```
 
-gazebo 모델 추가
+패키지 빌드
 ```
 cd ~/firstbot_ws
 colcon build --symlink-install
 source install/setup.bash
 echo "source ~/firstbot_ws/install/setup.bash" >> ~/.bashrc
-echo "export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/firstbot_ws/src/firstbot_zara/firstbot_description/models" >> ~/.bashrc
+#echo "export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/firstbot_ws/src/firstbot_zara/firstbot_description/models" >> ~/.bashrc
 source ~/.bashrc
+```
+
+gazebo 모델 추가
+
+```
+mkdir -p ~/.gazebo/models
+cp -Rf ~/firstbot_ws/src/firstbot_zara/firstbot_description/models/* ~/.gazebo/models
 ```
 
 #### 시뮬레이터 실행
@@ -118,8 +125,14 @@ ros2 launch firstbot_description launch_sim.launch.py use_sim_time:=true
 
 ![](https://i.imgur.com/eImcWz6.png)
 
+맵생성
+
 ```
 ros2 launch firstbot_cartographer cartographer.launch.py use_sim_time:=true
+```
+
+```
+ros2 launch firstbot_cartographer cartographer_rviz.launch.py use_sim_time:=true
 ```
 
 ![](https://i.imgur.com/MDWDPgQ.png)
@@ -155,16 +168,24 @@ ros2 run tf2_tools view_frames.py
 맵 저장
 
 ```
+cd ~/firstbot_ws
 ros2 run nav2_map_server map_saver_cli -f map
 ```
 
 네비게이션 실행. 자율 주행!
 
 ```
+cd ~/firstbot_ws
 ros2 launch firstbot_navigation2 navigation2.launch.py use_sim_time:=true map:=./map.yaml
 ```
 
+```
+ros2 launch firstbot_navigation2 navigation2_rviz.launch.py
+```
+
 ![](https://i.imgur.com/8TLNJRc.png)
+
+<!-- ![](https://i.imgur.com/NytGENa.png) -->
 
 #### 해보기: gazebo에서 브릭 박스로 장애물을 구성해서 자율 주행을 해보자.
 
