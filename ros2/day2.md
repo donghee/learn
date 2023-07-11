@@ -182,7 +182,7 @@ xacro joint-state-publisher-gui 설치
 sudo apt install ros-foxy-ros2-control ros-foxy-ros2-controllers ros-foxy-gazebo-ros2-control ros-foxy-xacro ros-foxy-joint-state-publisher-gui
 ```
 
-자라 로봇의 주요 수치
+ZARA 로봇의 주요 수치
 - 샷시의 지름 30cm
 - 샷시의 높이 5cm 
 - 샷시의 무게 500g
