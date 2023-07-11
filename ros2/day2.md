@@ -643,15 +643,56 @@ ssh ubuntu@192.168.88.??
 
 ![](https://i.imgur.com/AetvNwy.png)
 
+- Raspberry Pi 4
+- Raspberry Pi Camera V1
+- RPLIDAR A1
+- 몸체 프레임
+- DC 모터+인코더 출력 
+- 3S LiPo 배터리
+- 배터리 충전기 
+
 #### 차동구동 모터 드라이버
 
 `diffbot_arduion.ino`
 
 펌웨어: https://gist.github.com/donghee/c0319e3f95fce0dca63fb29710954119
 
+코드 읽기
+
+ - PID 제어: 속도 제어
+ - 인코더 읽기. 1바퀴에 1200 펄스 생성
+
 #### 카메라
 
 #### 라이다
 
+#### RPLIDAR A1
+
+https://www.slamtec.com/en/Lidar/A1
+
+![](https://mblogthumb-phinf.pstatic.net/MjAyMDA1MThfNTgg/MDAxNTg5NzczODkwMTAz.OF3ryBtnNzMRC8Zgtgz0l0M0mNOboq_Q3L95MFhYg6Ug.w7erXC3UCYdhj3tk1F8h0-3jCi7IsNhEqSKmswLQdyYg.PNG.rich0812/SE-18a6b694-89cf-4e5b-ae73-99e1b92f736f.png?type=w800)
+
+![](https://i.imgur.com/sJiKhWe.png ":size=600")
+
+ROS2 노드
+
+https://github.com/Slamtec/sllidar_ros2.git
+
+```
+cd ~/ros2_ws/src
+git clone https://github.com/Slamtec/sllidar_ros2.git
+cd ~/ros2_ws
+colcon build --symlink-install
+source ./install/setup.sh
+./src/sllidar_ros2/scripts/create_udev_rules.sh
+
+ros2 launch sllidar_ros2 sllidar_launch.py
+```
+
+#### 해보기: A1 라이더 값 받기
+
+- rplidar 센서값을 ros2 topic echo를 이용해서 받아 보자.
+- ros2 노드를 구성해서 라이더 값을 받아서 라이더 값의 최소값을 구해보자.
+- 참고: https://github.com/ROBOTIS-GIT/turtlebot3/blob/master/turtlebot3_example/nodes/turtlebot3_obstacle
 
 
