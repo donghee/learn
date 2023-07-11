@@ -11,9 +11,10 @@
 
 ---
 
+# 
 `robot_state_publisher`
 
-sensor_msgs/JointState 메시지와 URF를 받아서 로봇의 3D 모델(즉, 로봇의 전체 형태)의 현재 상태를 계산하여 . TF도 계산해서 전달. TF 상대위치 계산할때 사용
+sensor_msgs/JointState 메시지와 URDF를 받아서 로봇의 3D 모델(즉, 로봇의 전체 형태)의 현재 상태를 계산하여, TF와, /robot_description 메시지 발행
 
 ```graphviz
 digraph {
@@ -30,5 +31,3 @@ digraph {
 ```
 
 `joint_state_publisher_gui`
-
-

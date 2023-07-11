@@ -10,11 +10,6 @@
 - 교재: [https://learn.dronemap.io/ros-workshop/ros2/#/day2](https://learn.dronemap.io/ros-workshop/ros2/#/day2)
 - 코치: 박동희 dongheepark@gmail.com
 
-1. ROS 기본 프로그래밍
-
-- 워크스페이스 만들기
-- ROS 노드 만들기
-
 2. 자율 주행 소프트웨어 실습
 
 - 시뮬레이터 사용하기
@@ -26,205 +21,6 @@
 - 네트워크 설정
 - Raspberry Pi에 ROS 2 설치
 - 모터, IMU ROS 노드 만들기
-
----
-
-## ROS 노드 만들기
-
-### 새로운 노드 만들기
-
-빌드 도구 colcon 설치하기
-
-```
-sudo apt install python3-colcon-common-extensions python3-rosdep2
-```
-
-#### 패키지 만들기
-
-```
-mkdir -p ~/ros2_ws/src
-cd ~/ros2_ws/src
-```
-
-my_package 이름의 패키지 안에 my_node 이름 노드를 만들어 보자.
-
-```
-#ros2 pkg create --build-type ament_python my_package # my_package 만 만들경우
-ros2 pkg create --build-type ament_python --node-name my_node my_package
-```
-
-- python package(ament_python) ? cmake 패키지(ament_cmake) --dependencies 의존패키지
-- 의존 패키지 추가하기: ros2 pkg create --build-type ament_cmake --node-name my_node my_cpp_package --dependencies rclcpp
-
-#### 패키지 빌드
-
-```
-cd ~/ros2_ws
-colcon build --packages-select my_package
-```
-
-#### 패키지 노드 실행
-
-환경 변수 설정
-
-```
-cd ~/ros2_ws
-source install/setup.bash
-```
-
-노드 실행
-
-```
-ros2 run my_package my_node
-```
-
-#### 해보기: my_package 분석
-
-- ros2_ws/src/my_package 안의 디렉토리와 파일을 분석하고 설명해보자.
-
-#### 해보기: c++ 노드 패키지 작성
-
-- c++ 코드로 구현된 my_cpp_package와 my_node 만들고, 그 노드를 실행해보자.
-- 힌트: 패키지 만들때 ament_cmake 옵션 사용
-- 참고: https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Creating-Your-First-ROS2-Package.html
-
----
-
-### 새로운 노드 만들기: Pub Sub 노드 만들기
-
-#### 패키지 만들기
-
-```
-cd ~/ros2_ws/src
-ros2 pkg create --build-type ament_python py_pubsub
-```
-
-#### 노드 코드 작성
-
-~/ros2_ws/src/py_pubsub/py_pubsub/minimal_publisher.py
-
-```
-import rclpy
-from rclpy.node import Node
-
-from std_msgs.msg import String
-
-class MinimalPublisher(Node):
-
-    def __init__(self):
-        super().__init__('minimal_publisher')
-        self.publisher_ = self.create_publisher(String, 'topic', 10)
-        timer_period = 0.5  # seconds
-        self.timer = self.create_timer(timer_period, self.timer_callback)
-        self.i = 0
-
-    def timer_callback(self):
-        msg = String()
-        msg.data = 'Hello World: %d' % self.i
-        self.publisher_.publish(msg)
-        self.get_logger().info('Publishing: "%s"' % msg.data)
-        self.i += 1
-
-
-def main(args=None):
-    rclpy.init(args=args)
-
-    minimal_publisher = MinimalPublisher()
-
-    rclpy.spin(minimal_publisher)
-
-    minimal_publisher.destroy_node()
-    rclpy.shutdown()
-
-
-if __name__ == '__main__':
-    main()
-```
-
-~/ros2_ws/src/py_pubsub/py_pubsub/minimal_subscriber.py
-
-```
-import rclpy
-from rclpy.node import Node
-
-from std_msgs.msg import String
-
-
-class MinimalSubscriber(Node):
-
-    def __init__(self):
-        super().__init__('minimal_subscriber')
-        self.subscription = self.create_subscription(
-            String,
-            'topic',
-            self.listener_callback,
-            10)
-        self.subscription  # prevent unused variable warning
-
-    def listener_callback(self, msg):
-        self.get_logger().info('I heard: "%s"' % msg.data)
-
-
-def main(args=None):
-    rclpy.init(args=args)
-
-    minimal_subscriber = MinimalSubscriber()
-
-    rclpy.spin(minimal_subscriber)
-
-    minimal_subscriber.destroy_node()
-    rclpy.shutdown()
-
-if __name__ == '__main__':
-    main()
-```
-
-#### 패키지 노드 실행 위치지정
-
-~/ros2_ws/src/py_pubsub/setup.py 의 entry_points에 다음줄 추가
-
-```
-entry_points={
-        'console_scripts': [
-                'talker = py_pubsub.minimal_publisher:main',
-                'listener = py_pubsub.minimal_subscriber:main',
-        ],
-},
-```
-
-#### 패키지 빌드
-
-```
-cd ~/ros2_ws
-rosdep install -i --from-path src --rosdistro foxy -y
-```
-
-```
-colcon build --packages-select py_pubsub
-```
-
-```
-source install/setup.bash
-```
-
-#### 패키지 노드 실행
-
-```
-ros2 run py_pubsub talker
-```
-
-```
-ros2 run py_pubsub listener
-```
-
-#### 해보기: c++ 노드 작성
-
-- c++로 작성된 cpp_pubsub listener를 만들어서 py_pubsub talker가 보내는 토픽을 받아 보자.
-- ros2 run cpp_pubsub listener
-- 참고: https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html#write-the-subscriber-node
-- rqt를 이용하여 토픽을 모니터링 해보자.
-
-![](https://i.imgur.com/ARCF7vx.png)
 
 ## SLAM 소개
 
@@ -252,9 +48,6 @@ Simultaneous Localization and Mapping 동시적 위치추정 및 지도작성
 ## Gazebo 시뮬레이터를 이용하여 SLAM 실습
 
 Gazebo 시뮬레이터를 이용하여, SLAM과 자율 주행을 테스트 해보자.
-
-<!-- https://classic.gazebosim.org/tutorials?tut=ros2_installing&cat=connect_ros -->
-<!-- https://ubuntu.com/blog/simulate-the-turtlebot3 -->
 
 ### 시뮬레이터 Gazebo
 
@@ -399,69 +192,98 @@ ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
 
 ![](https://github.com/osrf/gazebo_tutorials/raw/master/ros2_installing/figs/gazebo_ros_diff_drive_lin_vel.gif)
 
-<!-- --- -->
-<!-- ## 가제보 시뮬레이션 로봇 만들기 -->
+---
 
-<!-- tank_gazebo -->
+모델 구성 요소
+ - LINK
+ - JOINT
+ - URDF: Unified Robot Description Format. 로봇의 geometry와 구성을 명세.
+ - 관성모멘트: 주어진 축을 중심으로 일어나는 회전 운동을 변화시키기 어려운 정도
 
-<!-- ros2 pkg create tank_gazebo --build-type ament_cmake --dependencies ament_cmake rclcpp rclpy -->
 
-<!-- ros2 pkg create tank_description --build-type ament_cmake --dependencies ament_cmake urdf -->
+Link 
 
-<!-- colcon build --symlink-install --packages-ignore dolly_ignition -->
+![](http://wiki.ros.org/urdf/XML/link?action=AttachFile&do=get&target=inertial.png)
 
-<!-- # Initial Setup ROS and colcon -->
-<!-- # https://docs.ros.org/en/foxy/Tutorials/Colcon-Tutorial.html#prerequisites -->
+```
+ <link name="my_link">
+   <inertial>
+     <origin xyz="0 0 0.5" rpy="0 0 0"/>
+     <mass value="1"/>
+     <inertia ixx="100"  ixy="0"  ixz="0" iyy="100" iyz="0" izz="100" />
+   </inertial>
 
-<!-- source /opt/ros/foxy/setup.bash -->
-<!-- # Only compile certian packages -->
-<!-- colcon build --symlink-install --packages-select tank_gazebo tank_description -->
-<!-- # Compile everything if you want -->
-<!-- colcon build --symlink-install -->
-<!-- source install/setup.bash -->
+   <visual>
+     <origin xyz="0 0 0" rpy="0 0 0" />
+     <geometry>
+       <box size="1 1 1" />
+     </geometry>
+     <material name="Cyan">
+       <color rgba="0 1.0 1.0 1.0"/>
+     </material>
+   </visual>
 
-<!-- # Install Dependencies -->
-<!-- # https://docs.ros.org/en/dashing/Installation/Linux-Development-Setup.html#install-dependencies-using-rosdep -->
-<!-- sudo rosdep init -->
-<!-- rosdep update -->
-<!-- # rosdep install --from-paths src --ignore-src --rosdistro foxy -y --skip-keys "console_bridge fastcdr fastrtps libopensplice67 libopensplice69 rti-connext-dds-5.3.1 urdfdom_headers" -->
-<!-- rosdep install --from-paths src --ignore-src --rosdistro foxy -y --skip-keys "console_bridge fastcdr fastrtps libopensplice67 libopensplice69 rti-connext-dds-5.3.1 urdfdom_headers" -->
+   <collision>
+     <origin xyz="0 0 0" rpy="0 0 0"/>
+     <geometry>
+       <cylinder radius="1" length="0.5"/>
+     </geometry>
+   </collision>
+ </link>
+```
 
-<!-- # Launch single liner -->
-<!-- ros2 launch tank_gazebo tank_launch.py -->
-<!-- ros2 launch tank_gazebo multi_tank_launch.py -->
+Joint
 
-<!-- # If you want separted -->
-<!-- ros2 launch tank_gazebo start_world_launch.py -->
-<!-- ros2 launch tank_description start_world_launch.py -->
+![](http://wiki.ros.org/urdf/XML/joint?action=AttachFile&do=get&target=joint.png)
 
-<!-- ros2 topic list -->
+```
+ <joint name="my_joint" type="floating">
+    <origin xyz="0 0 1" rpy="0 0 3.1416"/>
+    <parent link="link1"/>
+    <child link="link2"/>
 
-<!-- ros2 topic pub /tank/cmd_vel -->
+    <calibration rising="0.0"/>
+    <dynamics damping="0.0" friction="0.0"/>
+    <limit effort="30" velocity="1.0" lower="-2.2" upper="0.7" />
+    <safety_controller k_velocity="10" k_position="15" soft_lower_limit="-2.0" soft_upper_limit="0.5" />
+ </joint>
+```
 
-<!-- ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=/tank/cmd_vel -->
-<!-- ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=/tank2/cmd_vel -->
+ros2-control gazebo-ros2-control 설치
+```
+sudo apt install ros-foxy-ros2-control ros-foxy-ros2-controllers ros-foxy-gazebo-ros2-control ros-foxy-xacro
+```
 
-<!-- ros2 run tf2_tools view_frames.py -->
+simple_joint 패키지 설치
+```
+cd ~/ros2_ws/src
+git clone https://github.com/donghee/simple_joint
+cd ~/ros2_ws
+colcon build --packages-select simple_joint
+```
 
-<!-- ########### -->
+simple joint gazebo 실행
+```
+cd ~/ros2_ws
+source ./install/setup.bash
+ros2 launch simple_joint_gazebo simple_joint_launch.py
+```
 
-<!-- This part is missing libraries that cannot be satisfied with any available stage-packages known to snapcraft: -->
-<!-- - libnddsc.so -->
-<!-- - libnddscore.so -->
-<!-- - libnddscpp.so -->
-<!-- - librosidl_typesupport_connext_c.so -->
-<!-- - librosidl_typesupport_connext_cpp.so -->
-<!-- - librticonnextmsgcpp.so -->
-<!-- - usr/lib/x86_64-linux-gnu/libpsm_infinipath.so.1 -->
-<!-- These dependencies can be satisfied via additional parts or content sharing. Consider validating configured filesets if this dependency was built. -->
 
-<!-- https://www.theconstructsim.com/ros2-how-to-2-create-a-ros2-action-server/ -->
+ros2 control joint state와  trajectory controller 로드 (새로운 터미널에서)
+```
+cd ~/ros2_ws
+source ./install/setup.bash
+ros2 control load_controller --set-state start joint_state_broadcaster
+ros2 control load_controller --set-state start joint_trajectory_controller
+```
 
-<!-- 참고 -->
-<!--  - https://www.udemy.com/course/ros2-for-beginners/?referralCode=18C75F99C1A868F0A7AB -->
+조인트 제어
+```
+python3 ~/ros2_ws/install/simple_joint_description/lib/simple_joint_description/wheel_steer.py -0.5
+```
 
-## Raspberry Pi 3에 ROS 2 설치
+## Raspberry Pi 4에 ROS 2 설치
 
 준비물
 
