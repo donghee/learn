@@ -6,7 +6,7 @@
 
 ## 수업 소개
 
-- 목표: 나만의 ROS 노드 만들고, 시뮬레이터를 이용하여 노드를 프로그래밍 할 수 있다.
+- 목표: 시뮬레이터를 이용하여 노드를 프로그래밍 할 수 있다.
 - 교재: [https://learn.dronemap.io/ros-workshop/ros2/#/day2](https://learn.dronemap.io/ros-workshop/ros2/#/day2)
 - 코치: 박동희 dongheepark@gmail.com
 
@@ -269,7 +269,6 @@ source ./install/setup.bash
 ros2 launch simple_joint_gazebo simple_joint_launch.py
 ```
 
-
 ros2 control joint state와  trajectory controller 로드 (새로운 터미널에서)
 ```
 cd ~/ros2_ws
@@ -282,6 +281,10 @@ ros2 control load_controller --set-state start joint_trajectory_controller
 ```
 python3 ~/ros2_ws/install/simple_joint_description/lib/simple_joint_description/wheel_steer.py -0.5
 ```
+
+<!-- ``` -->
+<!-- ros2 action send_goal /joint_trajectory_controller/follow_joint_trajectory control_msgs/action/FollowJointTrajectory "{ trajectory: { joint_names: [body_steering__wheel_stir_right], points: [ { positions: [0, 0, 0.5, 0.5] }]}, goal_time_tolerance: { sec: 1, nanosec: 0 } }" -->
+<!-- ``` -->
 
 ## Raspberry Pi 4에 ROS 2 설치
 

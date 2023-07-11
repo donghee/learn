@@ -54,10 +54,13 @@ rviz2
 
 ---
 
-URDF 작성
+### URDF
+
+Unified Robot Description Format
 
 
-# 
+---
+
 `robot_state_publisher`
 
 `sensor_msgs/JointState` 메시지와 URDF를 받아서 로봇의 3D 모델(즉, 로봇의 전체 형태)의 현재 상태를 계산하여, TF와, /robot_description 메시지 발행
