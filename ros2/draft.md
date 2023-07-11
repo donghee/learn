@@ -1,5 +1,5 @@
 
-# FirstBot 패키지 소개
+# FirstBot Zara 패키지 소개
 
 - `firstbot_base`: controller_manager를 이용한 하드웨어 인터페이스
 - `firstbot_bringup`: 하드웨어 드라이버 실행 (카메라 ,라이다, 모터 컨트롤러)
@@ -24,10 +24,12 @@ digraph {
  edge [fontname="MS Gothic"];
  label = "robot_state_publisher";
  "URDF" -> "robot_state_publisher";
- "/joint_state" -> "robot_state_publisher";
- "robot_state_publisher" -> "/tf";
- "robot_state_publisher" -> "/robot_description";
+  node1 [label= ""]
+  node2 [label= ""]
+ "/joint_state_publisher" -> "/robot_state_publisher" [label="/joint_states"];
+ "/robot_state_publisher" -> node1 [label="/tf"];
+ "/robot_state_publisher" -> node2 [label="/robot_description"]"
 }
 ```
 
-`joint_state_publisher_gui`
+`joint_state_publisher_gui` 를 이용하여  /joint_state
