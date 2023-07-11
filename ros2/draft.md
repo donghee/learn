@@ -28,7 +28,7 @@ digraph {
  node2 [label= ""]
  "/joint_state_publisher" -> "/robot_state_publisher" [label="/joint_states"]
  "/robot_state_publisher" -> node1 [label="/tf"]
- "/robot_state_publisher" -> node2 [label="/robot_description"]"
+ "/robot_state_publisher" -> node2 [label="/robot_description"]
 }
 ```
 
