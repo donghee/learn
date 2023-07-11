@@ -10,17 +10,24 @@
 - 교재: [https://learn.dronemap.io/ros-workshop/ros2/#/day2](https://learn.dronemap.io/ros-workshop/ros2/#/day2)
 - 코치: 박동희 dongheepark@gmail.com
 
-2. 자율 주행 소프트웨어 실습
+1. 자율 주행 시뮬레이터 실습
 
-- 시뮬레이터 사용하기
+- 로봇 모델 만들기
 - SLAM 소개
 - ROS와 시뮬레이터를 이용하여 SLAM 실습
+
+2. 차동 구동 드라이버 만들기
+
+- 인코더와 모터
+- 피드백 제어
+- 시리얼 인터페이스
 
 3. Raspberry Pi에 ROS 2 개발 환경 구성
 
 - 네트워크 설정
 - Raspberry Pi에 ROS 2 설치
-- 모터, IMU ROS 노드 만들기
+- 모터, 엔코더 ROS 노드 만들기
+
 
 ## SLAM 소개
 
@@ -30,7 +37,7 @@ Simultaneous Localization and Mapping 동시적 위치추정 및 지도작성
 
 미지의 장소의 지도 작성!
 
-![](https://kr.mathworks.com/discovery/slam/_jcr_content/mainParsys3/discoverysubsection_158176500/mainParsys3/image.adapt.full.medium.png/1654866250910.png)
+![](https://i.imgur.com/tqJdpdr.png)
 
 종류
 
@@ -43,7 +50,7 @@ Simultaneous Localization and Mapping 동시적 위치추정 및 지도작성
 
 - 실시간 지도 생성
 - 누적 오차 발생
-- 높은 계산 비용.
+- 높은 계산 비용
 
 ## Gazebo 시뮬레이터를 이용하여 SLAM 실습
 
@@ -83,41 +90,36 @@ sudo apt install ros-foxy-navigation2
 sudo apt install ros-foxy-nav2-bringup
 ```
 
-#### 터틀봇 패키지 설치
+#### 퍼스트봇 ZARA 패키지 설치
 
 ```
-sudo apt install python3-vcstool
-mkdir -p ~/turtlebot3_ws/src
-cd ~/turtlebot3_ws
-wget https://raw.githubusercontent.com/ROBOTIS-GIT/turtlebot3/ros2/turtlebot3.repos
+mkdir -p ~/firstbot_ws/src
+cd ~/firstbot_ws/src
+git clone git@github.com:donghee/firstbot_zara.git -b foxy
 ```
 
 turtlebot3.repos파일의 version을 ros2-devel을 foxy-devel로 수정. 단 ld08_driver는 ros2-devel로 남겨 둔다.
 
-```
-vcs import src < turtlebot3.repos
-```
-
+gazebo 모델 추가
 ```
 cd ~/turtlebot3_ws
 colcon build --symlink-install
 source install/setup.bash
 echo "source ~/turtlebot3_ws/install/setup.bash" >> ~/.bashrc
-echo "export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/turtlebot3_ws/src/turtlebot3/turtlebot3_simulations/turtlebot3_gazebo/models" >> ~/.bashrc
-echo "export TURTLEBOT3_MODEL=waffle_pi" >> ~/.bashrc
+echo "export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/firstbot_ws/src/firstbot_zara/firstbot_description/models" >> ~/.bashrc
 source ~/.bashrc
 ```
 
 #### 시뮬레이터 실행
 
 ```
-ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
+ros2 launch firstbot_description launch_sim.launch.py use_sim_time:=true
 ```
 
 ![](https://i.imgur.com/eImcWz6.png)
 
 ```
-ros2 launch turtlebot3_cartographer cartographer.launch.py use_sim_time:=true
+ros2 launch firstbot_cartographer cartographer.launch.py use_sim_time:=true
 ```
 
 ![](https://i.imgur.com/MDWDPgQ.png)
@@ -125,7 +127,7 @@ ros2 launch turtlebot3_cartographer cartographer.launch.py use_sim_time:=true
 키보드 입력
 
 ```
-ros2 run turtlebot3_teleop teleop_keyboard
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
 ```
 
 토픽, 서비스 확인
@@ -159,14 +161,13 @@ ros2 run nav2_map_server map_saver_cli -f map
 네비게이션 실행. 자율 주행!
 
 ```
-ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=true map:=./map.yaml
+ros2 launch firstbot_navigation2 navigation2.launch.py use_sim_time:=true map:=./map.yaml
 ```
 
 ![](https://i.imgur.com/8TLNJRc.png)
 
-#### 해보기: turtlebot3_dqn_stage3.launch.py
+#### 해보기: gazebo에서 브릭 박스로 장애물을 구성해서 자율 주행을 해보자.
 
-- ros2 launch turtlebot3_gazebo turtlebot3_dqn_stage3.launch.py 실행하여 자율 주행 해보자.
 
 #### Gazebo를 이용하여 로봇 모델 만들기
 
