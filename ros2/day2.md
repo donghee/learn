@@ -176,10 +176,10 @@ Joint
  </joint>
 ```
 
-ros2-control gazebo-ros2-control 설치
+xacro joint-state-publisher-gui 설치
 
 ```
-sudo apt install ros-foxy-ros2-control ros-foxy-ros2-controllers ros-foxy-gazebo-ros2-control ros-foxy-xacro
+sudo apt install ros-foxy-ros2-control ros-foxy-ros2-controllers ros-foxy-gazebo-ros2-control ros-foxy-xacro ros-foxy-joint-state-publisher-gui
 ```
 
 자라 로봇의 주요 수치
@@ -223,23 +223,26 @@ creating folder ./firstbot_description/include/firstbot_description
 creating ./firstbot_description/CMakeLists.txt
 ```
 
-1. urdf/robot.urdf.xacro
+1. urdf/robot.urdf.xacro 추가
 
-2. urdf/robot_core.xacro
+2. urdf/robot_core.xacro 추가
 
-3. urdf/inertial_macros.xacro
+3. urdf/inertial_macros.xacro 추가
 
-4. launch/rsp.launch.py
+4. launch/rsp.launch.py 추가
 
 5. CMakefile에 install 추가
 
 6. 실행
 
+
+`robot_state_publisher` 실행
+
 ```
 ros2 launch firstbot_description rsp.launch.py use_sim_time:=true
 ```
 
-토픽 확인
+/robot_description 토픽 확인
 ```
 ros2 topic list
 /clock
@@ -251,14 +254,27 @@ ros2 topic list
 /tf_static
 ```
 
-![Zara TF](https://i.imgur.com/hgnirz7.png)
+`joint_state_publisher` 실행!
 
-![Zara](https://i.imgur.com/CqNEn3e.png)
+```
+ros2 run joint_state_publisher_gui joint_state_publisher_gui
+```
+
+rviz2 에서 `/tf` 와 `/robot_description` 확인 
+
+```
+rviz2
+```
+
+![](https://i.imgur.com/13glAoG.png)
+
+<!-- ![Zara TF](https://i.imgur.com/hgnirz7.png) -->
+<!-- ![Zara](https://i.imgur.com/CqNEn3e.png) -->
 
 해보기
 
 - wheel 바퀴 크기를 반지름 3.5cm 에서 7cm으로 바뀌기
-- lidar의 높이를 10cm에서 5cm 높이로 바꾸어 보자
+- lidar를 추가 하여 보자. 
  
 ## 로봇 모델을 시뮬레이터에서 실행
 
@@ -294,7 +310,6 @@ ros2 run gazebo_ros spawn_entity.py -topic robot_description -entity zara
 시뮬레이터 로봇 토픽 흐름
 ![](https://articulatedrobotics.xyz/media/assets/posts/mobile-robot/3-gazebo/control-gazebo.png)
 
-
 ### 테스트
 
 시뮬레이터 launch 실행 (rsp, gazebo, gazebo_ros 실행)
@@ -309,25 +324,7 @@ ros2 launch firstbot_description launch_sim.launch.py use_sim_time:=true
 ros2 run teleop_twist_keyboard teleop_twist_keyboard
 ```
 
-cartographer
-```
-ros2 launch firstbot_cartographer cartographer_rviz.launch.py use_sim_time:=True
-```
-
-save map
-```
-ros2 run nav2_map_server map_saver_cli -f map
-```
-
-navigation2
-```
-ros2 launch firstbot_navigation2 navigation2.launch.py map:=$HOME/map.yaml use_sim_time:=True
-```
-
-
 ![](https://i.imgur.com/4lCeCN3.png)
-
-
 
 ## SLAM 소개
 
