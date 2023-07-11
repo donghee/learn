@@ -194,6 +194,8 @@ sudo apt install ros-foxy-ros2-control ros-foxy-ros2-controllers ros-foxy-gazebo
 - 훨간격 22.4cm
 - (샷시로부터) 라이다 높이 13cm
 
+`firstbot_description`: https://cloud.baribarilab.com/s/oLanqecJfX3ybYG
+
 1. robot.urdf.xacro
 
 2. robot_core.xacro
