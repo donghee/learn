@@ -96,16 +96,17 @@ sudo apt install ros-foxy-nav2-bringup
 mkdir -p ~/firstbot_ws/src
 cd ~/firstbot_ws/src
 git clone git@github.com:donghee/firstbot_zara.git -b foxy
+git clone https://github.com/donghee/firstbot_zara.git -b foxy --recursive
 ```
 
 turtlebot3.repos파일의 version을 ros2-devel을 foxy-devel로 수정. 단 ld08_driver는 ros2-devel로 남겨 둔다.
 
 gazebo 모델 추가
 ```
-cd ~/turtlebot3_ws
+cd ~/firstbot_ws
 colcon build --symlink-install
 source install/setup.bash
-echo "source ~/turtlebot3_ws/install/setup.bash" >> ~/.bashrc
+echo "source ~/firstbot_ws/install/setup.bash" >> ~/.bashrc
 echo "export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/firstbot_ws/src/firstbot_zara/firstbot_description/models" >> ~/.bashrc
 source ~/.bashrc
 ```
