@@ -194,13 +194,62 @@ sudo apt install ros-foxy-ros2-control ros-foxy-ros2-controllers ros-foxy-gazebo
 - 훨간격 22.4cm
 - (샷시로부터) 라이다 높이 13cm
 
-`firstbot_description`: https://cloud.baribarilab.com/s/oLanqecJfX3ybYG
+`firstbot_description` 프로젝트: https://cloud.baribarilab.com/s/oLanqecJfX3ybYG
 
-1. robot.urdf.xacro
+0. 패키지 만들기
 
-2. robot_core.xacro
+```
+cd ~/ros2_ws/src
+ros2 pkg create firstbot_description --build-type ament_cmake --dependencies urdf xacro
+```
 
-3. rviz
+실행 결과
+```
+going to create a new package
+package name: firstbot_description
+destination directory: /tmp
+package format: 3
+version: 0.0.0
+description: TODO: Package description
+maintainer: ['donghee <donghee@todo.todo>']
+licenses: ['TODO: License declaration']
+build type: ament_cmake
+dependencies: ['urdf', 'xacro']
+creating folder ./firstbot_description
+creating ./firstbot_description/package.xml
+creating source and include folder
+creating folder ./firstbot_description/src
+creating folder ./firstbot_description/include/firstbot_description
+creating ./firstbot_description/CMakeLists.txt
+```
+
+1. urdf/robot.urdf.xacro
+
+2. urdf/robot_core.xacro
+
+3. urdf/inertial_macros.xacro
+
+4. launch/rsp.launch.py
+
+5. CMakefile에 install 추가
+
+6. 실행
+
+```
+ros2 launch firstbot_description rsp.launch.py use_sim_time:=true
+```
+
+토픽 확인
+```
+ros2 topic list
+/clock
+/joint_states
+/parameter_events
+/robot_description
+/rosout
+/tf
+/tf_static
+```
 
 ![Zara TF](https://i.imgur.com/hgnirz7.png)
 
@@ -218,7 +267,7 @@ gazebo
 `/robot_state_publisher`를 실행하여, URDF를 `/robot_description` 토픽으로 보내기
 
 ```
-ros2 launch firstbot_description rsp.launch.py use_sim_time:=true
+ros2 launch firstbot_description rsp.launch.py use_sim_time:=true
 ```
 
 gazebo 실행
