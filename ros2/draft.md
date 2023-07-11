@@ -20,7 +20,7 @@ sensor_msgs/JointState 메시지와 URDF를 받아서 로봇의 3D 모델(즉, �
 digraph {
  rankdir=LR;
  graph [fontname="MS Gothic"];
- node [shape=rect, color="#40e0d0"];
+ node [color="#40e0d0"];
  edge [fontname="MS Gothic"];
  label = "robot_state_publisher";
  "URDF" -> "/robot_state_publisher";
