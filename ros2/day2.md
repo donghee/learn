@@ -28,6 +28,255 @@
 - Raspberry Pi에 ROS 2 설치
 - 모터, 엔코더 ROS 노드 만들기
 
+## 로봇 모델 만들기
+
+ROS에서 사용하는 로봇 모델 만들기
+
+- 차동 구동 로봇
+- 로봇 구조 설명
+  - TF, FRAME
+  - `/robot_description`
+- URDF 작성
+- 로봇 모델을 시뮬레이터에서 실행
+
+### 차동 구동 로봇
+
+- 왼쪽 오른쪽 바퀴 두개에, 캐스터 휠이 하나 있는 로봇 
+- 자유도 높은 움직임. 간단한 구조
+- 터틀봇 시리즈
+
+모바일 로봇에 대한 ROS REP 표준
+ - REP 105: 로봇 프레임의 주요 좌표계 `base_link` https://www.ros.org/reps/rep-0105.html#base-link
+ - REP 103: 좌표계의 방향에 대한 표준, X(앞), Y(왼쪽), Z(위)
+
+### TF: Transform System
+
+![](https://articulatedrobotics.xyz/media/assets/posts/ready-for-ros/tf_frames_small.png)
+
+ros2 run tf2_ros static_transform_publisher x y z yaw pitch roll parent_frame child_frame
+
+world 프레임으로부터 robot_1 프레임에 대한 정의를 내려보자. x 방향 2, y 방향 1, yaw 방향 0.785 라디언
+
+```
+ros2 run tf2_ros static_transform_publisher 2 1 0 0.785 0 0 world robot_1
+```
+
+![](https://articulatedrobotics.xyz/media/assets/posts/ready-for-ros/tf_sidecar.png)
+
+
+`robot_1`과 `robot_2`의 관계를 내려보자. `robot_2`는 `robot_1`의 1만큼 x 방향(앞)에 있다.
+```
+ros2 run tf2_ros static_transform_publisher 1 0 0 0 0 0 robot_1 robot_2
+```
+
+#### 해보기: `robot_1`는 `world` 좌표계를 기준으로 어디에 있나?
+
+- robot_1의 위치와 방향을 계산해보자. 
+- rviz를 이용해서 `world`, `robot_1`, `robot_2`의 관계 보기
+
+```
+rviz2
+```
+
+![](https://i.imgur.com/9yZAy0c.png)
+
+### `/robot_description`
+
+`robot_state_publisher`
+
+`sensor_msgs/JointState` 메시지와 URDF 파일을 입력 받아서 로봇의 3D 모델(즉, 로봇의 전체 형태)의 현재 상태를 계산하여, TF(Joint Transforms)와, /robot_description 메시지(URDF Data) 발행
+
+```graphviz
+digraph {
+ rankdir=LR;
+ graph [fontname="MS Gothic"];
+ node [color="#40e0d0"];
+ edge [fontname="MS Gothic"];
+ label = "robot_state_publisher";
+ URDF [color="#fff", label="URDF", shape="plaintext"]
+ URDF ->  "/robot_state_publisher" [style="dotted"]
+ node1 [label= ""]
+ node2 [label= ""]
+ "/joint_state_publisher" -> "/robot_state_publisher" [label="/joint_states"]
+ "/robot_state_publisher" -> node1 [label="/tf"]
+ "/robot_state_publisher" -> node2 [label="/robot_description"]
+}
+```
+
+`joint_state_publisher_gui` 를 이용하여  /joint_state
+
+
+```
+ros2 run robot_state_publisher robot_state_publisher --ros-args -p robot_description:="$(xacro path/to/my/xacro/file.urdf.xacro)"
+```
+
+```
+ros2 run joint_state_publisher_gui joint_state_publisher_gui
+```
+
+```
+ros2 run tf2_tools view_frames.py
+```
+
+### URDF 작성
+
+Unified Robot Description Format
+
+모델 구성 요소
+ - LINK
+ - JOINT
+ - URDF: Unified Robot Description Format. 로봇의 geometry와 구성을 명세.
+ - 관성모멘트: 주어진 축을 중심으로 일어나는 회전 운동을 변화시키기 어려운 정도
+
+Link 
+
+![](http://wiki.ros.org/urdf/XML/link?action=AttachFile&do=get&target=inertial.png)
+
+```
+ <link name="my_link">
+   <inertial>
+     <origin xyz="0 0 0.5" rpy="0 0 0"/>
+     <mass value="1"/>
+     <inertia ixx="100"  ixy="0"  ixz="0" iyy="100" iyz="0" izz="100" />
+   </inertial>
+
+   <visual>
+     <origin xyz="0 0 0" rpy="0 0 0" />
+     <geometry>
+       <box size="1 1 1" />
+     </geometry>
+     <material name="Cyan">
+       <color rgba="0 1.0 1.0 1.0"/>
+     </material>
+   </visual>
+
+   <collision>
+     <origin xyz="0 0 0" rpy="0 0 0"/>
+     <geometry>
+       <cylinder radius="1" length="0.5"/>
+     </geometry>
+   </collision>
+ </link>
+```
+
+Joint
+
+![](http://wiki.ros.org/urdf/XML/joint?action=AttachFile&do=get&target=joint.png)
+
+```
+ <joint name="my_joint" type="floating">
+    <origin xyz="0 0 1" rpy="0 0 3.1416"/>
+    <parent link="link1"/>
+    <child link="link2"/>
+
+    <calibration rising="0.0"/>
+    <dynamics damping="0.0" friction="0.0"/>
+    <limit effort="30" velocity="1.0" lower="-2.2" upper="0.7" />
+    <safety_controller k_velocity="10" k_position="15" soft_lower_limit="-2.0" soft_upper_limit="0.5" />
+ </joint>
+```
+
+ros2-control gazebo-ros2-control 설치
+
+```
+sudo apt install ros-foxy-ros2-control ros-foxy-ros2-controllers ros-foxy-gazebo-ros2-control ros-foxy-xacro
+```
+
+자라 로봇의 주요 수치
+- 샷시의 지름 30cm
+- 샷시의 높이 5cm 
+- 샷시의 무게 500g
+- 바퀴의 크기 반지름 3.5cm
+- 바퀴의 두께 2cm
+- 바퀴의 무게 50g
+- 캐스터 휠의 반지름 1cm
+- 캐스터 휠의 무게 1cm
+- 훨간격 22.4cm
+- (샷시로부터) 라이다 높이 13cm
+
+1. robot.urdf.xacro
+
+2. robot_core.xacro
+
+3. rviz
+
+![Zara TF](https://i.imgur.com/hgnirz7.png)
+
+![Zara](https://i.imgur.com/CqNEn3e.png)
+
+해보기
+
+- wheel 바퀴 크기를 반지름 3.5cm 에서 7cm으로 바뀌기
+- lidar의 높이를 10cm에서 5cm 높이로 바꾸어 보자
+ 
+## 로봇 모델을 시뮬레이터에서 실행
+
+gazebo
+
+`/robot_state_publisher`를 실행하여, URDF를 `/robot_description` 토픽으로 보내기
+
+```
+ros2 launch firstbot_description rsp.launch.py use_sim_time:=true
+```
+
+gazebo 실행
+
+```
+ros2 launch gazebo_ros gazebo.launch.py
+```
+
+robot을 gazebo에 올리기
+
+```
+ros2 run gazebo_ros spawn_entity.py -topic robot_description -entity zara
+```
+
+### Gazebo Control
+
+`ros2_control` 하드웨어 로봇과 시뮬레이터 로봇 인터페이스 제공
+
+`/cmd_vel`을 입력 받아서 로봇(하드웨어 또는 시뮬레이터 로봇) 제어
+
+하드웨어 로봇 토픽 흐름
+![](https://articulatedrobotics.xyz/media/assets/posts/mobile-robot/3-gazebo/control-real.png)
+
+시뮬레이터 로봇 토픽 흐름
+![](https://articulatedrobotics.xyz/media/assets/posts/mobile-robot/3-gazebo/control-gazebo.png)
+
+
+### 테스트
+
+시뮬레이터 launch 실행 (rsp, gazebo, gazebo_ros 실행)
+
+```
+ros2 launch firstbot_description launch_sim.launch.py use_sim_time:=true
+```
+
+키보드 teleop
+
+```
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
+```
+
+cartographer
+```
+ros2 launch firstbot_cartographer cartographer_rviz.launch.py use_sim_time:=True
+```
+
+save map
+```
+ros2 run nav2_map_server map_saver_cli -f map
+```
+
+navigation2
+```
+ros2 launch firstbot_navigation2 navigation2.launch.py map:=$HOME/map.yaml use_sim_time:=True
+```
+
+
+![](https://i.imgur.com/4lCeCN3.png)
+
+
 
 ## SLAM 소개
 
@@ -92,15 +341,24 @@ sudo apt install ros-foxy-nav2-bringup
 
 #### 퍼스트봇 ZARA 패키지 설치
 
-패키지 다운로드
+- `firstbot_base`: controller_manager를 이용한 하드웨어 인터페이스
+- `firstbot_bringup`: 하드웨어 드라이버 실행 (카메라 ,라이다, 모터 컨트롤러)
+- `firstbot_control`: Configurations for the diff_drive_controller of ROS Control used in Gazebo simulation and the real robot.
+- `firstbot_description`: FirstBot의 URDF 
+- `firstbot_gazebo`: FirstBot의 시뮬레이션을 위한 launch 파일과 설정
+- `firstbot_navigation`: FirstBot의 네비게이션을 위한 launch 파일과 설정 
+- `firstbot_slam`: SLAM을 위한 설정
+
+패키지 다운로드: https://github.com/donghee/firstbot_zara/tree/foxy
+
 ```
 mkdir -p ~/firstbot_ws/src
 cd ~/firstbot_ws/src
-git clone git@github.com:donghee/firstbot_zara.git -b foxy
 git clone https://github.com/donghee/firstbot_zara.git -b foxy --recursive
 ```
 
 패키지 빌드
+
 ```
 cd ~/firstbot_ws
 colcon build --symlink-install
@@ -189,124 +447,6 @@ ros2 launch firstbot_navigation2 navigation2_rviz.launch.py
 
 #### 해보기: gazebo에서 브릭 박스로 장애물을 구성해서 자율 주행을 해보자.
 
-
-#### Gazebo를 이용하여 로봇 모델 만들기
-
-1. 차동 주행 월드 로드
-
-```
-gazebo --verbose /opt/ros/foxy/share/gazebo_plugins/worlds/gazebo_ros_diff_drive_demo.world
-```
-
-![](https://github.com/osrf/gazebo_tutorials/raw/master/ros2_installing/figs/gazebo_ros_diff_drive.png)
-
-1. 월드 파일 읽어 보기
-
-/opt/ros/foxy/share/gazebo_plugins/worlds/gazebo_ros_diff_drive_demo.world
-
-월드 파일에서 플러그인과 출력 확인
-
-1. 로봇 조정
-
-```
-ros2 topic pub /demo/cmd_demo geometry_msgs/Twist '{linear: {x: 1.0}}' -1
-```
-
-![](https://github.com/osrf/gazebo_tutorials/raw/master/ros2_installing/figs/gazebo_ros_diff_drive_lin_vel.gif)
-
----
-
-모델 구성 요소
- - LINK
- - JOINT
- - URDF: Unified Robot Description Format. 로봇의 geometry와 구성을 명세.
- - 관성모멘트: 주어진 축을 중심으로 일어나는 회전 운동을 변화시키기 어려운 정도
-
-
-Link 
-
-![](http://wiki.ros.org/urdf/XML/link?action=AttachFile&do=get&target=inertial.png)
-
-```
- <link name="my_link">
-   <inertial>
-     <origin xyz="0 0 0.5" rpy="0 0 0"/>
-     <mass value="1"/>
-     <inertia ixx="100"  ixy="0"  ixz="0" iyy="100" iyz="0" izz="100" />
-   </inertial>
-
-   <visual>
-     <origin xyz="0 0 0" rpy="0 0 0" />
-     <geometry>
-       <box size="1 1 1" />
-     </geometry>
-     <material name="Cyan">
-       <color rgba="0 1.0 1.0 1.0"/>
-     </material>
-   </visual>
-
-   <collision>
-     <origin xyz="0 0 0" rpy="0 0 0"/>
-     <geometry>
-       <cylinder radius="1" length="0.5"/>
-     </geometry>
-   </collision>
- </link>
-```
-
-Joint
-
-![](http://wiki.ros.org/urdf/XML/joint?action=AttachFile&do=get&target=joint.png)
-
-```
- <joint name="my_joint" type="floating">
-    <origin xyz="0 0 1" rpy="0 0 3.1416"/>
-    <parent link="link1"/>
-    <child link="link2"/>
-
-    <calibration rising="0.0"/>
-    <dynamics damping="0.0" friction="0.0"/>
-    <limit effort="30" velocity="1.0" lower="-2.2" upper="0.7" />
-    <safety_controller k_velocity="10" k_position="15" soft_lower_limit="-2.0" soft_upper_limit="0.5" />
- </joint>
-```
-
-ros2-control gazebo-ros2-control 설치
-```
-sudo apt install ros-foxy-ros2-control ros-foxy-ros2-controllers ros-foxy-gazebo-ros2-control ros-foxy-xacro
-```
-
-simple_joint 패키지 설치
-```
-cd ~/ros2_ws/src
-git clone https://github.com/donghee/simple_joint
-cd ~/ros2_ws
-colcon build --packages-select simple_joint
-```
-
-simple joint gazebo 실행
-```
-cd ~/ros2_ws
-source ./install/setup.bash
-ros2 launch simple_joint_gazebo simple_joint_launch.py
-```
-
-ros2 control joint state와  trajectory controller 로드 (새로운 터미널에서)
-```
-cd ~/ros2_ws
-source ./install/setup.bash
-ros2 control load_controller --set-state start joint_state_broadcaster
-ros2 control load_controller --set-state start joint_trajectory_controller
-```
-
-조인트 제어
-```
-python3 ~/ros2_ws/install/simple_joint_description/lib/simple_joint_description/wheel_steer.py -0.5
-```
-
-<!-- ``` -->
-<!-- ros2 action send_goal /joint_trajectory_controller/follow_joint_trajectory control_msgs/action/FollowJointTrajectory "{ trajectory: { joint_names: [body_steering__wheel_stir_right], points: [ { positions: [0, 0, 0.5, 0.5] }]}, goal_time_tolerance: { sec: 1, nanosec: 0 } }" -->
-<!-- ``` -->
 
 ## Raspberry Pi 4에 ROS 2 설치
 
@@ -448,192 +588,13 @@ ssh ubuntu@192.168.88.??
 
 ### 하드웨어 설치
 
-#### IMU
-
-_mpu9250과 Raspberry Pi 연결하기_
-![](https://images.squarespace-cdn.com/content/v1/59b037304c0dbfb092fbe894/1573589401909-GKK8YB7UJ9FLCCYBDDRP/rpi_mpu9250_wiring_diagram.png?format=2500w)
-
-https://abyz.me.uk/rpi/pigpio/download.html
-
-연결 확인
-
-```
-i2cdetect -y 1
-```
-
-0x68
-
-```
-ubuntu@doodoong:~$ i2cdetect -y 1
-     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
-00:          -- -- -- -- -- -- -- -- -- -- -- -- --
-10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-60: -- -- -- -- -- -- -- -- 68 -- -- -- -- -- -- --
-70: -- -- -- -- -- -- -- --
-```
-
-permission 문제가 있을경우, 다음 명령으로 i2c 그룹에 ubuntu 유저를 추가한다. 추가 후 다시 로그인 해야 그룹이 적용.
-
-```
-sudo usermod -G i2c "$USER"
-```
+#### 
 
 #### 모터 드라이버
 
-L298n
-
-![](https://i.imgur.com/omSvD8A.png)
-
-![](https://i.imgur.com/Cn6y8qp.png)
-
-_L298n과 Raspberry Pi 연결하기_
-
-![](https://imgur.com/0dio7EM.png)
-
-![](https://www.raspberrypi-spy.co.uk/wp-content/uploads/2012/06/raspberry_pi_3_model_b_plus_gpio.jpg)
-
 #### 카메라
-
-raspberry pi camera v1
-
-https://github.com/christianrauch/raspicam2_node
 
 #### 라이다
 
-rplidar a1
 
-https://github.com/Slamtec/sllidar_ros2
 
-<!-- ---- -->
-
-<!-- ### 소프트웨어 드라이버 -->
-
-<!-- Raspberry Pi GPIO 드라이버 -->
-
-<!-- pigpio -->
-
-<!-- http://abyz.me.uk/rpi/pigpio/download.html -->
-
-<!-- 설치 -->
-
-<!-- ``` -->
-<!-- sudo apt install python-setuptools python3-setuptools -->
-<!-- wget https://github.com/joan2937/pigpio/archive/master.zip -->
-<!-- unzip master.zip -->
-<!-- cd pigpio-master -->
-<!-- make -->
-<!-- sudo make install -->
-<!-- ``` -->
-
-<!-- https://www.theconstructsim.com/tag/ros2 -->
-
-<!-- ## ROS2 패키지 만들기 -->
-<!-- C++ -->
-
-<!-- source /opt/ros/foxy/setup.bash -->
-
-<!-- ros2 pkg create <package_name> --build-type <build_type> --dependencies <dependencies_separated_by_single_space> -->
-
-<!-- ros2_ws/src -->
-<!-- ros2 pkg create ros2_hello_cpp_pkg --build-type ament_cmake --dependencies rclcpp -->
-
-<!-- cd ros2_hello_cpp_pkg/src -->
-
-<!-- touch ros2_hello.cpp -->
-
-<!-- #include "rclcpp/rclcpp.hpp" -->
-
-<!-- int main(int argc, char *argv[]) { -->
-<!--   rclcpp::init(argc, argv); -->
-<!--   auto node = rclcpp::Node::make_shared("Hello"); -->
-
-<!--   RCLCPP_INFO(node->get_logger(), -->
-<!--               "Hello ROS 2 World"); -->
-
-<!--   rclcpp::shutdown(); -->
-<!--   return 0; -->
-<!-- } -->
-
-<!-- CMakeLists.txt -->
-<!-- ``` -->
-<!-- add_executable(hello src/ros2_hello.cpp) -->
-<!-- ament_target_dependencies(hello rclcpp) -->
-
-<!-- install(TARGETS -->
-<!--     hello -->
-<!--     DESTINATION lib/${PROJECT_NAME} -->
-<!-- ) -->
-<!-- ``` -->
-
-<!-- 컴파일 -->
-
-<!-- cd /home/user/ros2_ws -->
-
-<!-- colcon build --symlink-install -->
-
-<!-- source install/setup.sh -->
-
-<!-- ros2 run ros2_hello_cpp_pkg hello -->
-
-<!-- python 버전 -->
-
-<!-- ``` -->
-
-<!-- import rclpy -->
-<!-- from rclpy.node import Node -->
-<!-- from box_bot_perception.dummy_class import Dummy -->
-<!-- from std_msgs.msg import String -->
-
-<!-- class MinimalPublisher(Node): -->
-
-<!--     def __init__(self): -->
-<!--         super().__init__('minimal_publisher') -->
-<!--         self.dummy_obj = Dummy() -->
-<!--         self.publisher_ = self.create_publisher(String, '/box_bot_talker', 10) -->
-<!--         timer_period = 0.5  # seconds -->
-<!--         self.timer = self.create_timer(timer_period, self.timer_callback) -->
-
-<!--     def timer_callback(self): -->
-<!--         msg = String() -->
-<!--         talk_text = self.dummy_obj.talk() -->
-<!--         msg.data = "Dummy Said:"+str(talk_text) -->
-<!--         self.publisher_.publish(msg) -->
-<!--         self.get_logger().info('Publishing: "%s"' % msg.data) -->
-
-<!-- def main(args=None): -->
-<!--     rclpy.init(args=args) -->
-
-<!--     minimal_publisher = MinimalPublisher() -->
-
-<!--     rclpy.spin(minimal_publisher) -->
-
-<!--     # Destroy the node explicitly -->
-<!--     # (optional - otherwise it will be done automatically -->
-<!--     # when the garbage collector destroys the node object) -->
-<!--     minimal_publisher.destroy_node() -->
-<!--     rclpy.shutdown() -->
-
-<!-- if __name__ == '__main__': -->
-<!--     main() -->
-<!-- ``` -->
-
-<!-- rpi2 cam on ros2 -->
-<!-- https://www.youtube.com/watch?v=MlYWtDNsvgw -->
-
----
-
-diffdrive-arduino
-
-필요한 패키지
-ros-foxy-ros2-control ros-foxy-ros2-controllers ros-foxy-hardware-interface ros-foxy-xacro
-
----
-
-icra2023 ros2 gz tutorial
-
-- https://drive.google.com/drive/folders/1HeveECTM4RTbKhFgO0gieUqawBCQKZf0
-- https://github.com/osrf/icra2023_ros2_gz_tutorial#quick-start
