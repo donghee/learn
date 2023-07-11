@@ -8,15 +8,15 @@
   - [4\. ROS 2 소개](day1#ros-2-소개)
   - [5\. ROS 인터페이스](day1#ros-인터페이스)
   - [6\. ROS Turtlesim](day1#ros-turtlesim)
-  - [7\. 참고](day1#참고)
+  - [7\. ROS 노드 만들기](day1#ros-노드-만들기)
+  - [8\. 참고](day1#참고)
 
 - [둘째날](day2#ros-2-programming-day-2)
 
   - [수업 소개](day2#수업-소개)
-  - [ROS 노드 만들기](day2#ros-노드-만들기)
   - [SLAM 소개](day2#SLAM-소개)
   - [시뮬레이션](day2#시뮬레이션)
-  - [Raspberry Pi 3에 ROS 2 설치](day2#raspberry-pi-3에-ros-2-설치)
+  - [Raspberry Pi 4에 ROS 2 설치](day2#raspberry-pi-4에-ros-2-설치)
 
 - [셋째날](day3#ros-2-programming-day-3)
   - [수업 소개](day3#수업-소개)
