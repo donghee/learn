@@ -23,7 +23,7 @@ digraph {
  node [color="#40e0d0"];
  edge [fontname="MS Gothic"];
  label = "robot_state_publisher";
- "URDF" [shape=rect] -> "/robot_state_publisher";
+ "URDF" [shape=rect] -> [style=dotted] "/robot_state_publisher";
  node1 [label= ""]
  node2 [label= ""]
  "/joint_state_publisher" -> "/robot_state_publisher" [label="/joint_states"]
