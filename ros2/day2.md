@@ -194,7 +194,7 @@ sudo apt install ros-foxy-ros2-control ros-foxy-ros2-controllers ros-foxy-gazebo
 - 훨간격 22.4cm
 - (샷시로부터) 라이다 높이 13cm
 
-`firstbot_description` 프로젝트: https://cloud.baribarilab.com/s/oLanqecJfX3ybYG
+`firstbot_description` 프로젝트 참고: https://cloud.baribarilab.com/s/zDYCWggjD9tFRec
 
 0. 패키지 만들기
 
@@ -204,6 +204,7 @@ ros2 pkg create firstbot_description --build-type ament_cmake --dependencies urd
 ```
 
 실행 결과
+
 ```
 going to create a new package
 package name: firstbot_description
@@ -231,10 +232,9 @@ creating ./firstbot_description/CMakeLists.txt
 
 4. launch/rsp.launch.py 추가
 
-5. CMakefile에 install 추가
+5. CMakefile 내용에 urdf, launch 파일 추가
 
 6. 실행
-
 
 `robot_state_publisher` 실행
 
@@ -276,11 +276,9 @@ rviz2
 - wheel 바퀴 크기를 반지름 3.5cm 에서 7cm으로 바뀌기
 - lidar를 추가 하여 보자. 
  
-## 로봇 모델을 시뮬레이터에서 실행
+## 로봇 모델을 Gazebo 시뮬레이터에서 실행
 
-gazebo
-
-`/robot_state_publisher`를 실행하여, URDF를 `/robot_description` 토픽으로 보내기
+`robot_state_publisher` 실행
 
 ```
 ros2 launch firstbot_description rsp.launch.py use_sim_time:=true
@@ -292,11 +290,14 @@ gazebo 실행
 ros2 launch gazebo_ros gazebo.launch.py
 ```
 
-robot을 gazebo에 올리기
+`/robot_description`에 정의된 robot을 gazebo에 올리기
 
 ```
 ros2 run gazebo_ros spawn_entity.py -topic robot_description -entity zara
 ```
+
+실행 화면. 왼쪽 gazebo, 오른쪽 rviz
+![](https://i.imgur.com/VvnJcuZ.png)
 
 ### Gazebo Control
 
