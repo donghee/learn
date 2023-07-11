@@ -24,10 +24,10 @@ digraph {
  edge [fontname="MS Gothic"];
  label = "robot_state_publisher";
  "URDF" -> "robot_state_publisher";
-  node1 [label= ""]
-  node2 [label= ""]
- "/joint_state_publisher" -> "/robot_state_publisher" [label="/joint_states"];
- "/robot_state_publisher" -> node1 [label="/tf"];
+ node1 [label= ""]
+ node2 [label= ""]
+ "/joint_state_publisher" -> "/robot_state_publisher" [label="/joint_states"]
+ "/robot_state_publisher" -> node1 [label="/tf"]
  "/robot_state_publisher" -> node2 [label="/robot_description"]"
 }
 ```
