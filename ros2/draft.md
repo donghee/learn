@@ -47,8 +47,12 @@ ros2 run tf2_ros static_transform_publisher 1 0 0 0 0 0 robot_1 robot_2
 - rviz를 이용해서 `world`, `robot_1`, `robot_2`의 관계 보기
 
 ```
-ros2 run rviz2 rviz2
+rviz2
 ```
+
+![](https://i.imgur.com/9yZAy0c.png)
+
+---
 
 URDF 작성
 
