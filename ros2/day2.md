@@ -242,7 +242,8 @@ creating ./firstbot_description/CMakeLists.txt
 ros2 launch firstbot_description rsp.launch.py use_sim_time:=true
 ```
 
-/robot_description 토픽 확인
+`/robot_description` 토픽 확인
+
 ```
 ros2 topic list
 /clock
@@ -284,7 +285,7 @@ rviz2
 ros2 launch firstbot_description rsp.launch.py use_sim_time:=true
 ```
 
-gazebo 실행
+`gazebo_ros` 실행
 
 ```
 ros2 launch gazebo_ros gazebo.launch.py
@@ -296,10 +297,10 @@ ros2 launch gazebo_ros gazebo.launch.py
 ros2 run gazebo_ros spawn_entity.py -topic robot_description -entity zara
 ```
 
-실행 화면. 왼쪽 gazebo, 오른쪽 rviz
+실행 화면: 왼쪽 gazebo, 오른쪽 rviz
 ![](https://i.imgur.com/VvnJcuZ.png)
 
-### Gazebo Control
+### ROS2 Control
 
 `ros2_control` 하드웨어 로봇과 시뮬레이터 로봇 인터페이스 제공
 
