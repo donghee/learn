@@ -17,10 +17,8 @@
 - ROS와 시뮬레이터를 이용하여 SLAM 실습
 
 2. 차동 구동 드라이버 만들기
-
 - 인코더와 모터
 - 피드백 제어
-- 시리얼 인터페이스
 
 3. Raspberry Pi에 ROS 2 개발 환경 구성
 
@@ -176,13 +174,36 @@ Joint
  </joint>
 ```
 
-xacro joint-state-publisher-gui 설치
+xacro joint-state-publisher-gui, gazebo 설치
 
+gazebo
+```
+sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
+wget https://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
+sudo apt update
+sudo apt install gazebo11 libgazebo11-dev
+
+gazebo
+```
+
+가상 머신에서 에러가 나는 경우 다음 실행후 다시 gazebo 실행
+
+```
+export SVGA_VGPU10=0
+```
+
+ROS Gazebo 패키지 설치
+
+```
+sudo apt install ros-foxy-gazebo-dev ros-foxy-gazebo-plugins ros-foxy-gazebo-msgs  ros-foxy-gazebo-ros-pkgs ros-foxy-gazebo-ros ros-foxy-ros-core ros-foxy-geometry2
+```
+
+xacro joint-state-publisher-gui
 ```
 sudo apt install ros-foxy-ros2-control ros-foxy-ros2-controllers ros-foxy-gazebo-ros2-control ros-foxy-xacro ros-foxy-joint-state-publisher-gui
 ```
 
-ZARA 로봇의 주요 수치
+**로봇의 주요 수치**
 - 샷시의 지름 30cm
 - 샷시의 높이 5cm 
 - 샷시의 무게 500g
@@ -356,29 +377,6 @@ Simultaneous Localization and Mapping 동시적 위치추정 및 지도작성
 Gazebo 시뮬레이터를 이용하여, SLAM과 자율 주행을 테스트 해보자.
 
 ### 시뮬레이터 Gazebo
-
-#### Gazebo 11 설치
-
-```
-sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
-wget https://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
-sudo apt update
-sudo apt install gazebo11 libgazebo11-dev
-
-gazebo
-```
-
-가상 머신에서 에러가 나는 경우 다음 실행후 다시 gazebo 실행
-
-```
-export SVGA_VGPU10=0
-```
-
-#### ROS Gazebo 패키지 설치
-
-```
-sudo apt install ros-foxy-gazebo-dev ros-foxy-gazebo-plugins ros-foxy-gazebo-msgs  ros-foxy-gazebo-ros-pkgs ros-foxy-gazebo-ros ros-foxy-ros-core ros-foxy-geometry2
-```
 
 #### SLAM, Navigation 패키지 설치
 
