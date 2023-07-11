@@ -18,6 +18,7 @@
 
 2. 차동 구동 드라이버 만들기
 - 인코더와 모터
+- 아두이노 개발 환경 설치
 - 피드백 제어
 
 3. Raspberry Pi에 ROS 2 개발 환경 구성
@@ -376,7 +377,9 @@ Simultaneous Localization and Mapping 동시적 위치추정 및 지도작성
 
 Gazebo 시뮬레이터를 이용하여, SLAM과 자율 주행을 테스트 해보자.
 
-### 시뮬레이터 Gazebo
+### 시뮬레이터 Gazebo 
+
+gazebo 11 설치 확인
 
 #### SLAM, Navigation 패키지 설치
 
@@ -516,6 +519,8 @@ ros2 launch firstbot_navigation2 navigation2_rviz.launch.py
 - WIFI AP: "baribarilab"
 - WIFI PASSWORD: "1111100000"
 
+사용하는 무선 AP에 맞춰서 설정
+
 sudo nano /etc/netplan/50-cloud-init.yaml
 
 ```
@@ -636,9 +641,13 @@ ssh ubuntu@192.168.88.??
 
 ### 하드웨어 설치
 
-#### 
+![](https://i.imgur.com/AetvNwy.png)
 
-#### 모터 드라이버
+#### 차동구동 모터 드라이버
+
+`diffbot_arduion.ino`
+
+펌웨어: https://gist.github.com/donghee/c0319e3f95fce0dca63fb29710954119
 
 #### 카메라
 
