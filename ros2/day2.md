@@ -644,10 +644,11 @@ ssh ubuntu@192.168.88.??
 ![](https://i.imgur.com/AetvNwy.png)
 
 - Raspberry Pi 4
-- Raspberry Pi Camera V1
+- Raspberry Pi Camera
+- Paspberry Pi 어댑터
 - RPLIDAR A1
 - 몸체 프레임
-- DC 모터+인코더 출력 
+- 인코터 장착된 청소기 모터
 - 3S LiPo 배터리
 - 배터리 충전기 
 
