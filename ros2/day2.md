@@ -92,14 +92,13 @@ sudo apt install ros-foxy-nav2-bringup
 
 #### 퍼스트봇 ZARA 패키지 설치
 
+패키지 다운로드
 ```
 mkdir -p ~/firstbot_ws/src
 cd ~/firstbot_ws/src
 git clone git@github.com:donghee/firstbot_zara.git -b foxy
 git clone https://github.com/donghee/firstbot_zara.git -b foxy --recursive
 ```
-
-turtlebot3.repos파일의 version을 ros2-devel을 foxy-devel로 수정. 단 ld08_driver는 ros2-devel로 남겨 둔다.
 
 gazebo 모델 추가
 ```
