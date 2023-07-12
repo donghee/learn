@@ -465,6 +465,7 @@ ros2 launch firstbot_description launch_sim.launch.py use_sim_time:=true
 ros2 launch firstbot_cartographer cartographer.launch.py use_sim_time:=true
 ```
 
+맵생성 rviz2
 ```
 ros2 launch firstbot_cartographer cartographer_rviz.launch.py use_sim_time:=true
 ```
@@ -513,6 +514,7 @@ cd ~/firstbot_ws
 ros2 launch firstbot_navigation2 navigation2.launch.py use_sim_time:=true map:=./map.yaml
 ```
 
+네비게이션 rviz2
 ```
 ros2 launch firstbot_navigation2 navigation2_rviz.launch.py
 ```
@@ -522,7 +524,6 @@ ros2 launch firstbot_navigation2 navigation2_rviz.launch.py
 <!-- ![](https://i.imgur.com/NytGENa.png) -->
 
 #### 해보기: gazebo에서 브릭 박스로 장애물을 구성해서 자율 주행을 해보자.
-
 
 ## Raspberry Pi 4에 ROS 2 설치
 
@@ -564,9 +565,14 @@ network:
           password: "YOUR_WIFI_PASSWORD"
 ```
 
+
+네트워크 설정 적용
+
 ```
 sudo netplan --debug apply
 ```
+
+ip  확인
 
 ```
 ip address
@@ -689,6 +695,36 @@ ssh ubuntu@192.168.88.??
  - 인코더 읽기. 1바퀴에 1200 펄스 생성
 
 #### 카메라
+
+Raspberry Pi Camera 설정을 위해 필요한 패키지 
+
+```
+sudo apt install libraspberrypi-bin v4l-utils ros-foxy-v4l2-camera ros-foxy-image-transport-plugins
+```
+```
+sudo usermod -aG video $USER
+```
+
+카메라 연결 확인
+```
+vcgencmd get_camera
+```
+
+확인 결과
+```
+supported=1 detected=1
+```
+
+```
+v4l2-ctl --list-devices
+```
+
+카메라 실행 노드
+```
+ros2 run v4l2_camera v4l2_camera_node --ros-args -p image_size:="[640,480]" -p camera_frame_id:=camera_optical_link
+```
+
+`ROS_DOMAIN_ID=0 rqt_image_view` 로 이미지 토픽 읽기
 
 #### 라이다
 
