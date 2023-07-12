@@ -583,7 +583,6 @@ network:
           password: "YOUR_WIFI_PASSWORD"
 ```
 
-
 네트워크 설정 적용
 
 ```
@@ -756,8 +755,7 @@ void loop() {
         Serial.print(l_wheel_cnt);
         Serial.print(' ');
         Serial.println(r_wheel_cnt);
-    }
-    if (value == 'm') { 
+    } else if (value == 'm') { 
         analogWrite(MOTOR_L_PWM_PIN, 127);
         analogWrite(MOTOR_R_PWM_PIN, 127);
     } else {
