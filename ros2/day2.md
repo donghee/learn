@@ -350,22 +350,23 @@ https://control.ros.org
 
 ### 테스트
 
-gazebo_control.xacro 다음 링크에서 다운받아서 firstbot_description/urdf 디렉토리 안에 저장
+
+1. gazebo_control.xacro 다음 링크에서 다운받아서 firstbot_description/urdf 디렉토리 안에 저장
 https://cloud.baribarilab.com/s/kkDe9jHFpCHNNCR
 
-robot.urdf.xacro 파일에 다음 내용 추가
+2. robot.urdf.xacro 파일에 다음 내용 추가
 ```
 <xacro:include filename="gazebo_control.xacro" />
 ```
 
 
-시뮬레이터 launch 실행 (`rsp`, `gazebo`, `gazebo_ros` 실행)
+3. 시뮬레이터 launch 실행 (`rsp`, `gazebo`, `gazebo_ros` 실행)
 
 ```
 ros2 launch firstbot_description launch_sim.launch.py use_sim_time:=true
 ```
 
-키보드 teleop
+4. 키보드 teleop
 
 ```
 ros2 run teleop_twist_keyboard teleop_twist_keyboard
