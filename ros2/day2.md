@@ -216,7 +216,7 @@ sudo apt install ros-foxy-ros2-control ros-foxy-ros2-controllers ros-foxy-gazebo
 - 바퀴의 두께 2cm
 - 바퀴의 무게 50g
 - 캐스터 휠의 반지름 1cm
-- 캐스터 휠의 무게 1cm
+- 캐스터 휠의 무게 10g
 - 훨간격 22.4cm
 - (샷시로부터) 라이다 높이 13cm
 
@@ -260,7 +260,14 @@ creating ./firstbot_description/CMakeLists.txt
 
 5. CMakefile 내용에 urdf, launch 파일 추가
 
-6. 실행
+6. 빌드, 그리고 실행
+
+빌드
+
+```
+cd ~/ros2_ws
+colcon build --symlink-install
+```
 
 `robot_state_publisher` 실행
 
@@ -301,7 +308,7 @@ rviz2
 해보기
 
 - wheel 바퀴 크기를 반지름 3.5cm 에서 7cm으로 바뀌기
-- lidar를 추가 하여 보자. 
+- lidar를 추가 하여 보자. 힌트: `xacro:include`
  
 ## 로봇 모델을 Gazebo 시뮬레이터에서 실행
 
