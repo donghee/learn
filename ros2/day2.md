@@ -864,6 +864,13 @@ source ./install/setup.sh
 ros2 launch sllidar_ros2 sllidar_launch.py
 ```
 
+<!-- 또다른 노드 -->
+
+<!-- sudo apt-get install ros-foxy-rplidar-ros -->
+<!-- cd ~/firstbot_ws/src -->
+<!-- ros2 launch firstbot_bringup rplidar.launch.py -->
+
+
 #### 해보기: A1 라이더 값 받기
 
 - rplidar 센서값을 ros2 topic echo를 이용해서 받아 보자.

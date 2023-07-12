@@ -43,3 +43,17 @@ ros2 launch firstbot_navigation2 navigation2.launch.py map:=$HOME/map.yaml use_s
 
 
 
+### joy
+jstest-gtk 로 캘리브레이션
+
+ROS_DOMAIN_ID=0 ros2 launch teleop_twist_joy teleop-launch.py joy_dev:=/dev/input/js1 
+
+sudo apt-get install ros-foxy-teleop-twist-joy
+
+
+rplidar 왼쪽 위쪽에 연결 
+
+sudo apt-get install ros-foxy-rplidar-ros
+cd ~/firstbot_ws/src
+ros2 launch firstbot_bringup rplidar.launch.py
+
