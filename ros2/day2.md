@@ -694,6 +694,67 @@ ssh ubuntu@192.168.88.??
  - PID 제어: 속도 제어
  - 인코더 읽기. 1바퀴에 1200 펄스 생성
 
+```
+#define BAUDRATE 57600
+
+#define MOTOR_L_WCNT_PIN 2  // FS brown: Encoder
+#define MOTOR_R_WCNT_PIN 3  // FS brown: Encoder
+
+#define MOTOR_L_FR_PIN 7  // FR white: Direction
+#define MOTOR_R_FR_PIN 8  // FR white: Direction
+
+#define MOTOR_L_BREAK_PIN 9   // BREAK green: BREAK
+#define MOTOR_R_BREAK_PIN 10  // BREAK green: BREAK
+
+#define MOTOR_L_PWM_PIN 5  // PWM blue: SPEED
+#define MOTOR_R_PWM_PIN 6  // PWM blue: SPEED
+
+int l_wheel_cnt = 0;
+int r_wheel_cnt = 0;
+
+// encoder
+volatile long l_duration = 0;
+volatile long r_duration = 0;
+
+void setup {
+  TCCR0B = 0b00000010;  // x8
+  TCCR0A = 0b00000001;  // phase correct
+
+  // setting the rising edge interrupt
+  pinMode(MOTOR_L_WCNT_PIN, INPUT_PULLUP);
+  pinMode(MOTOR_R_WCNT_PIN, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(MOTOR_L_WCNT_PIN), ISR_L_wheelCount, RISING);
+  attachInterrupt(digitalPinToInterrupt(MOTOR_R_WCNT_PIN), ISR_R_wheelCount, RISING);
+
+  Serial.begin(BAUDRATE);
+}
+
+void loop() {
+  if (Serial.available()) {
+    value = Serial.read();
+    if (value == 'e') { 
+        Serial.print(l_wheel_cnt);
+        Serial.print(' ');
+        Serial.println(r_wheel_cnt);
+    }
+    if (value == 'm') { 
+        analogWrite(MOTOR_L_PWM_PIN, 127);
+        analogWrite(MOTOR_R_PWM_PIN, 127);
+    } else {
+        analogWrite(MOTOR_L_PWM_PIN, 0);
+        analogWrite(MOTOR_R_PWM_PIN, 0);
+    }
+  }
+}
+
+void ISR_L_wheelCount() {
+  l_wheel_cnt = l_duration / 1200;
+}
+
+void ISR_R_wheelCount() {
+  r_wheel_cnt = r_duration / 1200;
+}
+```
 #### 카메라
 
 Raspberry Pi Camera 설정을 위해 필요한 패키지 
