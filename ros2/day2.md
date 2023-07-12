@@ -68,10 +68,14 @@ ros2 run tf2_ros static_transform_publisher 2 1 0 0.785 0 0 world robot_1
 ros2 run tf2_ros static_transform_publisher 1 0 0 0 0 0 robot_1 robot_2
 ```
 
-#### 해보기: `robot_1`는 `world` 좌표계를 기준으로 어디에 있나?
+#### 해보기: `robot_2`는 `world` 좌표계를 기준으로 어디에 있나?
 
 - robot_1의 위치와 방향을 계산해보자. 
 - rviz를 이용해서 `world`, `robot_1`, `robot_2`의 관계 보기
+
+```
+ros2 run tf2_ros tf2_echo world robot_2
+```
 
 ```
 rviz2
@@ -667,7 +671,7 @@ ssh ubuntu@192.168.88.??
 
 #### 라이다
 
-#### RPLIDAR A1
+**RPLIDAR A1**
 
 https://www.slamtec.com/en/Lidar/A1
 
@@ -696,4 +700,23 @@ ros2 launch sllidar_ros2 sllidar_launch.py
 - ros2 노드를 구성해서 라이더 값을 받아서 라이더 값의 최소값을 구해보자.
 - 참고: https://github.com/ROBOTIS-GIT/turtlebot3/blob/master/turtlebot3_example/nodes/turtlebot3_obstacle
 
+
+
+### Raspberry Pi에 퍼스트봇 ZARA 패키지 설치
+
+```
+mkdir -p ~/firstbot_ws/src
+cd ~/firstbot_ws/src
+git clone https://github.com/donghee/firstbot_zara.git -b foxy --recursive
+```
+
+패키지 빌드
+
+```
+cd ~/firstbot_ws
+colcon build --symlink-install
+source install/setup.bash
+echo "source ~/firstbot_ws/install/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+```
 
