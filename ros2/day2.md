@@ -434,11 +434,9 @@ https://github.com/cartographer-project/cartographer
 
 - `firstbot_base`: controller_manager를 이용한 하드웨어 인터페이스
 - `firstbot_bringup`: 하드웨어 드라이버 실행 (카메라 ,라이다, 모터 컨트롤러)
-- `firstbot_control`: Configurations for the diff_drive_controller of ROS Control used in Gazebo simulation and the real robot.
-- `firstbot_description`: FirstBot의 URDF 
-- `firstbot_gazebo`: FirstBot의 시뮬레이션을 위한 launch 파일과 설정
+- `firstbot_description`: FirstBot의 URDF, gazebo 실행
 - `firstbot_navigation`: FirstBot의 네비게이션을 위한 launch 파일과 설정 
-- `firstbot_slam`: SLAM을 위한 설정
+- `firstbot_cartographer`: SLAM을 위한 설정
 
 패키지 다운로드: https://github.com/donghee/firstbot_zara/tree/foxy
 
