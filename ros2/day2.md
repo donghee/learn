@@ -267,6 +267,7 @@ creating ./firstbot_description/CMakeLists.txt
 ```
 cd ~/ros2_ws
 colcon build --symlink-install
+source ./install/setup.sh
 ```
 
 `robot_state_publisher` 실행
