@@ -335,6 +335,8 @@ ros2 run gazebo_ros spawn_entity.py -topic robot_description -entity zara
 
 ### ROS2 Control
 
+https://control.ros.org
+
 `ros2_control` 하드웨어 로봇과 시뮬레이터 로봇 인터페이스 제공
 
 `/cmd_vel`을 입력 받아서 로봇(하드웨어 또는 시뮬레이터 로봇) 제어
