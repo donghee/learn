@@ -350,7 +350,6 @@ https://control.ros.org
 
 ### 테스트
 
-
 gazebo_control.xacro 다음 링크에서 다운받아서 firstbot_description/urdf 디렉토리 안에 저장
 https://cloud.baribarilab.com/s/kkDe9jHFpCHNNCR
 
