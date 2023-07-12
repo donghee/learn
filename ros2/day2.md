@@ -767,9 +767,9 @@ void ISR_R_wheelCount() {
   r_wheel_cnt = r_duration / 1200;
 }
 ```
-#### 카메라
+### Raspberry Pi Camera 사용하기
 
-Raspberry Pi Camera 설정을 위해 필요한 패키지 
+ROS에서 Raspberry Pi Camera 사용에 필요한 패키지 설치 
 
 ```
 sudo apt install libraspberrypi-bin v4l-utils ros-foxy-v4l2-camera ros-foxy-image-transport-plugins
@@ -778,26 +778,65 @@ sudo apt install libraspberrypi-bin v4l-utils ros-foxy-v4l2-camera ros-foxy-imag
 sudo usermod -aG video $USER
 ```
 
-카메라 연결 확인
-```
-vcgencmd get_camera
-```
+raspi-config 다운로드
 
-확인 결과
 ```
-supported=1 detected=1
+wget https://archive.raspberrypi.org/debian/pool/main/r/raspi-config/raspi-config_20200601_all.deb -P /tmp
 ```
 
 ```
+sudo dpkg -i /tmp/raspi-config_20200601_all.deb
+```
+
+```
+sudo apt --fix-broken install
+```
+
+카메라 활성화
+
+```
+sudo mount /dev/mmcblk0p1 /boot
+```
+
+```
+sudo raspi-config
+
+# 5. Interface Options -> P1 Camera -> Enable camera
+```
+재부팅
+
+카메라 설치 확인
+```
+sudo usermod -G video "$USER"
+
+sudo apt-get install v4l-utils
 v4l2-ctl --list-devices
 ```
 
-카메라 실행 노드
 ```
-ros2 run v4l2_camera v4l2_camera_node --ros-args -p image_size:="[640,480]" -p camera_frame_id:=camera_optical_link
+raspistill -o cam.jpg
 ```
 
-`ROS_DOMAIN_ID=0 rqt_image_view` 로 이미지 토픽 읽기
+pc에서 camera 이미지 보기
+```
+ros2 run rqt_image_view rqt_image_view
+```
+
+해상도 수정
+```
+ros2 param set /v4l2_camera image_size '[320, 240]'
+ros2 param get /v4l2_camera image_size
+```
+
+pi 카메라 실행 노드
+```
+ros2 run v4l2_camera v4l2_camera_node --ros-args -p image_size:="[320,240]" -p camera_frame_id:=camera_optical_link
+```
+
+pc에서 camera 이미지 보기
+```
+ros2 run rqt_image_view rqt_image_view
+```
 
 #### 라이다
 
