@@ -356,7 +356,7 @@ https://cloud.baribarilab.com/s/kkDe9jHFpCHNNCR
 
 robot.urdf.xacro 파일에 다음 내용 추가
 ```
-        <xacro:include filename="gazebo_control.xacro" />
+<xacro:include filename="gazebo_control.xacro" />
 ```
 
 
