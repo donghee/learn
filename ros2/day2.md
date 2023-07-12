@@ -708,7 +708,6 @@ ros2 launch sllidar_ros2 sllidar_launch.py
 - 참고: https://github.com/ROBOTIS-GIT/turtlebot3/blob/master/turtlebot3_example/nodes/turtlebot3_obstacle
 
 
-
 ### Raspberry Pi에 퍼스트봇 ZARA 패키지 설치
 
 ```
