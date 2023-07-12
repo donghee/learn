@@ -845,6 +845,11 @@ cd ~/firstbot_ws/src
 git clone https://github.com/donghee/firstbot_zara.git -b foxy --recursive
 ```
 
+필요한 패키시 설치
+```
+sudo apt-get install `cat ~/firstbot_ws/src/firstbot_zara/tools/ros2-foxy-installed.txt`
+```
+
 패키지 빌드
 
 ```
@@ -854,4 +859,12 @@ source install/setup.bash
 echo "source ~/firstbot_ws/install/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 ```
+
+실행
+
+```
+cd ~/firstbot_ws/src/firstbot_zara
+tmuxinator local
+```
+
 
