@@ -349,7 +349,7 @@ https://control.ros.org
 
 ### 테스트
 
-시뮬레이터 launch 실행 (rsp, gazebo, gazebo_ros 실행)
+시뮬레이터 launch 실행 (`rsp`, `gazebo`, `gazebo_ros` 실행)
 
 ```
 ros2 launch firstbot_description launch_sim.launch.py use_sim_time:=true
@@ -402,6 +402,18 @@ sudo apt install ros-foxy-cartographer-ros
 sudo apt install ros-foxy-navigation2
 sudo apt install ros-foxy-nav2-bringup
 ```
+
+#### cartographer: 2D, 3D환경에서 SLAM
+
+https://github.com/cartographer-project/cartographer
+
+![](https://camo.githubusercontent.com/10d0032636bb1b2a266209bdc0b4fa48ab9ef9fb47dcf834701aa8a50384ddc3/68747470733a2f2f6a2e676966732e636f6d2f777033424a4d2e676966)
+
+#### nav2
+ 
+네비게이션 
+
+![](https://navigation.ros.org/_images/nav2_architecture.png)
 
 #### 퍼스트봇 ZARA 패키지 설치
 
