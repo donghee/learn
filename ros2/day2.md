@@ -875,7 +875,7 @@ ros2 launch sllidar_ros2 sllidar_launch.py
 
 - rplidar 센서값을 ros2 topic echo를 이용해서 받아 보자.
 - ros2 노드를 구성해서 라이더 값을 받아서 라이더 값의 최소값을 구해보자.
-- 참고: https://github.com/ROBOTIS-GIT/turtlebot3/blob/master/turtlebot3_example/nodes/turtlebot3_obstacle
+<!-- - 참고: https://github.com/ROBOTIS-GIT/turtlebot3/blob/master/turtlebot3_example/nodes/turtlebot3_obstacle -->
 
 
 ### Raspberry Pi에 퍼스트봇 ZARA 패키지 설치
@@ -907,5 +907,9 @@ source ~/.bashrc
 cd ~/firstbot_ws/src/firstbot_zara
 tmuxinator local
 ```
+
+tmux 사용법
+
+`ctrl+b n` 또는 `ctrlb p` 를 이용하여 원도우 이용. `ctrl+b o` 를 이용하여 원도우 내부의 pane 이동
 
 
