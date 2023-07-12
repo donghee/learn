@@ -831,7 +831,7 @@ ros2 param get /v4l2_camera image_size
 
 pi 카메라 실행 노드
 ```
-ros2 run v4l2_camera v4l2_camera_node --ros-args -p image_size:="[320,240]" -p camera_frame_id:=camera_optical_link
+ros2 run v4l2_camera v4l2_camera_node --ros-args -p image_size:="[160,120]" -p camera_frame_id:=camera_optical_link
 ```
 
 pc에서 camera 이미지 보기
