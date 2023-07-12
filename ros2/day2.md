@@ -432,7 +432,6 @@ https://github.com/cartographer-project/cartographer
 
 #### 퍼스트봇 ZARA 패키지 설치
 
-- `firstbot_base`: controller_manager를 이용한 하드웨어 인터페이스
 - `firstbot_bringup`: 하드웨어 드라이버 실행 (카메라 ,라이다, 모터 컨트롤러)
 - `firstbot_description`: FirstBot의 URDF, gazebo 실행
 - `firstbot_navigation`: FirstBot의 네비게이션을 위한 launch 파일과 설정 
