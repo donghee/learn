@@ -415,10 +415,7 @@ gazebo 11 설치 확인
 #### SLAM, Navigation 패키지 설치
 
 ```
-sudo apt install ros-foxy-cartographer
-sudo apt install ros-foxy-cartographer-ros
-sudo apt install ros-foxy-navigation2
-sudo apt install ros-foxy-nav2-bringup
+sudo apt install ros-foxy-cartographer ros-foxy-cartographer-ros ros-foxy-navigation2 ros-foxy-nav2-bringup -y
 ```
 
 #### cartographer: 2D, 3D환경에서 SLAM
