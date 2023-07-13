@@ -130,6 +130,41 @@ picocom /dev/ttyUSB0 -b 57600
  
 ctrl+a ctrl+c 를 클릭하여 키보드 입력 확인
 
+### Raspberry Pi에 퍼스트봇 ZARA 패키지 설치
+
+```
+mkdir -p ~/firstbot_ws/src
+cd ~/firstbot_ws/src
+git clone https://github.com/donghee/firstbot_zara.git -b foxy --recursive
+```
+
+필요한 패키시 설치
+```
+sudo apt-get install `cat ~/firstbot_ws/src/firstbot_zara/tools/ros2-foxy-installed.txt`
+```
+
+패키지 빌드
+
+```
+cd ~/firstbot_ws
+colcon build --symlink-install
+source install/setup.bash
+echo "source ~/firstbot_ws/install/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+```
+
+실행
+
+```
+cd ~/firstbot_ws/src/firstbot_zara
+tmuxinator local
+```
+
+tmux 사용법
+
+`ctrl+b n` 또는 `ctrlb p` 를 이용하여 원도우 이용. `ctrl+b o` 를 이용하여 원도우 내부의 pane 이동
+
+
 ### Raspberry Pi Camera 사용하기
 
 ROS에서 Raspberry Pi Camera 사용에 필요한 패키지 설치 
@@ -235,47 +270,11 @@ ros2 launch sllidar_ros2 sllidar_launch.py
 <!-- cd ~/firstbot_ws/src -->
 <!-- ros2 launch firstbot_bringup rplidar.launch.py -->
 
-
 #### 해보기: A1 라이더 값 받기
 
 - rplidar 센서값을 ros2 topic echo를 이용해서 받아 보자.
 - ros2 노드를 구성해서 라이더 값을 받아서 라이더 값의 최소값을 구해보자.
 <!-- - 참고: https://github.com/ROBOTIS-GIT/turtlebot3/blob/master/turtlebot3_example/nodes/turtlebot3_obstacle -->
-
-
-### Raspberry Pi에 퍼스트봇 ZARA 패키지 설치
-
-```
-mkdir -p ~/firstbot_ws/src
-cd ~/firstbot_ws/src
-git clone https://github.com/donghee/firstbot_zara.git -b foxy --recursive
-```
-
-필요한 패키시 설치
-```
-sudo apt-get install `cat ~/firstbot_ws/src/firstbot_zara/tools/ros2-foxy-installed.txt`
-```
-
-패키지 빌드
-
-```
-cd ~/firstbot_ws
-colcon build --symlink-install
-source install/setup.bash
-echo "source ~/firstbot_ws/install/setup.bash" >> ~/.bashrc
-source ~/.bashrc
-```
-
-실행
-
-```
-cd ~/firstbot_ws/src/firstbot_zara
-tmuxinator local
-```
-
-tmux 사용법
-
-`ctrl+b n` 또는 `ctrlb p` 를 이용하여 원도우 이용. `ctrl+b o` 를 이용하여 원도우 내부의 pane 이동
 
 
 ## 주행 테스트
