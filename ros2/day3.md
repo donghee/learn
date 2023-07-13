@@ -279,11 +279,31 @@ ros2 launch sllidar_ros2 sllidar_launch.py
 
 ## 주행 테스트
 
-#### keyboard teleop
+빌드 
 
 ```
-ros2 run teleop_twist_keyboard teleop_twist_keyboard
+cd ~/firstbot_ws
+colcon build --symlink-install
+source ./install/setup.sh
 ```
+
+모터 컨트롤러 실행
+```
+cd ~/firstbot_ws
+ros2 launch firstbot_bringup test_robot.launch.py
+```
+key_teleop 실행
+
+```
+cd ~/firstbot_ws
+ros2 run twist_mux twist_mux --ros-args --remap cmd_vel_out:=diff_cont/cmd_vel_unstamped --params-file ./src/firstbot_zara/config/twist_mux.yaml
+```
+
+
+```
+ros2 run key_teleop key_teleop
+```
+
 
 ## 프로젝트
 
