@@ -10,7 +10,7 @@
 - 교재: [https://learn.dronemap.io/ros-workshop/ros2/#/day3](https://learn.dronemap.io/ros-workshop/ros2/#/day3)
 - 코치: 박동희 dongheepark@gmail.com
 
-1. 자율 주행 로봇 조립
+1. 자율 주행 로봇 주변장치 제어
 
  - 모터 드라이버
  - Camera 사용하기
