@@ -186,12 +186,9 @@ cd ~/firstbot_ws
 ros2 run twist_mux twist_mux --ros-args --remap cmd_vel_out:=diff_cont/cmd_vel_unstamped --params-file ./src/firstbot_zara/config/twist_mux.yaml
 ```
 
-
 ```
 ros2 run key_teleop key_teleop
 ```
-
-
 
 ### Raspberry Pi Camera 사용하기
 
@@ -279,24 +276,25 @@ https://www.slamtec.com/en/Lidar/A1
 
 ROS2 노드
 
-https://github.com/Slamtec/sllidar_ros2.git
+<!-- https://github.com/Slamtec/sllidar_ros2.git -->
+
+<!-- ``` -->
+<!-- cd ~/ros2_ws/src -->
+<!-- git clone https://github.com/Slamtec/sllidar_ros2.git -->
+<!-- cd ~/ros2_ws -->
+<!-- colcon build --symlink-install -->
+<!-- source ./install/setup.sh -->
+<!-- ./src/sllidar_ros2/scripts/create_udev_rules.sh -->
+<!--  -->
+<!-- ros2 launch sllidar_ros2 sllidar_launch.py -->
+<!-- ``` -->
+<!--  -->
 
 ```
-cd ~/ros2_ws/src
-git clone https://github.com/Slamtec/sllidar_ros2.git
-cd ~/ros2_ws
-colcon build --symlink-install
-source ./install/setup.sh
-./src/sllidar_ros2/scripts/create_udev_rules.sh
-
-ros2 launch sllidar_ros2 sllidar_launch.py
+sudo apt-get install ros-foxy-rplidar-ros
+cd ~/firstbot_ws/src
+ros2 launch firstbot_bringup rplidar.launch.py
 ```
-
-<!-- 또다른 노드 -->
-
-<!-- sudo apt-get install ros-foxy-rplidar-ros -->
-<!-- cd ~/firstbot_ws/src -->
-<!-- ros2 launch firstbot_bringup rplidar.launch.py -->
 
 #### 해보기: A1 라이더 값 받기
 
@@ -304,7 +302,14 @@ ros2 launch sllidar_ros2 sllidar_launch.py
 - ros2 노드를 구성해서 라이더 값을 받아서 라이더 값의 최소값을 구해보자.
 <!-- - 참고: https://github.com/ROBOTIS-GIT/turtlebot3/blob/master/turtlebot3_example/nodes/turtlebot3_obstacle -->
 
+## SLAM!
 
+SLAM 프로젝트 로드
+```
+cd ~/firstbot_ws/src/firstbot_zara
+git pull
+tmuxinator local
+```
 
 ## 프로젝트
 
