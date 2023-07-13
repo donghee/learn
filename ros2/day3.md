@@ -292,8 +292,15 @@ ROS2 노드
 
 ```
 sudo apt-get install ros-foxy-rplidar-ros
-cd ~/firstbot_ws/src
+cd ~/firstbot_ws
+colcon build --symlink-install
+source ./install/setup.bash
 ros2 launch firstbot_bringup rplidar.launch.py
+```
+
+/scan 토픽 확인
+```
+ros2 topic list 
 ```
 
 #### 해보기: A1 라이더 값 받기
