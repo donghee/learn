@@ -119,7 +119,7 @@ sudo apt-get install picocom
 picocom /dev/ttyUSB0 -b 57600
 ```
 
-ctrl+a ctrl+c 를 클릭하여 타자 echo 확인
+ctrl+a ctrl+c 를 클릭하여 키보드 입력 확인
 
 ### Raspberry Pi Camera 사용하기
 
