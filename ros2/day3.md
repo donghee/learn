@@ -10,11 +10,11 @@
 - 교재: [https://learn.dronemap.io/ros-workshop/ros2/#/day3](https://learn.dronemap.io/ros-workshop/ros2/#/day3)
 - 코치: 박동희 dongheepark@gmail.com
 
-1. 자율 주행 하드웨어 구성
+1. 자율 주행 로봇 조립
 
-- 자율 주행 하드웨어(탱크) 소개
-- 탱크 프레임 조립, 센서 및 모터 드라이버 하드웨어 구성
-- ROS 를 이용하여 센서(Lidar, 거리센서), 모터 드라이버(L293D) 제어
+ - 모터 드라이버
+ - Camera 사용하기
+ - 라이다
 
 2. 자율 주행 실습
 
@@ -22,161 +22,105 @@
 - 주행 테스트
 - 자율 프로젝트
 
-## 자율 주행 하드웨어 소개
+### 하드웨어 설치
 
-![](https://i.imgur.com/QMcDV3r.jpg ":size=141") ![](https://i.imgur.com/IjhXEDr.jpg ":size=250") ![](https://i.imgur.com/qcDHWaj.jpg ":size=250")
+![](https://i.imgur.com/AetvNwy.png)
 
-- L298n H-Bridge
-- MPU9250 IMU
-- Raspberry Pi Camera V1
+- Raspberry Pi 4
+- Raspberry Pi Camera
+- Paspberry Pi 어댑터
 - RPLIDAR A1
 - 몸체 프레임
-- DC 모터
+- 인코터 장착된 청소기 모터
 - 3S LiPo 배터리
-- DCDC 컨버터
-- Raspberry Pi 3
-- Raspberry Pi용 5V 어댑터
+- 배터리 충전기 
 
-## 탱크 주변 장치 제어하기
+#### 차동 구동로봇의 모터 드라이버
 
-### L298N
+`diffbot_arduion.ino`
 
-l298n 연결 확인
+펌웨어: https://gist.github.com/donghee/c0319e3f95fce0dca63fb29710954119
 
-RPi.GPIO 라이브러리 설치
+코드 읽기
 
-```
-sudo apt-get install python3-rpi.gpio rpi.gpio-common
-sudo usermod -aG dialout $USER
-sudo reboot
-```
+ - PID 제어: 속도 제어
+ - 인코더 읽기. 1바퀴에 1200 펄스 생성
 
-python3 rpi_l298n_test.py
+다음 코드를 참고하여 모터를 제어하고, 바퀴의 회전수 를 읽어보자.
 
 ```
-import RPi.GPIO as GPIO
-import time
+#define BAUDRATE 57600
 
-# setup
-GPIO.setmode(GPIO.BCM)
+#define MOTOR_L_WCNT_PIN 2  // FS brown: Encoder
+#define MOTOR_R_WCNT_PIN 3  // FS brown: Encoder
 
-GPIO.setup(12, GPIO.OUT)
-GPIO.setup(21, GPIO.OUT)
-GPIO.setup(20, GPIO.OUT)
-GPIO.setup(23, GPIO.OUT)
-GPIO.setup(24, GPIO.OUT)
-GPIO.setup(13, GPIO.OUT)
+#define MOTOR_L_FR_PIN 7  // FR white: Direction
+#define MOTOR_R_FR_PIN 8  // FR white: Direction
 
-# forward
-GPIO.output(12, GPIO.HIGH)
-GPIO.output(13, GPIO.HIGH)
+#define MOTOR_L_BREAK_PIN 9   // BREAK green: BREAK
+#define MOTOR_R_BREAK_PIN 10  // BREAK green: BREAK
 
-GPIO.output(21, GPIO.HIGH)
-GPIO.output(20, GPIO.LOW)
-GPIO.output(23, GPIO.HIGH)
-GPIO.output(24, GPIO.LOW)
+#define MOTOR_L_PWM_PIN 5  // PWM blue: SPEED
+#define MOTOR_R_PWM_PIN 6  // PWM blue: SPEED
 
-time.sleep(2)
+int l_wheel_cnt = 0;
+int r_wheel_cnt = 0;
 
-GPIO.output(12, GPIO.LOW)
-GPIO.output(13, GPIO.LOW)
+// encoder
+volatile long l_duration = 0;
+volatile long r_duration = 0;
 
-# backward
-GPIO.output(12, GPIO.HIGH)
-GPIO.output(13, GPIO.HIGH)
+void setup {
+  TCCR0B = 0b00000010;  // x8
+  TCCR0A = 0b00000001;  // phase correct
 
-GPIO.output(21, GPIO.LOW)
-GPIO.output(20, GPIO.HIGH)
-GPIO.output(23, GPIO.LOW)
-GPIO.output(24, GPIO.HIGH)
+  // setting the rising edge interrupt
+  pinMode(MOTOR_L_WCNT_PIN, INPUT_PULLUP);
+  pinMode(MOTOR_R_WCNT_PIN, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(MOTOR_L_WCNT_PIN), ISR_L_wheelCount, RISING);
+  attachInterrupt(digitalPinToInterrupt(MOTOR_R_WCNT_PIN), ISR_R_wheelCount, RISING);
 
-time.sleep(2)
+  Serial.begin(BAUDRATE);
+}
 
-GPIO.output(12, GPIO.LOW)
-GPIO.output(13, GPIO.LOW)
+void loop() {
+  if (Serial.available()) {
+    value = Serial.read();
+    if (value == 'e') { 
+        Serial.print(l_wheel_cnt);
+        Serial.print(' ');
+        Serial.println(r_wheel_cnt);
+    } else if (value == 'm') { 
+        analogWrite(MOTOR_L_PWM_PIN, 127);
+        analogWrite(MOTOR_R_PWM_PIN, 127);
+    } else {
+        analogWrite(MOTOR_L_PWM_PIN, 0);
+        analogWrite(MOTOR_R_PWM_PIN, 0);
+    }
+  }
+}
+
+void ISR_L_wheelCount() {
+  l_wheel_cnt = l_duration / 1200;
+}
+
+void ISR_R_wheelCount() {
+  r_wheel_cnt = r_duration / 1200;
+}
 ```
-
-permission 에러가 나는 경우 python3를 root로 실행
-
-```
-sudo python3
-```
-
-#### 해보기: 회전
-
-- 1초 동안 좌우 회전을 시켜보자.
-
-### IMU
-
-Inertial Measurement Unit 관성 측정 장치
-
-- 가속도 센서(Acceleration)
-- 각속도 센서(Gyroscope)
-- 지자기 센서(Magnetometer)
-
-Axis Orientation
-
-x forward, y left, z up
-
-![](https://velog.velcdn.com/images%2Fleesy970906%2Fpost%2F13213a98-13c4-4d00-9968-f461bffd90b0%2FScreen%20Shot%202021-04-08%20at%204.40.12%20PM.png ":size=600")
-
-right hand rule
-![](https://velog.velcdn.com/images%2Fleesy970906%2Fpost%2Fe6042f9c-7c3b-4878-a288-8dca47ab6a33%2FScreen%20Shot%202021-04-08%20at%204.42.02%20PM.png ":size=400")
-
-참고: https://www.ros.org/reps/rep-0103.html
-
-#### mpu9250 라이브러리 설치
-
-- https://github.com/niru-5/imusensor
-
-```
-sudo apt-get install i2c-tools
-sudo apt-get install python3-pip python3-numpy
-sudo pip install smbus
-sudo pip install easydict
-cd ~/
-git clone https://github.com/niru-5/imusensor
-cd imusensor
-sudo python3 setup.py install
-```
-
-#### 해보기
-
-- mpu9250_calibration.py: https://github.com/donghee/tank-foxy/blob/main/hwtest/mpu9250_calibration.py
-- mpu9250_calibration.py를 실행하여, imu의 roll, pitch, yaw 방향을 ROS의 axis orientaton과 right hand rule에 맞게 mpu9250 모듈을 로봇에 부착하자.
-- mpu9250_calibration.py를 이용하여, 센서값을 캘리브레이션 하여, gyro, accel, mag 센서의 bias값을 구하자.
 
 ### Raspberry Pi Camera 사용하기
 
-<!--
-libraspberrypi-bin libraspberrypi-dev 설치
-```
-sudo apt autoremove --purge libgles2-mesa-dev mesa-common-dev
-sudo add-apt-repository ppa:ubuntu-pi-flavour-makers/ppa
-sudo apt install libraspberrypi-bin libraspberrypi-dev
-```
-
-raspicam2_node
-
-https://github.com/christianrauch/raspicam2_node
+ROS에서 Raspberry Pi Camera 사용에 필요한 패키지 설치 
 
 ```
-cd ~/ros2_ws/src
-git clone https://github.com/christianrauch/raspicam2_node
-cd ~/ros2_ws
-colcon build
+sudo apt install libraspberrypi-bin v4l-utils ros-foxy-v4l2-camera ros-foxy-image-transport-plugins
+```
+```
+sudo usermod -aG video $USER
 ```
 
-video 그룹에 유저 추가후 리부팅
-```
-sudo usermod -a -G video $USER
-```
-
-노드 실행
-```
-ros2 run raspicam2 raspicam2_node --ros-args --params-file `ros2 pkg prefix raspicam2`/share/raspicam2/cfg/params.yaml
-```
--->
+raspi-config 다운로드
 
 ```
 wget https://archive.raspberrypi.org/debian/pool/main/r/raspi-config/raspi-config_20200601_all.deb -P /tmp
@@ -190,12 +134,6 @@ sudo dpkg -i /tmp/raspi-config_20200601_all.deb
 sudo apt --fix-broken install
 ```
 
-```
-sudo apt autoremove --purge libgles2-mesa-dev mesa-common-dev
-sudo add-apt-repository ppa:ubuntu-pi-flavour-makers/ppa
-sudo apt install libraspberrypi-bin libraspberrypi-dev
-```
-
 카메라 활성화
 
 ```
@@ -207,11 +145,9 @@ sudo raspi-config
 
 # 5. Interface Options -> P1 Camera -> Enable camera
 ```
-
 재부팅
 
 카메라 설치 확인
-
 ```
 sudo usermod -G video "$USER"
 
@@ -223,75 +159,33 @@ v4l2-ctl --list-devices
 raspistill -o cam.jpg
 ```
 
-ROS 2 camera node 설치
-
-```
-sudo apt install ros-foxy-cv-bridge ros-foxy-camera-info-manager ros-foxy-camera-calibration-parsers ros-foxy-image-common ros-foxy-image-transport ros-foxy-v4l2-camera
-```
-
-<!--
-v4l2-camera 패키지 source 설치
-```
-cd ros2_ws/src/
-#git clone --branch ros2 https://github.com/ros-perception/image_common.git
-#git clone --branch ros2 https://github.com/ros-perception/vision_opencv.git
-git clone --branch foxy https://gitlab.com/boldhearts/ros2_v4l2_camera.git v4l2_camera
-```
-
-의존성 패키지 설치
-```
-cd ros2_ws
-sudo apt-get install python3-rosdep
-sudo rosdep init
-rosdep update
-rosdep install --from-paths src -r -y
-```
-
-camera node 패키지 빌드
-```
-cd ros2_ws
-colcon build --symlink-install
-source ~/install/setup.bash
-```
-
-에러. camera_info_manager.cpp 파일에 다음줄 추가
-```
-#include "rcpputils/get_env.hpp"
-```
-
--->
-
-camera node 실행
-
-```
-ros2 run v4l2_camera v4l2_camera_node
-```
-
 pc에서 camera 이미지 보기
-
 ```
 ros2 run rqt_image_view rqt_image_view
 ```
 
 해상도 수정
-
 ```
 ros2 param set /v4l2_camera image_size '[320, 240]'
 ros2 param get /v4l2_camera image_size
 ```
 
+pi 카메라 실행 노드
+```
+ros2 run v4l2_camera v4l2_camera_node --ros-args -p image_size:="[160,120]" -p camera_frame_id:=camera_optical_link
+```
+
+pc에서 camera 이미지 보기
+```
+ros2 run rqt_image_view rqt_image_view
+```
+
 #### 해보기
+- pi 카메라에서 나오는 영상을 pc에서 보기 
 
-- 컴퓨터 비전 노드 만들기
-- 참고: https://automaticaddison.com/getting-started-with-opencv-in-ros-2-foxy-fitzroy-python/
-- Aruco 태그 이용하여, 카메라 위치 구하기:
-- 참고: https://github.com/lapo5/ROS2-Aruco-TargetTracking
+#### 라이다
 
-<!--
-https://github.com/ptrmu/fiducial_vlam_sam
--->
-
-### RPLIDAR A1
+**RPLIDAR A1**
 
 https://www.slamtec.com/en/Lidar/A1
 
@@ -314,36 +208,56 @@ source ./install/setup.sh
 ros2 launch sllidar_ros2 sllidar_launch.py
 ```
 
+<!-- 또다른 노드 -->
+
+<!-- sudo apt-get install ros-foxy-rplidar-ros -->
+<!-- cd ~/firstbot_ws/src -->
+<!-- ros2 launch firstbot_bringup rplidar.launch.py -->
+
+
 #### 해보기: A1 라이더 값 받기
 
 - rplidar 센서값을 ros2 topic echo를 이용해서 받아 보자.
 - ros2 노드를 구성해서 라이더 값을 받아서 라이더 값의 최소값을 구해보자.
-- 참고: https://github.com/ROBOTIS-GIT/turtlebot3/blob/master/turtlebot3_example/nodes/turtlebot3_obstacle
+<!-- - 참고: https://github.com/ROBOTIS-GIT/turtlebot3/blob/master/turtlebot3_example/nodes/turtlebot3_obstacle -->
+
+
+### Raspberry Pi에 퍼스트봇 ZARA 패키지 설치
+
+```
+mkdir -p ~/firstbot_ws/src
+cd ~/firstbot_ws/src
+git clone https://github.com/donghee/firstbot_zara.git -b foxy --recursive
+```
+
+필요한 패키시 설치
+```
+sudo apt-get install `cat ~/firstbot_ws/src/firstbot_zara/tools/ros2-foxy-installed.txt`
+```
+
+패키지 빌드
+
+```
+cd ~/firstbot_ws
+colcon build --symlink-install
+source install/setup.bash
+echo "source ~/firstbot_ws/install/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+```
+
+실행
+
+```
+cd ~/firstbot_ws/src/firstbot_zara
+tmuxinator local
+```
+
+tmux 사용법
+
+`ctrl+b n` 또는 `ctrlb p` 를 이용하여 원도우 이용. `ctrl+b o` 를 이용하여 원도우 내부의 pane 이동
+
 
 ## 주행 테스트
-
-mpu9250 패키지와 tank-foxy 패키지를 설치하여, 키보드를 이용해서 주행을 해보자!
-
-```
-cd ~/ros2_ws/src
-git clone https://github.com/Schnilz/mpu9250
-git clone https://github.com/donghee/tank-foxy
-cd ~/ros2_ws
-colcon build --symlink-install
-source ./install/setup.sh
-```
-
-tmux 사용하기
-
-```
-sudo apt-get install tmux
-```
-
-#### 모터 노드
-
-```
-ros2 run tank_control robot_control
-```
 
 #### keyboard teleop
 
