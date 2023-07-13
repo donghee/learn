@@ -70,7 +70,7 @@ int r_wheel_cnt = 0;
 volatile long l_duration = 0;
 volatile long r_duration = 0;
 
-void setup {
+void setup() {
   // 4Khz PWM  
   TCCR0B = 0b00000010;  // x8
   TCCR0A = 0b00000001;  // phase correct
