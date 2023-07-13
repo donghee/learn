@@ -95,9 +95,9 @@ void loop() {
     } else if (value == 'm') { 
         analogWrite(MOTOR_L_PWM_PIN, 127);
         analogWrite(MOTOR_R_PWM_PIN, 127);
-    } else {
-        analogWrite(MOTOR_L_PWM_PIN, 0);
-        analogWrite(MOTOR_R_PWM_PIN, 0);
+    } else { 
+        analogWrite(MOTOR_L_PWM_PIN, 255); //STOP
+        analogWrite(MOTOR_R_PWM_PIN, 255); //STOP
     }
   }
 }
