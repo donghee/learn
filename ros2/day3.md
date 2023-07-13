@@ -164,6 +164,34 @@ tmux 사용법
 
 `ctrl+b n` 또는 `ctrlb p` 를 이용하여 원도우 이용. `ctrl+b o` 를 이용하여 원도우 내부의 pane 이동
 
+#### 주행 테스트
+
+빌드 
+
+```
+cd ~/firstbot_ws
+colcon build --symlink-install
+source ./install/setup.sh
+```
+
+모터 컨트롤러 실행
+```
+cd ~/firstbot_ws
+ros2 launch firstbot_bringup test_robot.launch.py
+```
+key_teleop 실행
+
+```
+cd ~/firstbot_ws
+ros2 run twist_mux twist_mux --ros-args --remap cmd_vel_out:=diff_cont/cmd_vel_unstamped --params-file ./src/firstbot_zara/config/twist_mux.yaml
+```
+
+
+```
+ros2 run key_teleop key_teleop
+```
+
+
 
 ### Raspberry Pi Camera 사용하기
 
@@ -276,33 +304,6 @@ ros2 launch sllidar_ros2 sllidar_launch.py
 - ros2 노드를 구성해서 라이더 값을 받아서 라이더 값의 최소값을 구해보자.
 <!-- - 참고: https://github.com/ROBOTIS-GIT/turtlebot3/blob/master/turtlebot3_example/nodes/turtlebot3_obstacle -->
 
-
-## 주행 테스트
-
-빌드 
-
-```
-cd ~/firstbot_ws
-colcon build --symlink-install
-source ./install/setup.sh
-```
-
-모터 컨트롤러 실행
-```
-cd ~/firstbot_ws
-ros2 launch firstbot_bringup test_robot.launch.py
-```
-key_teleop 실행
-
-```
-cd ~/firstbot_ws
-ros2 run twist_mux twist_mux --ros-args --remap cmd_vel_out:=diff_cont/cmd_vel_unstamped --params-file ./src/firstbot_zara/config/twist_mux.yaml
-```
-
-
-```
-ros2 run key_teleop key_teleop
-```
 
 
 ## 프로젝트
