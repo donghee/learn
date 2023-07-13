@@ -71,6 +71,7 @@ volatile long l_duration = 0;
 volatile long r_duration = 0;
 
 void setup {
+  // 4Khz PWM  
   TCCR0B = 0b00000010;  // x8
   TCCR0A = 0b00000001;  // phase correct
 
@@ -84,6 +85,7 @@ void setup {
 }
 
 void loop() {
+  char value;
   if (Serial.available()) {
     value = Serial.read();
     if (value == 'e') { 
